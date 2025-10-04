@@ -11,3 +11,4 @@ export { default as PhoneNumberInput } from "./phone-number-input.component";
 export { default as PageBreadCrumbs } from "./page-breadcrumb/page-breadcrumb.component";
 export { default as SpinnerList } from "./spinner-list";
 export { default as RichTextEditor } from "./rich-text-editor";
+export { default as NonBlockingLoader } from "./non-blocking-loader";

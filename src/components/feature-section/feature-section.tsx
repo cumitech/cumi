@@ -1,11 +1,12 @@
 "use client";
 import React from "react";
 import styles from "./feature.module.css";
-import { Button, Spin, Card } from "antd";
+import { Button } from "antd";
 import Image from "next/image";
 import ServiceList from "@components/service/service-list.component";
 import { serviceAPI } from "@store/api/service_api";
 import { useTranslation } from "@contexts/translation.context";
+import { NonBlockingLoader } from "@components/shared";
 
 const FeatureSection = () => {
   const { t } = useTranslation();
@@ -15,31 +16,18 @@ const FeatureSection = () => {
     isFetching: isFetchService,
   } = serviceAPI.useFetchAllServicesQuery(1);
 
-const loading = isLoadingService || isFetchService;
+  const loading = isLoadingService || isFetchService;
 
-if (loading) {
-    return (
-      <section className={`section ${styles.section}`} style={{ minHeight: "400px", display: "flex", justifyContent: "center", alignItems: "center", padding: '20px' }}>
-        <Card style={{ padding: '40px', borderRadius: '16px', textAlign: 'center', maxWidth: '400px' }}>
-          <Spin size="large" />
-          <div style={{ marginTop: '16px', fontSize: '16px', color: '#666' }}>{t('common.loading')}</div>
-        </Card>
-      </section>
-    );
-  }
-
-return (
-    <>
+  return (
+    <NonBlockingLoader loading={loading}>
       <section className={`section ${styles.section}`}>
         <div className="container">
           <div className={`titleHolder ${styles.headerCp}`}>
-            <h1 className={styles.heading}>{t('features.title')}</h1>
-            <p>
-              {t('features.subtitle')}
-            </p>
+            <h1 className={styles.heading}>{t("features.title")}</h1>
+            <p>{t("features.subtitle")}</p>
           </div>
 
-<div className={styles.content}>
+          <div className={styles.content}>
             <div className={styles.content_group}>
               <Image
                 height={500}
@@ -51,10 +39,10 @@ return (
               />
               <div className={styles.content_group_1_text}>
                 <h1 className={styles.content_group_heading}>
-                  {t('features.custom_solutions.title')}
+                  {t("features.custom_solutions.title")}
                 </h1>
                 <p className={styles.content_group_subheading}>
-                  {t('features.custom_solutions.description')}
+                  {t("features.custom_solutions.description")}
                 </p>
                 <Button
                   className="primary-btn"
@@ -64,18 +52,18 @@ return (
                   target="_blank"
                   size="large"
                 >
-                  {t('features.hire_expertise')}
+                  {t("features.hire_expertise")}
                 </Button>
               </div>
             </div>
 
-<div className={styles.content_group}>
+            <div className={styles.content_group}>
               <div className={styles.content_group_2_text}>
                 <h1 className={styles.content_group_heading}>
-                  {t('features.training.title')}
+                  {t("features.training.title")}
                 </h1>
                 <p className={styles.content_group_subheading}>
-                  {t('features.training.description')}
+                  {t("features.training.description")}
                 </p>
                 <Button
                   className="primary-btn"
@@ -85,7 +73,7 @@ return (
                   target="_blank"
                   size="large"
                 >
-                  {t('features.hire_expertise')}
+                  {t("features.hire_expertise")}
                 </Button>
               </div>
               <Image
@@ -100,7 +88,7 @@ return (
           </div>
         </div>
       </section>
-    </>
+    </NonBlockingLoader>
   );
 };
 

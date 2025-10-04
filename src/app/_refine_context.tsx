@@ -109,56 +109,32 @@ export const App = (props: any) => {
     if (!menu || !menu.name || !menu.meta) {
       return false;
     }
-    
+
     // Check access permissions
-    if (!menu.meta.canAccess?.includes(data ? data!.user.role : '')) {
+    if (!menu.meta.canAccess?.includes(data ? data!.user.role : "")) {
       return false;
     }
-    
+
     // Only include resources that have CRUD operations
     if (!menu.list) {
       return false;
     }
-    
+
     // Ensure the resource has a valid name
-    if (!menu.name || menu.name.trim() === '') {
+    if (!menu.name || menu.name.trim() === "") {
       return false;
     }
-    
+
     // Exclude hidden menu items
     if ((menu.meta as any).hidden === true) {
       return false;
     }
-    
+
     return true;
   });
 
-  // Don't block rendering during authentication check
-  if (status === "loading") {
-    return (
-      <RefineKbarProvider>
-        <AntdRegistry>
-          <AntdApp>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "100vh",
-                flexDirection: "column",
-                background: "linear-gradient(135deg, #f0fdf4 0%, #f0f9ff 100%)",
-              }}
-            >
-              <Spin size="large" />
-              <p style={{ marginTop: 16, color: "#666", fontSize: 16 }}>
-                Loading your experience...
-              </p>
-            </div>
-          </AntdApp>
-        </AntdRegistry>
-      </RefineKbarProvider>
-    );
-  }
+  // Show non-blocking loading indicator instead of blocking the entire UI
+  const isLoading = status === "loading";
 
   return (
     <>
@@ -195,11 +171,35 @@ export const App = (props: any) => {
             >
               {props.children}
               <RefineKbar />
-              </Refine>
-            </AntdApp>
-          </AntdRegistry>
-        </RefineKbarProvider>
+              {/* Non-blocking loading indicator */}
+              {isLoading && (
+                <div
+                  style={{
+                    position: "fixed",
+                    top: "20px",
+                    right: "20px",
+                    zIndex: 9999,
+                    background: "rgba(255, 255, 255, 0.95)",
+                    backdropFilter: "blur(10px)",
+                    borderRadius: "12px",
+                    padding: "12px 16px",
+                    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+                    border: "1px solid rgba(255, 255, 255, 0.2)",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                  }}
+                >
+                  <Spin size="small" />
+                  <span style={{ fontSize: "14px", color: "#666" }}>
+                    Loading...
+                  </span>
+                </div>
+              )}
+            </Refine>
+          </AntdApp>
+        </AntdRegistry>
+      </RefineKbarProvider>
     </>
   );
 };
-

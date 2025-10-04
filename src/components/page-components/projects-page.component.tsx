@@ -5,7 +5,18 @@ import { AppFootnote } from "@components/footnote/footnote";
 import { AppNav } from "@components/nav/nav.component";
 import ProjectCard from "@components/project/ProjectCard";
 import { projectAPI } from "@store/api/project_api";
-import { Col, Empty, Layout, Row, Spin, Typography, Card, Space, Tag, Statistic } from "antd";
+import {
+  Col,
+  Empty,
+  Layout,
+  Row,
+  Spin,
+  Typography,
+  Card,
+  Space,
+  Tag,
+  Statistic,
+} from "antd";
 import { motion } from "framer-motion";
 import styles from "@app/projects/project-card.module.css";
 import {
@@ -16,6 +27,7 @@ import {
 } from "@ant-design/icons";
 import { useTranslation } from "@contexts/translation.context";
 import { AppCTA } from "@components/CTA.component";
+import { NonBlockingLoader } from "@components/shared";
 
 const { Content } = Layout;
 const { Title, Paragraph, Text } = Typography;
@@ -23,15 +35,15 @@ const { Title, Paragraph, Text } = Typography;
 export default function ProjectsPageComponent() {
   const { t } = useTranslation();
 
-const {
+  const {
     data: projects,
     isLoading: isLoadingEvent,
     isFetching: isFetchEvent,
   } = projectAPI.useFetchAllProjectsQuery(1);
 
-const loading = isLoadingEvent || isFetchEvent;
+  const loading = isLoadingEvent || isFetchEvent;
 
-const stats = [
+  const stats = [
     {
       title: t("about.projects_completed"),
       value: projects?.length || 0,
@@ -50,7 +62,7 @@ const stats = [
     },
   ];
 
-const technologies = [
+  const technologies = [
     "JavaScript",
     "PHP",
     "React",
@@ -66,37 +78,13 @@ const technologies = [
     "Laravel",
   ];
 
-return (
-    <>
+  return (
+    <NonBlockingLoader loading={loading}>
       <div className="container-fluid" style={{ width: "100%" }}>
         <AppNav logoPath="/" />
       </div>
 
-{loading ? (
-        <div
-          style={{
-            minHeight: "65vh",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            padding: "20px",
-          }}
-        >
-          <Card
-            style={{
-              padding: "40px",
-              borderRadius: "16px",
-              textAlign: "center",
-              maxWidth: "400px",
-            }}
-          >
-            <Spin size="large" />
-            <div style={{ marginTop: "16px", fontSize: "16px", color: "#666" }}>
-              Loading projects...
-            </div>
-          </Card>
-        </div>
-      ) : (
+      {!loading && (
         <>
           <BannerComponent
             breadcrumbs={[{ label: t("nav.projects"), uri: "projects" }]}
@@ -137,7 +125,7 @@ return (
             </div>
           </section>
 
-{}
+          {}
           <section className="py-5 my-5">
             <div className="container">
               <Row justify="center" className="mb-4">
@@ -177,7 +165,7 @@ return (
             </div>
           </section>
 
-{}
+          {}
           <Content className="container py-5">
             <Row justify="center" className="mb-5">
               <Col xs={24} lg={16} className="text-center">
@@ -192,7 +180,7 @@ return (
               </Col>
             </Row>
 
-{projects && projects.length > 0 ? (
+            {projects && projects.length > 0 ? (
               <Row gutter={[24, 24]} justify="center">
                 {projects?.map((project, index) => (
                   <Col xs={24} sm={12} lg={8} key={project.id}>
@@ -224,11 +212,11 @@ return (
             )}
           </Content>
 
-<AppCTA />
+          <AppCTA />
           <AppFooter logoPath="/" />
           <AppFootnote />
         </>
       )}
-    </>
+    </NonBlockingLoader>
   );
 }
