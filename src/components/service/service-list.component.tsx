@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -37,12 +38,15 @@ const ServiceList: React.FC<IServiceListProps> = ({ services }) => {
                 services.map((item: IService, index: number) => (
                   <SwiperSlide key={index}>
                     <div className="card rounded bg-light shadow border-0">
-                      <img
-                        src={item.imageUrl}
-                        alt={item.title}
-                        className="card-img-top"
-                        style={{ maxHeight: 250 }}
-                      />
+                      <div style={{ position: 'relative', width: '100%', height: 250 }}>
+                        <Image
+                          src={item.imageUrl}
+                          alt={item.title || "Service image"}
+                          fill
+                          className="card-img-top"
+                          style={{ objectFit: 'cover' }}
+                        />
+                      </div>
                       <div className="card-body">
                         <h3 className="h5 fw-semibold">{item.title}</h3>
                         <blockquote

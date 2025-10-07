@@ -4,7 +4,6 @@ import BannerComponent from "@components/banner/banner.component";
 import { AppFooter } from "@components/footer/footer";
 import { AppFootnote } from "@components/footnote/footnote";
 import { AppNav } from "@components/nav/nav.component";
-import SpinnerList from "@components/shared/spinner-list";
 import {
   Col,
   Empty,
@@ -21,7 +20,6 @@ import {
 } from "antd";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-import { IOpportunity } from "@domain/models/opportunity.model";
 import {
   CalendarOutlined,
   EnvironmentOutlined,
@@ -54,23 +52,23 @@ export default function OpportunitiesPageComponent() {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
 
-const {
+  const {
     data: opportunities,
     error,
     isLoading,
     isFetching,
   } = opportunityAPI.useFetchAllOpportunitiesQuery();
 
-// Debounce search term
+  // Debounce search term
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
     }, 300);
 
-return () => clearTimeout(timer);
+    return () => clearTimeout(timer);
   }, [searchTerm]);
 
-const filteredOpportunities = (opportunities || []).filter((opp) => {
+  const filteredOpportunities = (opportunities || []).filter((opp) => {
     const matchesFilter = filter === "all" || opp.opp_type === filter;
     const matchesSearch =
       opp.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
@@ -83,7 +81,7 @@ const filteredOpportunities = (opportunities || []).filter((opp) => {
     return matchesFilter && matchesSearch;
   });
 
-const getOpportunityTypeColor = (type: string) => {
+  const getOpportunityTypeColor = (type: string) => {
     switch (type) {
       case "scholarship":
         return "green";
@@ -100,7 +98,7 @@ const getOpportunityTypeColor = (type: string) => {
     }
   };
 
-const getOpportunityTypeIcon = (type: string) => {
+  const getOpportunityTypeIcon = (type: string) => {
     switch (type) {
       case "scholarship":
         return <BookOutlined />;
@@ -117,7 +115,7 @@ const getOpportunityTypeIcon = (type: string) => {
     }
   };
 
-const formatDeadline = (deadline: string | Date) => {
+  const formatDeadline = (deadline: string | Date) => {
     const date = new Date(deadline);
     return date.toLocaleDateString("en-US", {
       year: "numeric",
@@ -126,7 +124,7 @@ const formatDeadline = (deadline: string | Date) => {
     });
   };
 
-const isDeadlineNear = (deadline: string | Date) => {
+  const isDeadlineNear = (deadline: string | Date) => {
     const date = new Date(deadline);
     const now = new Date();
     const diffTime = date.getTime() - now.getTime();
@@ -134,7 +132,7 @@ const isDeadlineNear = (deadline: string | Date) => {
     return diffDays <= 30 && diffDays > 0;
   };
 
-return (
+  return (
     <Layout className="min-h-screen" style={{ backgroundColor: "white" }}>
       <AppNav logoPath="/" />
       <Content style={{ backgroundColor: "white" }}>
@@ -145,90 +143,179 @@ return (
           ]}
         />
 
-<div className="container py-5" style={{ backgroundColor: "white" }}>
-          {}
+        <div className="container py-5" style={{ backgroundColor: "white" }}>
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <Row gutter={[16, 16]} style={{ marginBottom: '2rem' }}>
+            <Row gutter={[16, 16]} style={{ marginBottom: "2rem" }}>
               <Col xs={24} sm={12} md={6}>
                 <Card
                   style={{
-                    borderRadius: '16px',
-                    background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)',
-                    border: '1px solid rgba(34, 197, 94, 0.15)',
-                    boxShadow: '0 4px 12px rgba(34, 197, 94, 0.1)',
-                    textAlign: 'center',
+                    borderRadius: "16px",
+                    background:
+                      "linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)",
+                    border: "1px solid rgba(34, 197, 94, 0.15)",
+                    boxShadow: "0 4px 12px rgba(34, 197, 94, 0.1)",
+                    textAlign: "center",
                   }}
-                  styles={{ body: { padding: '24px' } }}
+                  styles={{ body: { padding: "24px" } }}
                 >
-                  <ShopOutlined style={{ fontSize: '32px', color: '#22C55E', marginBottom: '8px' }} />
-                  <Title level={3} style={{ margin: '8px 0 4px', color: '#16a34a', fontWeight: 700 }}>
+                  <ShopOutlined
+                    style={{
+                      fontSize: "32px",
+                      color: "#22C55E",
+                      marginBottom: "8px",
+                    }}
+                  />
+                  <Title
+                    level={3}
+                    style={{
+                      margin: "8px 0 4px",
+                      color: "#16a34a",
+                      fontWeight: 700,
+                    }}
+                  >
                     {filteredOpportunities?.length || 0}
                   </Title>
-                  <Text style={{ color: '#4b5563', fontSize: '14px', fontWeight: 500 }}>Total</Text>
+                  <Text
+                    style={{
+                      color: "#4b5563",
+                      fontSize: "14px",
+                      fontWeight: 500,
+                    }}
+                  >
+                    Total
+                  </Text>
                 </Card>
               </Col>
               <Col xs={24} sm={12} md={6}>
                 <Card
                   style={{
-                    borderRadius: '16px',
-                    background: 'linear-gradient(135deg, #ecfeff 0%, #cffafe 100%)',
-                    border: '1px solid rgba(20, 184, 166, 0.15)',
-                    boxShadow: '0 4px 12px rgba(20, 184, 166, 0.1)',
-                    textAlign: 'center',
+                    borderRadius: "16px",
+                    background:
+                      "linear-gradient(135deg, #ecfeff 0%, #cffafe 100%)",
+                    border: "1px solid rgba(20, 184, 166, 0.15)",
+                    boxShadow: "0 4px 12px rgba(20, 184, 166, 0.1)",
+                    textAlign: "center",
                   }}
-                  styles={{ body: { padding: '24px' } }}
+                  styles={{ body: { padding: "24px" } }}
                 >
-                  <BookOutlined style={{ fontSize: '32px', color: '#14B8A6', marginBottom: '8px' }} />
-                  <Title level={3} style={{ margin: '8px 0 4px', color: '#0d9488', fontWeight: 700 }}>
-                    {opportunities?.filter(o => o.opp_type === 'scholarship').length || 0}
+                  <BookOutlined
+                    style={{
+                      fontSize: "32px",
+                      color: "#14B8A6",
+                      marginBottom: "8px",
+                    }}
+                  />
+                  <Title
+                    level={3}
+                    style={{
+                      margin: "8px 0 4px",
+                      color: "#0d9488",
+                      fontWeight: 700,
+                    }}
+                  >
+                    {opportunities?.filter((o) => o.opp_type === "scholarship")
+                      .length || 0}
                   </Title>
-                  <Text style={{ color: '#4b5563', fontSize: '14px', fontWeight: 500 }}>Scholarships</Text>
+                  <Text
+                    style={{
+                      color: "#4b5563",
+                      fontSize: "14px",
+                      fontWeight: 500,
+                    }}
+                  >
+                    Scholarships
+                  </Text>
                 </Card>
               </Col>
               <Col xs={24} sm={12} md={6}>
                 <Card
                   style={{
-                    borderRadius: '16px',
-                    background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)',
-                    border: '1px solid rgba(14, 165, 233, 0.15)',
-                    boxShadow: '0 4px 12px rgba(14, 165, 233, 0.1)',
-                    textAlign: 'center',
+                    borderRadius: "16px",
+                    background:
+                      "linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)",
+                    border: "1px solid rgba(14, 165, 233, 0.15)",
+                    boxShadow: "0 4px 12px rgba(14, 165, 233, 0.1)",
+                    textAlign: "center",
                   }}
-                  styles={{ body: { padding: '24px' } }}
+                  styles={{ body: { padding: "24px" } }}
                 >
-                  <TeamOutlined style={{ fontSize: '32px', color: '#0EA5E9', marginBottom: '8px' }} />
-                  <Title level={3} style={{ margin: '8px 0 4px', color: '#0284c7', fontWeight: 700 }}>
-                    {opportunities?.filter(o => o.opp_type === 'job').length || 0}
+                  <TeamOutlined
+                    style={{
+                      fontSize: "32px",
+                      color: "#0EA5E9",
+                      marginBottom: "8px",
+                    }}
+                  />
+                  <Title
+                    level={3}
+                    style={{
+                      margin: "8px 0 4px",
+                      color: "#0284c7",
+                      fontWeight: 700,
+                    }}
+                  >
+                    {opportunities?.filter((o) => o.opp_type === "job")
+                      .length || 0}
                   </Title>
-                  <Text style={{ color: '#4b5563', fontSize: '14px', fontWeight: 500 }}>Jobs</Text>
+                  <Text
+                    style={{
+                      color: "#4b5563",
+                      fontSize: "14px",
+                      fontWeight: 500,
+                    }}
+                  >
+                    Jobs
+                  </Text>
                 </Card>
               </Col>
               <Col xs={24} sm={12} md={6}>
                 <Card
                   style={{
-                    borderRadius: '16px',
-                    background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)',
-                    border: '1px solid rgba(245, 158, 11, 0.15)',
-                    boxShadow: '0 4px 12px rgba(245, 158, 11, 0.1)',
-                    textAlign: 'center',
+                    borderRadius: "16px",
+                    background:
+                      "linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)",
+                    border: "1px solid rgba(245, 158, 11, 0.15)",
+                    boxShadow: "0 4px 12px rgba(245, 158, 11, 0.1)",
+                    textAlign: "center",
                   }}
-                  styles={{ body: { padding: '24px' } }}
+                  styles={{ body: { padding: "24px" } }}
                 >
-                  <RocketOutlined style={{ fontSize: '32px', color: '#f59e0b', marginBottom: '8px' }} />
-                  <Title level={3} style={{ margin: '8px 0 4px', color: '#d97706', fontWeight: 700 }}>
-                    {opportunities?.filter(o => o.opp_type === 'internship').length || 0}
+                  <RocketOutlined
+                    style={{
+                      fontSize: "32px",
+                      color: "#f59e0b",
+                      marginBottom: "8px",
+                    }}
+                  />
+                  <Title
+                    level={3}
+                    style={{
+                      margin: "8px 0 4px",
+                      color: "#d97706",
+                      fontWeight: 700,
+                    }}
+                  >
+                    {opportunities?.filter((o) => o.opp_type === "internship")
+                      .length || 0}
                   </Title>
-                  <Text style={{ color: '#4b5563', fontSize: '14px', fontWeight: 500 }}>Internships</Text>
+                  <Text
+                    style={{
+                      color: "#4b5563",
+                      fontSize: "14px",
+                      fontWeight: 500,
+                    }}
+                  >
+                    Internships
+                  </Text>
                 </Card>
               </Col>
             </Row>
           </motion.div>
 
-{}
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -245,14 +332,14 @@ return (
                     overflow: "hidden",
                     border: "1px solid rgba(34, 197, 94, 0.1)",
                   }}
-                  styles={{ body: { padding: '32px' } }}
+                  styles={{ body: { padding: "32px" } }}
                 >
                   <div className="text-center">
                     <Title level={4} className="mb-3">
                       {t("opportunities.filter_title")}
                     </Title>
 
-{}
+                    {}
                     <Search
                       placeholder="Search opportunities..."
                       value={searchTerm}
@@ -268,7 +355,7 @@ return (
                       size="large"
                     />
 
-<Space wrap>
+                    <Space wrap>
                       <Button
                         type={filter === "all" ? "primary" : "default"}
                         onClick={() => setFilter("all")}
@@ -318,7 +405,6 @@ return (
             </Row>
           </motion.div>
 
-{}
           {isLoading || isFetching ? (
             <div
               style={{
@@ -345,7 +431,7 @@ return (
               </Col>
             </Row>
           ) : filteredOpportunities.length > 0 ? (
-            <Row justify="center" className="align-items-start">
+            <Row justify="center" className="align-items-start mt-5">
               <Col xs={24} lg={22}>
                 <div className="row">
                   {filteredOpportunities.map((opportunity, index) => (
@@ -470,17 +556,17 @@ return (
                           )}
                         </div>
 
-<Title level={4} className="mb-2">
+                        <Title level={4} className="mb-2">
                           <Link href={`/opportunities/${opportunity.id}`}>
                             {opportunity.title}
                           </Link>
                         </Title>
 
-<Paragraph className="text-muted mb-3">
+                        <Paragraph className="text-muted mb-3">
                           {opportunity.companyOrInstitution}
                         </Paragraph>
 
-<div className="mb-3">
+                        <div className="mb-3">
                           <Space direction="vertical" size="small">
                             <div>
                               <EnvironmentOutlined className="me-2" />
@@ -507,15 +593,15 @@ return (
                           </Space>
                         </div>
 
-<Paragraph ellipsis={{ rows: 3 }} className="mb-3">
+                        <Paragraph ellipsis={{ rows: 3 }} className="mb-3">
                           {opportunity.description}
                         </Paragraph>
 
-{(() => {
+                        {(() => {
                           // Parse skills if it's a string, otherwise use as-is
                           let skillsArray: string[] = [];
                           try {
-                            if (typeof opportunity.skills === 'string') {
+                            if (typeof opportunity.skills === "string") {
                               skillsArray = JSON.parse(opportunity.skills);
                             } else if (Array.isArray(opportunity.skills)) {
                               skillsArray = opportunity.skills;
@@ -524,21 +610,17 @@ return (
                             skillsArray = [];
                           }
 
-return skillsArray && skillsArray.length > 0 ? (
+                          return skillsArray && skillsArray.length > 0 ? (
                             <div className="mb-3">
                               <Text strong className="me-2">
                                 Skills:
                               </Text>
                               <Space wrap>
-                                {skillsArray
-                                  .slice(0, 3)
-                                  .map((skill, index) => (
-                                    <Tag key={index}>{skill}</Tag>
-                                  ))}
+                                {skillsArray.slice(0, 3).map((skill, index) => (
+                                  <Tag key={index}>{skill}</Tag>
+                                ))}
                                 {skillsArray.length > 3 && (
-                                  <Tag>
-                                    +{skillsArray.length - 3} more
-                                  </Tag>
+                                  <Tag>+{skillsArray.length - 3} more</Tag>
                                 )}
                               </Space>
                             </div>

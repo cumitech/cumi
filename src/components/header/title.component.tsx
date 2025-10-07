@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useLink, useRouterContext, useRouterType } from "@refinedev/core";
 import React from "react";
 
@@ -21,29 +22,37 @@ return (
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            position: "relative",
+            height: "65.5px",
           }}
         >
-          <img
+          <Image
             src="/cumi-green.jpg"
-            alt="Cumi website logo"
+            alt="CUMI Logo"
+            width={53}
+            height={41}
             style={{
               margin: "0 auto",
               padding: "12px 0",
-              maxHeight: "65.5px",
               width: "auto",
+              height: "auto",
+              maxHeight: "65.5px",
             }}
           />
         </div>
       ) : (
-        <img
-          src="/cumi-green.jpg"
-          alt="Cumi website logo"
-          style={{
-            width: "180px",
-            height: "auto",
-            padding: "12px 24px",
-          }}
-        />
+        <div style={{ position: "relative", padding: "12px 24px" }}>
+          <Image
+            src="/cumi-green.jpg"
+            alt="CUMI Logo"
+            width={180}
+            height={42}
+            style={{
+              width: "180px",
+              height: "auto",
+            }}
+          />
+        </div>
       )}
     </ActiveLink>
   );

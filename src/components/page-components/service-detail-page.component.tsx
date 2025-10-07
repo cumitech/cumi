@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { AppNav } from "@components/nav/nav.component";
 import { AppFooter } from "@components/footer/footer";
 import { AppFootnote } from "@components/footnote/footnote";
@@ -241,12 +242,15 @@ return (
 <Col xs={24} lg={18}>
                   {}
                   <Card className="cumi-card mb-4">
-                    <img
-                      src={service.imageUrl}
-                      alt={service.title}
-                      className="img-fluid rounded"
-                      style={{ width: '100%', height: '400px', objectFit: 'cover' }}
-                    />
+                    <div style={{ position: 'relative', width: '100%', height: '400px' }}>
+                      <Image
+                        src={service.imageUrl}
+                        alt={`${service.title} - Professional service details`}
+                        fill
+                        className="rounded"
+                        style={{ objectFit: 'cover' }}
+                      />
+                    </div>
                   </Card>
 
 {}

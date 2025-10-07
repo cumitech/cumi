@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import React, { useState } from "react";
 import {
   Modal,
@@ -148,16 +149,17 @@ return (
         <Card size="small" style={{ marginBottom: 24, backgroundColor: 'white' }}>
           <Row gutter={[16, 16]}>
             <Col span={24}>
-              <img
-                src={course.imageUrl || "/img/design-3.jpg"}
-                alt={course.title}
-                style={{
-                  width: "100%",
-                  height: 150,
-                  objectFit: "cover",
-                  borderRadius: 8,
-                }}
-              />
+              <div style={{ position: 'relative', width: "100%", height: 150 }}>
+                <Image
+                  src={course.imageUrl || "/img/design-3.jpg"}
+                  alt={course.title || "Course enrollment"}
+                  fill
+                  style={{
+                    objectFit: "cover",
+                    borderRadius: 8,
+                  }}
+                />
+              </div>
             </Col>
             <Col span={24}>
               <Space direction="vertical" size="small">

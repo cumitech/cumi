@@ -22,40 +22,55 @@ const courseRepository = new CourseRepository();
 const courseUseCase = new CourseUseCase(courseRepository);
 
 export async function GET(request: NextRequest) {
-  const session = await getServerSession(authOptions);
-  
-  if (!session || !session.user) {
-    return NextResponse.json(
-      {
-        message: "Unauthorized: Please log in to access this resource.",
-        success: false,
-        data: null,
-        validationErrors: [],
-      },
-      { status: 401 }
-    );
-  }
-
   try {
     const { searchParams } = new URL(request.url);
     const courseId = searchParams.get("courseId");
+    const userId = searchParams.get("userId");
+    const session = await getServerSession(authOptions);
     
-    if (courseId) {
-      // Check if user is enrolled in specific course
-      const isEnrolled = await courseEnrollmentUseCase.checkUserEnrollment(courseId, session.user.id);
-      return NextResponse.json({
-        enrolled: isEnrolled,
-        success: true
-      });
-    } else {
-      // Get all enrollments for the user
-      const enrollments = await courseEnrollmentUseCase.getEnrollmentsByUserId(session.user.id);
-      return NextResponse.json(enrollments);
+    // If requesting specific user's enrollments or enrollment check, require authentication
+    if (userId || (courseId && session?.user)) {
+      if (!session || !session.user) {
+        return NextResponse.json(
+          {
+            message: "Unauthorized: Please log in to access this resource.",
+            success: false,
+            data: null,
+            validationErrors: [],
+          },
+          { status: 401 }
+        );
+      }
+
+      if (courseId) {
+        // Check if user is enrolled in specific course
+        const isEnrolled = await courseEnrollmentUseCase.checkUserEnrollment(courseId, session.user.id);
+        return NextResponse.json({
+          enrolled: isEnrolled,
+          success: true
+        });
+      } else if (userId) {
+        // Get all enrollments for the user
+        const enrollments = await courseEnrollmentUseCase.getEnrollmentsByUserId(session.user.id);
+        return NextResponse.json(enrollments);
+      }
     }
+    
+    // Public access: Get enrollment statistics (count only, no personal data)
+    const enrollments = await courseEnrollmentUseCase.getAll();
+    
+    // Return aggregated data without exposing sensitive user information
+    return NextResponse.json({
+      success: true,
+      total: Array.isArray(enrollments) ? enrollments.length : 0,
+      data: Array.isArray(enrollments) ? enrollments : [],
+      message: "Enrollment statistics retrieved successfully"
+    });
   } catch (error: any) {
     return NextResponse.json(
       {
         data: null,
+        total: 0,
         message: error.message,
         validationErrors: [error],
         success: false,

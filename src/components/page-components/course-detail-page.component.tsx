@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import BannerComponent from "@components/banner/banner.component";
 import { AppFooter } from "@components/footer/footer";
 import { AppFootnote } from "@components/footnote/footnote";
@@ -441,17 +442,18 @@ return (
 
 {course.imageUrl && (
                     <div className="mb-6">
-                      <img
-                        src={course.imageUrl}
-                        alt={course.title}
-                        style={{
-                          width: "100%",
-                          height: "400px",
-                          objectFit: "cover",
-                          borderRadius: "12px",
-                          boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
-                        }}
-                      />
+                      <div style={{ position: 'relative', width: '100%', height: 400 }}>
+                        <Image
+                          src={course.imageUrl}
+                          alt={`${course.title} - Course details`}
+                          fill
+                          style={{
+                            objectFit: "cover",
+                            borderRadius: "12px",
+                            boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
+                          }}
+                        />
+                      </div>
                     </div>
                   )}
 

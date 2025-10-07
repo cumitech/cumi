@@ -205,6 +205,8 @@ return (
               </Title>
               <Link href="/login">Login</Link>
               <Link href="/register">Register</Link>
+              <Link href="/terms-of-use">Terms of Use</Link>
+              <Link href="/privacy-policy">Privacy Policy</Link>
               {/* <Link href="/dashboard">
                 <DashboardOutlined style={{ marginRight: '6px' }} />
                 Dashboard

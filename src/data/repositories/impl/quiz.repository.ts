@@ -79,8 +79,23 @@ export class QuizRepository implements IQuizRepository {
 
   async findByModuleId(moduleId: string): Promise<InstanceType<typeof Quiz>[]> {
     try {
-      const quizes = await Quiz.findAll({
+      // Quizzes are linked to lessons, not directly to modules
+      // We need to get all lessons for this module first, then get quizzes for those lessons
+      const { Lesson } = require('../../entities/index');
+      const lessons = await Lesson.findAll({
         where: { moduleId },
+        attributes: ['id'],
+      });
+      
+      if (!lessons || lessons.length === 0) {
+        return [];
+      }
+      
+      const lessonIds = lessons.map((lesson: any) => lesson.id);
+      const quizes = await Quiz.findAll({
+        where: { 
+          lessonId: lessonIds 
+        },
         order: [['quiz_order', 'ASC']],
       });
       return quizes;
@@ -91,8 +106,23 @@ export class QuizRepository implements IQuizRepository {
 
   async findByCourseId(courseId: string): Promise<InstanceType<typeof Quiz>[]> {
     try {
-      const quizes = await Quiz.findAll({
+      // Quizzes are linked to lessons, not directly to courses
+      // We need to get all lessons for this course first, then get quizzes for those lessons
+      const { Lesson } = require('../../entities/index');
+      const lessons = await Lesson.findAll({
         where: { courseId },
+        attributes: ['id'],
+      });
+      
+      if (!lessons || lessons.length === 0) {
+        return [];
+      }
+      
+      const lessonIds = lessons.map((lesson: any) => lesson.id);
+      const quizes = await Quiz.findAll({
+        where: { 
+          lessonId: lessonIds 
+        },
         order: [['quiz_order', 'ASC']],
       });
       return quizes;

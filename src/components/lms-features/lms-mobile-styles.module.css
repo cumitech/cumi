@@ -1,0 +1,880 @@
+/* Mobile-First Responsive Styles for LMS Components */
+/* Optimized for mobile with content prioritization */
+
+/* ===== VISIBILITY UTILITIES ===== */
+.hideOnMobile {
+    display: none !important;
+}
+
+@media (min-width: 768px) {
+    .hideOnMobile {
+        display: block !important;
+    }
+}
+
+.showOnMobileOnly {
+    display: block !important;
+}
+
+@media (min-width: 768px) {
+    .showOnMobileOnly {
+        display: none !important;
+    }
+}
+
+/* ===== SECTION LAYOUT ===== */
+.lmsSection {
+    padding: 24px 0;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+@media (min-width: 640px) {
+    .lmsSection {
+        padding: 40px 0;
+    }
+}
+
+@media (min-width: 768px) {
+    .lmsSection {
+        padding: 56px 0;
+    }
+}
+
+@media (min-width: 1024px) {
+    .lmsSection {
+        padding: 80px 0;
+    }
+}
+
+/* ===== CONTAINER ===== */
+.lmsContainer {
+    padding: 0 16px;
+    max-width: 100%;
+}
+
+@media (min-width: 768px) {
+    .lmsContainer {
+        padding: 0 24px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .lmsContainer {
+        padding: 0 32px;
+    }
+}
+
+/* ===== TYPOGRAPHY ===== */
+.lmsMainTitle {
+    font-size: 1.625rem;
+    line-height: 1.2;
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+@media (min-width: 640px) {
+    .lmsMainTitle {
+        font-size: 2rem;
+        margin-bottom: 16px;
+    }
+}
+
+@media (min-width: 768px) {
+    .lmsMainTitle {
+        font-size: 2.25rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .lmsMainTitle {
+        font-size: 2.5rem;
+    }
+}
+
+.lmsSubtitle {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+@media (min-width: 640px) {
+    .lmsSubtitle {
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 24px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .lmsSubtitle {
+        font-size: 1.125rem;
+        margin-bottom: 32px;
+    }
+}
+
+.lmsSectionTitle {
+    font-size: 1.375rem;
+    line-height: 1.3;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+@media (min-width: 640px) {
+    .lmsSectionTitle {
+        font-size: 1.5rem;
+        margin-bottom: 24px;
+    }
+}
+
+@media (min-width: 768px) {
+    .lmsSectionTitle {
+        font-size: 1.75rem;
+        margin-bottom: 32px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .lmsSectionTitle {
+        font-size: 2rem;
+        margin-bottom: 40px;
+    }
+}
+
+/* ===== BUTTONS ===== */
+.buttonWrapper {
+    width: 100%;
+    max-width: 100%;
+}
+
+@media (min-width: 640px) {
+    .buttonWrapper {
+        max-width: 300px;
+    }
+}
+
+@media (min-width: 768px) {
+    .buttonWrapper {
+        width: auto;
+        max-width: none;
+    }
+}
+
+.button {
+    height: 48px;
+    font-size: 14px;
+    padding: 0 24px !important;
+    width: 100%;
+    font-weight: 600;
+}
+
+.buttonException {
+    display: none !important;
+}
+
+@media (min-width: 768px) {
+    .button {
+        font-size: 15px;
+        padding: 0 32px !important;
+
+    }
+
+    .buttonException {
+        display: block !important;
+    }
+}
+
+.buttonLarge {
+    height: 50px;
+    font-size: 15px;
+    padding: 0 28px !important;
+    width: 100%;
+    font-weight: 600;
+}
+
+@media (min-width: 768px) {
+    .buttonLarge {
+        height: 52px;
+        font-size: 16px;
+        padding: 0 40px !important;
+    }
+}
+
+/* ===== BUTTON SPACE ===== */
+.buttonSpace {
+    width: 100%;
+    justify-content: center;
+    gap: 12px;
+    flex-direction: column;
+}
+
+@media (min-width: 640px) {
+    .buttonSpace {
+        flex-direction: row;
+        gap: 16px;
+    }
+}
+
+/* ===== STAT CARDS ===== */
+.statCard {
+    padding: 16px 12px !important;
+    min-height: 120px;
+}
+
+@media (min-width: 640px) {
+    .statCard {
+        padding: 20px 14px !important;
+        min-height: 140px;
+    }
+}
+
+@media (min-width: 768px) {
+    .statCard {
+        padding: 24px 16px !important;
+        min-height: 160px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .statCard {
+        padding: 32px 20px !important;
+        min-height: 180px;
+    }
+}
+
+.statIcon {
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+@media (min-width: 768px) {
+    .statIcon {
+        font-size: 36px;
+        margin-bottom: 12px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .statIcon {
+        font-size: 40px;
+        margin-bottom: 16px;
+    }
+}
+
+.statValue {
+    font-size: 20px;
+}
+
+@media (min-width: 768px) {
+    .statValue {
+        font-size: 28px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .statValue {
+        font-size: 32px;
+    }
+}
+
+.statLabel {
+    font-size: 11px;
+    margin-top: 4px;
+}
+
+@media (min-width: 640px) {
+    .statLabel {
+        font-size: 12px;
+    }
+}
+
+@media (min-width: 768px) {
+    .statLabel {
+        font-size: 13px;
+        margin-top: 6px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .statLabel {
+        font-size: 14px;
+        margin-top: 8px;
+    }
+}
+
+/* ===== FEATURE CARDS ===== */
+.featureCard {
+    padding: 20px !important;
+    margin-bottom: 0;
+}
+
+@media (min-width: 768px) {
+    .featureCard {
+        padding: 28px !important;
+    }
+}
+
+@media (min-width: 1024px) {
+    .featureCard {
+        padding: 32px !important;
+    }
+}
+
+.featureIcon {
+    font-size: 40px;
+    margin-bottom: 12px;
+}
+
+@media (min-width: 768px) {
+    .featureIcon {
+        font-size: 44px;
+        margin-bottom: 16px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .featureIcon {
+        font-size: 48px;
+        margin-bottom: 20px;
+    }
+}
+
+.featureTitle {
+    font-size: 1.0625rem;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+@media (min-width: 768px) {
+    .featureTitle {
+        font-size: 1.125rem;
+        margin-bottom: 12px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .featureTitle {
+        font-size: 1.25rem;
+    }
+}
+
+.featureDescription {
+    font-size: 13px;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+@media (min-width: 768px) {
+    .featureDescription {
+        font-size: 14px;
+        line-height: 1.6;
+        -webkit-line-clamp: 4;
+    }
+}
+
+/* ===== CTA CARD ===== */
+.ctaCard {
+    padding: 32px 20px !important;
+    border-radius: 16px;
+    margin: 0;
+}
+
+@media (min-width: 768px) {
+    .ctaCard {
+        padding: 40px 32px !important;
+        border-radius: 20px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .ctaCard {
+        padding: 48px 40px !important;
+        border-radius: 24px;
+    }
+}
+
+.ctaTitle {
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+@media (min-width: 768px) {
+    .ctaTitle {
+        font-size: 1.75rem;
+        margin-bottom: 16px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .ctaTitle {
+        font-size: 2rem;
+    }
+}
+
+.ctaDescription {
+    font-size: 0.9375rem;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+@media (min-width: 768px) {
+    .ctaDescription {
+        font-size: 1.0625rem;
+        margin-bottom: 28px;
+        line-height: 1.6;
+    }
+}
+
+@media (min-width: 1024px) {
+    .ctaDescription {
+        font-size: 1.125rem;
+        margin-bottom: 32px;
+    }
+}
+
+/* ===== MOBILE APP PHONE MOCKUP ===== */
+.phoneMockup {
+    max-width: 220px;
+    margin: 0 auto 20px;
+}
+
+@media (min-width: 640px) {
+    .phoneMockup {
+        max-width: 260px;
+        margin: 0 auto;
+    }
+}
+
+@media (min-width: 768px) {
+    .phoneMockup {
+        max-width: 300px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .phoneMockup {
+        max-width: 380px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .phoneMockup {
+        max-width: 400px;
+    }
+}
+
+.phoneContent {
+    padding: 28px 14px;
+}
+
+@media (min-width: 768px) {
+    .phoneContent {
+        padding: 36px 18px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .phoneContent {
+        padding: 40px 20px;
+    }
+}
+
+.mobileIcon {
+    font-size: 72px;
+}
+
+@media (min-width: 640px) {
+    .mobileIcon {
+        font-size: 80px;
+    }
+}
+
+@media (min-width: 768px) {
+    .mobileIcon {
+        font-size: 96px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .mobileIcon {
+        font-size: 112px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .mobileIcon {
+        font-size: 120px;
+    }
+}
+
+/* ===== FLOATING ICONS ===== */
+.floatingIcon {
+    width: 48px;
+    height: 48px;
+    font-size: 22px;
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .floatingIcon {
+        display: flex;
+        width: 56px;
+        height: 56px;
+        font-size: 26px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .floatingIcon {
+        width: 60px;
+        height: 60px;
+        font-size: 28px;
+    }
+}
+
+/* ===== APP FEATURES GRID ===== */
+.appFeaturesGrid {
+    gap: 12px;
+}
+
+@media (min-width: 768px) {
+    .appFeaturesGrid {
+        gap: 14px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .appFeaturesGrid {
+        gap: 16px;
+    }
+}
+
+.appFeatureItem {
+    gap: 8px;
+}
+
+@media (min-width: 768px) {
+    .appFeatureItem {
+        gap: 10px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .appFeatureItem {
+        gap: 12px;
+    }
+}
+
+/* Hide last 2 features on mobile for cleaner look */
+.appFeatureItem:nth-child(n + 5) {
+    display: none;
+}
+
+@media (min-width: 640px) {
+    .appFeatureItem:nth-child(n + 5) {
+        display: flex;
+    }
+}
+
+/* ===== REVENUE FEATURES ===== */
+.revenueIcon {
+    width: 56px;
+    height: 56px;
+    font-size: 26px;
+    margin-bottom: 12px;
+}
+
+@media (min-width: 768px) {
+    .revenueIcon {
+        width: 68px;
+        height: 68px;
+        font-size: 32px;
+        margin-bottom: 16px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .revenueIcon {
+        width: 76px;
+        height: 76px;
+        font-size: 34px;
+        margin-bottom: 18px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .revenueIcon {
+        width: 80px;
+        height: 80px;
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+}
+
+.revenueTitle {
+    font-size: 0.875rem;
+    margin-bottom: 6px;
+}
+
+@media (min-width: 768px) {
+    .revenueTitle {
+        font-size: 0.9375rem;
+        margin-bottom: 8px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .revenueTitle {
+        font-size: 1rem;
+    }
+}
+
+.revenueDescription {
+    font-size: 11px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+@media (min-width: 768px) {
+    .revenueDescription {
+        font-size: 12px;
+        line-height: 1.5;
+    }
+}
+
+@media (min-width: 1024px) {
+    .revenueDescription {
+        font-size: 13px;
+    }
+}
+
+/* ===== CONTENT TYPE CARDS ===== */
+.contentCard {
+    padding: 20px !important;
+    min-height: auto;
+    margin-bottom: 0;
+}
+
+@media (min-width: 768px) {
+    .contentCard {
+        padding: 28px !important;
+        min-height: 380px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .contentCard {
+        padding: 32px !important;
+        min-height: 400px;
+    }
+}
+
+.contentIconBox {
+    width: 56px;
+    height: 56px;
+    font-size: 28px;
+    margin-bottom: 14px;
+}
+
+@media (min-width: 768px) {
+    .contentIconBox {
+        width: 60px;
+        height: 60px;
+        font-size: 30px;
+        margin-bottom: 18px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .contentIconBox {
+        width: 64px;
+        height: 64px;
+        font-size: 32px;
+        margin-bottom: 20px;
+    }
+}
+
+.contentTitle {
+    font-size: 1.0625rem;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+@media (min-width: 768px) {
+    .contentTitle {
+        font-size: 1.125rem;
+        margin-bottom: 12px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .contentTitle {
+        font-size: 1.25rem;
+    }
+}
+
+.contentDescription {
+    font-size: 12.5px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+}
+
+@media (min-width: 768px) {
+    .contentDescription {
+        font-size: 13px;
+        margin-bottom: 16px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .contentDescription {
+        font-size: 14px;
+    }
+}
+
+.contentBenefits {
+    margin-bottom: 16px;
+}
+
+/* Hide last 2 benefits on mobile */
+.contentBenefits>div:nth-child(n + 3) {
+    display: none;
+}
+
+@media (min-width: 640px) {
+    .contentBenefits>div:nth-child(n + 3) {
+        display: flex;
+    }
+}
+
+
+/* ===== SECTION MARGINS ===== */
+.sectionMarginBottom {
+    margin-bottom: 32px;
+}
+
+@media (min-width: 640px) {
+    .sectionMarginBottom {
+        margin-bottom: 40px;
+    }
+}
+
+@media (min-width: 768px) {
+    .sectionMarginBottom {
+        margin-bottom: 48px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .sectionMarginBottom {
+        margin-bottom: 60px;
+    }
+}
+
+/* ===== HEADER MARGIN ===== */
+.headerMargin {
+    margin-bottom: 24px;
+}
+
+@media (min-width: 640px) {
+    .headerMargin {
+        margin-bottom: 32px;
+    }
+}
+
+@media (min-width: 768px) {
+    .headerMargin {
+        margin-bottom: 36px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .headerMargin {
+        margin-bottom: 48px;
+    }
+}
+
+/* ===== MOBILE CARD OPTIMIZATION ===== */
+.mobileCard {
+    border-radius: 12px;
+}
+
+@media (min-width: 768px) {
+    .mobileCard {
+        border-radius: 16px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .mobileCard {
+        border-radius: 20px;
+    }
+}
+
+/* ===== FEATURE LIMIT ON MOBILE ===== */
+/* Show only 3 features on mobile, all on tablet+ */
+.featureCol:nth-child(n + 4) {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .featureCol:nth-child(n + 4) {
+        display: block;
+    }
+}
+
+/* ===== TEXT TRUNCATION ===== */
+.truncateText {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (min-width: 768px) {
+    .truncateText {
+        -webkit-line-clamp: 3;
+    }
+}
+
+/* ===== MOBILE SPECIFIC SPACING ===== */
+.mobileSpacing {
+    padding: 16px;
+}
+
+@media (min-width: 768px) {
+    .mobileSpacing {
+        padding: 24px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .mobileSpacing {
+        padding: 32px;
+    }
+}
+
+/* ===== GRID OPTIMIZATIONS ===== */
+.mobileGrid {
+    gap: 12px;
+}
+
+@media (min-width: 768px) {
+    .mobileGrid {
+        gap: 16px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .mobileGrid {
+        gap: 24px;
+    }
+}

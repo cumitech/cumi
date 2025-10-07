@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import PageBreadCrumbs from "@components/shared/page-breadcrumb/page-breadcrumb.component";
 import { 
   Card, 
@@ -88,11 +89,14 @@ export default function StudentCourseBrowser() {
         style={{ borderRadius: 12, height: "100%" }}
         cover={
           course.imageUrl ? (
-            <img
-              alt={course.title}
-              src={course.imageUrl}
-              style={{ height: 200, objectFit: "cover" }}
-            />
+            <div style={{ position: 'relative', height: 200, width: '100%' }}>
+              <Image
+                alt={`${course.title} - Course image`}
+                src={course.imageUrl}
+                fill
+                style={{ objectFit: "cover" }}
+              />
+            </div>
           ) : (
             <div style={{ height: 200, background: "#f0f0f0", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <BookOutlined style={{ fontSize: 48, color: "#ccc" }} />

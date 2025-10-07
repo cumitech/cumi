@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import OpportunitiesPageComponent from "@components/page-components/opportunities-page.component";
-import { generatePageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
+import { generatePageMetadata, defaultImages } from "../../lib/seo";
 
 export const metadata: Metadata = generatePageMetadata({
   title: "Opportunities - CUMI Career Opportunities & Job Openings",

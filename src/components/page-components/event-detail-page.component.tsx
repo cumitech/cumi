@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import BannerComponent from "@components/banner/banner.component";
 import { AppFooter } from "@components/footer/footer";
 import { AppFootnote } from "@components/footnote/footnote";
@@ -275,12 +276,11 @@ return (
                                 overflow: "hidden",
                               }}
                             >
-                              <img
+                              <Image
                                 src={event.imageUrl}
-                                alt={event.title}
+                                alt={`${event.title} - Event details`}
+                                fill
                                 style={{
-                                  width: "100%",
-                                  height: "100%",
                                   objectFit: "cover",
                                   transition: "transform 0.5s ease",
                                 }}

@@ -35,7 +35,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const tags = tagsResponse ? await tagsResponse.json().catch(() => []) : [];
     const services = servicesResponse ? await servicesResponse.json().catch(() => []) : [];
 
-    // Generate dynamic URLs
+    // Generate dynamic URLs with enhanced metadata
     const postsData = posts?.data?.map((post: any) => ({
       url: `${baseUrl}/blog_posts/${post?.slug}`,
       lastModified: new Date(post?.updatedAt || post?.createdAt),
@@ -43,53 +43,53 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
       images: post?.imageUrl ? [
         {
-          url: `${baseUrl}/uploads/posts/${post?.imageUrl}`,
-          alt: post?.title,
+          url: post?.imageUrl.startsWith('http') ? post?.imageUrl : `${baseUrl}/uploads/posts/${post?.imageUrl}`,
+          alt: post?.title || 'Blog post image',
         },
       ] : [],
     })) || [];
 
     const projectsData = projects?.data?.map((project: any) => ({
-      url: `${baseUrl}/projects/${project?.id}`,
+      url: `${baseUrl}/projects/${project?.slug || project?.id}`,
       lastModified: new Date(project?.updatedAt || project?.createdAt),
       changeFrequency: 'weekly' as const,
       priority: 0.8,
       images: project?.imageUrl ? [
         {
-          url: `${baseUrl}/uploads/projects/${project?.imageUrl}`,
-          alt: project?.title,
+          url: project?.imageUrl.startsWith('http') ? project?.imageUrl : `${baseUrl}/uploads/projects/${project?.imageUrl}`,
+          alt: project?.title || 'Project image',
         },
       ] : [],
     })) || [];
 
     const eventsData = events?.data?.map((event: any) => ({
-      url: `${baseUrl}/events/${event?.id}`,
+      url: `${baseUrl}/events/${event?.slug || event?.id}`,
       lastModified: new Date(event?.updatedAt || event?.createdAt),
       changeFrequency: 'weekly' as const,
       priority: 0.7,
       images: event?.imageUrl ? [
         {
-          url: `${baseUrl}/uploads/events/${event?.imageUrl}`,
-          alt: event?.title,
+          url: event?.imageUrl.startsWith('http') ? event?.imageUrl : `${baseUrl}/uploads/events/${event?.imageUrl}`,
+          alt: event?.title || 'Event image',
         },
       ] : [],
     })) || [];
 
     const coursesData = courses?.data?.map((course: any) => ({
-      url: `${baseUrl}/courses/${course?.id}`,
+      url: `${baseUrl}/courses/${course?.slug || course?.id}`,
       lastModified: new Date(course?.updatedAt || course?.createdAt),
       changeFrequency: 'weekly' as const,
       priority: 0.8,
       images: course?.imageUrl ? [
         {
-          url: `${baseUrl}/uploads/courses/${course?.imageUrl}`,
-          alt: course?.title,
+          url: course?.imageUrl.startsWith('http') ? course?.imageUrl : `${baseUrl}/uploads/courses/${course?.imageUrl}`,
+          alt: course?.title || 'Course image',
         },
       ] : [],
     })) || [];
 
     const opportunitiesData = opportunities?.data?.map((opportunity: any) => ({
-      url: `${baseUrl}/opportunities/${opportunity?.id}`,
+      url: `${baseUrl}/opportunities/${opportunity?.slug || opportunity?.id}`,
       lastModified: new Date(opportunity?.updatedAt || opportunity?.createdAt),
       changeFrequency: 'weekly' as const,
       priority: 0.7,
@@ -102,8 +102,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
       images: service?.imageUrl ? [
         {
-          url: `${baseUrl}/uploads/services/${service?.imageUrl}`,
-          alt: service?.title,
+          url: service?.imageUrl.startsWith('http') ? service?.imageUrl : `${baseUrl}/uploads/services/${service?.imageUrl}`,
+          alt: service?.title || 'Service image',
         },
       ] : [],
     })) || [];
@@ -122,7 +122,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6,
     })) || [];
 
-    // Static URLs
+    // Enhanced static URLs with better organization
     const staticUrls: MetadataRoute.Sitemap = [
       {
         url: baseUrl,
@@ -140,7 +140,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         url: `${baseUrl}/our_services`,
         lastModified: new Date(),
         changeFrequency: 'monthly',
-        priority: 0.8,
+        priority: 0.9,
       },
       {
         url: `${baseUrl}/contact_us`,
@@ -177,6 +177,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         lastModified: new Date(),
         changeFrequency: 'weekly',
         priority: 0.7,
+      },
+      {
+        url: `${baseUrl}/partners`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.6,
       },
       {
         url: `${baseUrl}/categories`,
@@ -214,6 +220,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: 'yearly',
         priority: 0.3,
       },
+      {
+        url: `${baseUrl}/forgot-password`,
+        lastModified: new Date(),
+        changeFrequency: 'yearly',
+        priority: 0.2,
+      },
     ];
 
     // Combine all URLs
@@ -231,7 +243,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   } catch (error) {
     console.error('Error generating sitemap:', error);
     
-    // Fallback to static URLs only
+    // Enhanced fallback to static URLs only
     return [
       {
         url: baseUrl,
@@ -249,7 +261,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         url: `${baseUrl}/our_services`,
         lastModified: new Date(),
         changeFrequency: 'monthly',
-        priority: 0.8,
+        priority: 0.9,
       },
       {
         url: `${baseUrl}/contact_us`,
@@ -286,6 +298,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         lastModified: new Date(),
         changeFrequency: 'weekly',
         priority: 0.7,
+      },
+      {
+        url: `${baseUrl}/partners`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.6,
       },
       {
         url: `${baseUrl}/categories`,

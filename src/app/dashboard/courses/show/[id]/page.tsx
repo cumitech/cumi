@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import EnhancedBreadcrumb from "@components/shared/enhanced-breadcrumb/enhanced-breadcrumb.component";
 import { useShow } from "@refinedev/core";
 import {
@@ -644,16 +645,17 @@ export default function CourseShow() {
                 {/* Course Image - First */}
                 <Col xs={24} md={8}>
                   {course?.imageUrl && (
-                    <img
-                      src={course.imageUrl}
-                      alt={course.title}
-                      style={{
-                        width: "100%",
-                        height: 200,
-                        objectFit: "cover",
-                        borderRadius: 8,
-                      }}
-                    />
+                    <div style={{ position: 'relative', width: "100%", height: 200 }}>
+                      <Image
+                        src={course.imageUrl}
+                        alt={`${course.title} - Course image`}
+                        fill
+                        style={{
+                          objectFit: "cover",
+                          borderRadius: 8,
+                        }}
+                      />
+                    </div>
                   )}
                 </Col>
                 {/* Course Details */}

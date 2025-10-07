@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import BannerComponent from "@components/banner/banner.component";
 import { AppFooter } from "@components/footer/footer";
 import { AppFootnote } from "@components/footnote/footnote";
@@ -157,12 +158,15 @@ return (
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="text-center"
               >
-                <img
-                  className="w-100 img-fluid rounded-3"
-                  style={{ maxHeight: 350 }}
-                  src="/img/desola-lanre-ologun-IgUR1iX0mqM-unsplash.jpg"
-                  alt="Benefits"
-                />
+                <div style={{ position: 'relative', width: '100%', height: 350 }}>
+                  <Image
+                    className="rounded-3"
+                    fill
+                    src="/img/desola-lanre-ologun-IgUR1iX0mqM-unsplash.jpg"
+                    alt="CUMI professional services showcase"
+                    style={{ objectFit: 'cover' }}
+                  />
+                </div>
               </motion.div>
             </Col>
           </Row>

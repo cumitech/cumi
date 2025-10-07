@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import {
@@ -164,16 +165,17 @@ export default function CourseReviewsPage() {
           <Card style={{ borderRadius: "12px" }}>
             <Row gutter={24} align="middle">
               <Col xs={24} md={6}>
-                <img
-                  src={course.imageUrl || "/api/placeholder/200/150"}
-                  alt={course.title}
-                  style={{
-                    width: "100%",
-                    borderRadius: "8px",
-                    aspectRatio: "4/3",
-                    objectFit: "cover",
-                  }}
-                />
+                <div style={{ position: 'relative', width: "100%", paddingBottom: '75%' }}>
+                  <Image
+                    src={course.imageUrl || "/api/placeholder/200/150"}
+                    alt={`${course.title} - Course image`}
+                    fill
+                    style={{
+                      borderRadius: "8px",
+                      objectFit: "cover",
+                    }}
+                  />
+                </div>
               </Col>
               <Col xs={24} md={18}>
                 <Title level={2} style={{ margin: 0, marginBottom: "8px" }}>

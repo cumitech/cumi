@@ -1,5 +1,6 @@
 "use client";
 import React, { Suspense } from "react";
+import Image from "next/image";
 import { Typography, Row, Col, Card, Button, Divider, Space, Avatar, Statistic, Badge, Tag } from "antd";
 import { RocketOutlined, CodeOutlined, TeamOutlined, BulbOutlined, HeartOutlined, TrophyOutlined, GlobalOutlined, ThunderboltOutlined, CheckCircleOutlined, StarOutlined, ArrowRightOutlined, MailOutlined, PhoneOutlined, EnvironmentOutlined, LinkedinOutlined, GithubOutlined, TwitterOutlined } from "@ant-design/icons";
 import { motion } from "framer-motion";
@@ -193,11 +194,15 @@ return (
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6 }}
               >
-                <img
-                  className="w-100 img-fluid rounded-3 shadow-lg"
-                  src="/img/desola-lanre-ologun-IgUR1iX0mqM-unsplash.jpg"
-                  alt="Our Team"
-                />
+                <div style={{ position: 'relative', width: '100%', height: '400px' }}>
+                  <Image
+                    className="rounded-3 shadow-lg"
+                    src="/img/desola-lanre-ologun-IgUR1iX0mqM-unsplash.jpg"
+                    alt="CUMI team working on innovative software development projects"
+                    fill
+                    style={{ objectFit: 'cover' }}
+                  />
+                </div>
               </motion.div>
             </Col>
             <Col xs={24} lg={12}>

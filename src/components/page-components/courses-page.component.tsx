@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import React, { useState, useEffect, useCallback } from "react";
 import { Card, Row, Col, Typography, Space, Button, Tag, Input, Select, App, Empty, Spin } from "antd";
 import { CalendarOutlined, EnvironmentOutlined, EyeOutlined, SearchOutlined, FilterOutlined, BookOutlined } from "@ant-design/icons";
@@ -317,13 +318,12 @@ return (
                       overflow: "hidden",
                     }}
                     cover={
-                      <div style={{ position: "relative" }}>
-                        <img
+                      <div style={{ position: "relative", height: 200, width: '100%' }}>
+                        <Image
                           alt={course.title}
                           src={course.imageUrl || "/img/design-3.jpg"}
+                          fill
                           style={{
-                            width: "100%",
-                            height: 200,
                             objectFit: "cover",
                           }}
                         />

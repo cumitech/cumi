@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { Card, Tag, Tooltip, Typography, Button, Space, Avatar } from "antd";
 import { IProject } from "@domain/models/project.model";
 import Link from "next/link";
@@ -46,11 +47,13 @@ return (
       <Card
         hoverable
         cover={
-          <div className="position-relative overflow-hidden">
-            <img
+          <div className="position-relative overflow-hidden" style={{ height: 250 }}>
+            <Image
               alt={project.title}
               src={project.imageUrl}
+              fill
               className={`card-img-top ${styles.projectImage}`}
+              style={{ objectFit: 'cover' }}
             />
             <div className="position-absolute top-0 end-0 m-3">
               <Tag 

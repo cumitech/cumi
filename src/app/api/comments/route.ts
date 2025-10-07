@@ -94,7 +94,6 @@ export async function POST(request: NextRequest) {
     const userId = session.user.id;
 
     if (validationErrors.length > 0) {
-      );
       return NextResponse.json(
         {
           validationErrors: displayValidationErrors(validationErrors),

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { 
   Card, 
@@ -310,11 +311,14 @@ return (
       <Card style={{ marginBottom: 24 }}>
         <Row gutter={[24, 24]}>
           <Col xs={24} md={12}>
-            <img
-              src={course.thumbnail}
-              alt={course.title}
-              style={{ width: '100%', height: 300, objectFit: 'cover', borderRadius: 8 }}
-            />
+            <div style={{ position: 'relative', width: '100%', height: 300 }}>
+              <Image
+                src={course.thumbnail}
+                alt={`${course.title} - Course thumbnail`}
+                fill
+                style={{ objectFit: 'cover', borderRadius: 8 }}
+              />
+            </div>
           </Col>
           <Col xs={24} md={12}>
             <Space direction="vertical" size="middle" style={{ width: '100%' }}>

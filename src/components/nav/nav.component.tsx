@@ -270,6 +270,7 @@ const navContent = (
                 { path: "/opportunities", label: t('nav.opportunities') },
                 { path: "/events", label: t('nav.events') },
                 { path: "/courses", label: t('nav.courses') },
+                { path: "/mobile-app", label: t('nav.mobile_app') },
                 { path: "/about_us", label: t('nav.about_us') },
                 { path: "/contact_us", label: t('nav.contact_us') },
               ].map(({ path, label }) => (

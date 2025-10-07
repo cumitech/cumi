@@ -28,13 +28,13 @@ export interface IUser {
   gender?: 'male' | 'female' | 'other' | 'prefer_not_to_say';
   accountStatus: 'active' | 'inactive' | 'suspended' | 'banned' | 'pending';
   emailVerifiedAt?: Date;
-  emailVerificationToken?: string;
-  passwordResetToken?: string;
+  emailVerificationToken?: string | null;
+  passwordResetToken?: string | null;
   passwordResetExpiresAt?: Date;
-  resetToken?: string;
+  resetToken?: string | null;
   resetTokenExpiry?: Date;
   twoFactorEnabled: boolean;
-  twoFactorSecret?: string;
+  twoFactorSecret?: string | null;
   lastLoginAt?: Date;
   lastActiveAt?: Date;
   loginAttempts: number;
@@ -43,11 +43,11 @@ export interface IUser {
   locale: string;
   notificationPreferences?: any;
   deletedAt?: Date;
-  deletedBy?: string;
+  deletedBy?: string | null;
   lastPasswordChange?: Date;
-  referralCode?: string;
-  referredBy?: string;
-  registrationIp?: string;
+  referralCode?: string | null;
+  referredBy?: string | null;
+  registrationIp?: string | null;
   emailNotifications: boolean;
   smsNotifications: boolean;
 
@@ -80,11 +80,11 @@ export const emptyUser: IUser = {
   gender: undefined,
   accountStatus: 'pending',
   emailVerifiedAt: undefined,
-  emailVerificationToken: "",
-  passwordResetToken: "",
+  emailVerificationToken: null,
+  passwordResetToken: null,
   passwordResetExpiresAt: undefined,
   twoFactorEnabled: false,
-  twoFactorSecret: "",
+  twoFactorSecret: null,
   lastLoginAt: undefined,
   lastActiveAt: undefined,
   loginAttempts: 0,
@@ -93,11 +93,11 @@ export const emptyUser: IUser = {
   locale: 'en',
   notificationPreferences: undefined,
   deletedAt: undefined,
-  deletedBy: "",
+  deletedBy: null,
   lastPasswordChange: undefined,
-  referralCode: "",
-  referredBy: "",
-  registrationIp: "",
+  referralCode: null,
+  referredBy: null,
+  registrationIp: null,
   emailNotifications: true,
   smsNotifications: false,
 };

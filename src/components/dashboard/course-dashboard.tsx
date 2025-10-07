@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { 
   Card, 
   Row, 
@@ -341,11 +342,12 @@ return (
                 hoverable
                 style={{ backgroundColor: 'white' }}
                 cover={
-                  <div style={{ position: 'relative' }}>
-                    <img
-                      alt={course.title}
+                  <div style={{ position: 'relative', height: 200, width: '100%' }}>
+                    <Image
+                      alt={`${course.title} - Course image`}
                       src={course.thumbnail}
-                      style={{ height: 200, objectFit: 'cover' }}
+                      fill
+                      style={{ objectFit: 'cover' }}
                     />
                     <div style={{
                       position: 'absolute',
@@ -437,11 +439,12 @@ return (
                 hoverable
                 style={{ backgroundColor: 'white' }}
                 cover={
-                  <div style={{ position: 'relative' }}>
-                    <img
-                      alt={course.title}
+                  <div style={{ position: 'relative', height: 200, width: '100%' }}>
+                    <Image
+                      alt={`${course.title} - Course image`}
                       src={course.thumbnail}
-                      style={{ height: 200, objectFit: 'cover' }}
+                      fill
+                      style={{ objectFit: 'cover' }}
                     />
                     <div style={{
                       position: 'absolute',
@@ -518,11 +521,14 @@ return (
           <div>
             <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
               <Col span={24}>
-                <img
-                  src={selectedCourse.thumbnail}
-                  alt={selectedCourse.title}
-                  style={{ width: '100%', height: 200, objectFit: 'cover', borderRadius: 8 }}
-                />
+                <div style={{ position: 'relative', width: '100%', height: 200 }}>
+                  <Image
+                    src={selectedCourse.thumbnail}
+                    alt={`${selectedCourse.title} - Course thumbnail`}
+                    fill
+                    style={{ objectFit: 'cover', borderRadius: 8 }}
+                  />
+                </div>
               </Col>
             </Row>
 

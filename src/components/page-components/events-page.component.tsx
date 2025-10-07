@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { Card, Row, Col, Typography, Space, Button, Tag, Input, Select, Empty, Spin, App } from "antd";
 import { CalendarOutlined, EnvironmentOutlined, EyeOutlined, SearchOutlined, FilterOutlined, TeamOutlined, RocketOutlined, FireOutlined, TrophyOutlined, ClockCircleOutlined } from "@ant-design/icons";
@@ -396,12 +397,11 @@ return (
                       styles={{ body: { padding: '24px' } }}
                       cover={
                         <div style={{ position: "relative", height: "220px", overflow: "hidden" }}>
-                          <img
+                          <Image
                             alt={event.title}
                             src={event.imageUrl || "/img/design-3.jpg"}
+                            fill
                             style={{
-                              width: "100%",
-                              height: "100%",
                               objectFit: "cover",
                               transition: "transform 0.5s ease",
                             }}

@@ -32,18 +32,18 @@ export const ServicesSection: React.FC<IServicesSectionProps> = ({
   const carouselRef = useRef<CarouselRef>(null);
   const [isMobile, setIsMobile] = useState(false);
 
-// Detect mobile/tablet screen size
+  // Detect mobile/tablet screen size
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 992); // <992px = mobile/tablet (show 1 card)
     };
 
-handleResize();
+    handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-if (isLoading) {
+  if (isLoading) {
     return (
       <div
         style={{
@@ -61,21 +61,21 @@ if (isLoading) {
     );
   }
 
-if (!services || services.length === 0) {
+  if (!services || services.length === 0) {
     return null;
   }
 
-// Group services based on screen size: 1 for mobile/tablet (<992px), 3 for desktop (≥992px)
+  // Group services based on screen size: 1 for mobile/tablet (<992px), 3 for desktop (≥992px)
   const servicesPerSlide = isMobile ? 1 : 3;
   const serviceSlides = [];
   for (let i = 0; i < services.length; i += servicesPerSlide) {
     serviceSlides.push(services.slice(i, i + servicesPerSlide));
   }
 
-const handlePrev = () => carouselRef.current?.prev();
+  const handlePrev = () => carouselRef.current?.prev();
   const handleNext = () => carouselRef.current?.next();
 
-return (
+  return (
     <section
       style={{
         padding: "80px 0",
@@ -84,7 +84,6 @@ return (
         overflow: "hidden",
       }}
     >
-      {}
       <div
         style={{
           position: "absolute",
@@ -98,11 +97,10 @@ return (
         }}
       />
 
-<div
+      <div
         className={`container bg-none`}
         style={{ position: "relative", zIndex: 1 }}
       >
-        {}
         <div style={{ textAlign: "center", marginBottom: "60px" }}>
           <Title
             level={2}
@@ -133,14 +131,12 @@ return (
           </Paragraph>
         </div>
 
-{}
         <div
           style={{
             position: "relative",
             padding: isMobile ? "0 32px" : "0 60px",
           }}
         >
-          {}
           {serviceSlides.length > 1 && (
             <>
               <Button
@@ -220,7 +216,7 @@ return (
             </>
           )}
 
-{}
+          {}
           <Carousel
             ref={carouselRef}
             dots={false}
@@ -263,7 +259,7 @@ return (
                           display: "flex",
                           flexDirection: "column",
                           height: "100%",
-                        }
+                        },
                       }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.transform = "translateY(-16px)";
@@ -321,7 +317,7 @@ return (
                         </div>
                       )}
 
-{}
+                      {}
                       <div
                         style={{
                           padding: "28px 24px",
@@ -355,7 +351,7 @@ return (
                           {service.description}
                         </Paragraph>
 
-{}
+                        {}
                         {service.items && (
                           <div style={{ marginBottom: "20px" }}>
                             {(Array.isArray(service.items)
@@ -389,7 +385,7 @@ return (
                           </div>
                         )}
 
-{}
+                        {}
                         <Link
                           href={`/our_services/${service.slug}`}
                           style={{ marginTop: "auto" }}
@@ -433,9 +429,8 @@ return (
           </Carousel>
         </div>
 
-{}
         {showViewAllButton && (
-          <div style={{ textAlign: "center", marginTop: "64px" }}>
+          <div style={{ textAlign: "center", marginTop: "10px" }}>
             <Link href="/our_services">
               <Button
                 size="large"
