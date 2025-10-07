@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { User } from '../../../../data/entities/index';
 import { verifyMobileToken } from '../../../../utils/mobile-auth';
 
+// Force dynamic rendering since we use request.headers
+export const dynamic = 'force-dynamic';
+
 export async function GET(req: NextRequest) {
   try {
     // Verify token and get user info

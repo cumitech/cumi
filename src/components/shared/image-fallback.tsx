@@ -14,10 +14,11 @@ useEffect(() => {
   }, [src]);
   const { width } = useWindowSize();
 
-return (
+  return (
     <Image
       {...rest}
       src={imgSrc}
+      alt={props.alt || ""}
       onError={() => {
         setImgSrc(fallback);
       }}

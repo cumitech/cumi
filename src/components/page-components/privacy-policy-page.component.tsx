@@ -4,7 +4,7 @@ import { AppNav } from "@components/nav/nav.component";
 import { AppFooter } from "@components/footer/footer";
 import { AppFootnote } from "@components/footnote/footnote";
 import { Typography, Card, Divider } from "antd";
-import { ShieldOutlined, CalendarOutlined } from "@ant-design/icons";
+import { SafetyOutlined, CalendarOutlined } from "@ant-design/icons";
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -35,7 +35,7 @@ export default function PrivacyPolicyPageComponent() {
               boxShadow: "0 4px 12px rgba(0, 0, 0, 0.05)",
               border: "1px solid rgba(0, 0, 0, 0.05)"
             }}>
-              <ShieldOutlined style={{ fontSize: "24px", color: "#22C55E" }} />
+              <SafetyOutlined style={{ fontSize: "24px", color: "#22C55E" }} />
               <span style={{ fontSize: "16px", fontWeight: "600", color: "#1e293b" }}>PRIVACY POLICY</span>
             </div>
             
@@ -246,7 +246,7 @@ export default function PrivacyPolicyPageComponent() {
 
               <div style={{ marginBottom: "48px" }}>
                 <Title level={2} style={{ color: "#1e293b", marginBottom: "16px" }}>
-                  9. Children's Privacy
+                  9. Children&apos;s Privacy
                 </Title>
                 <Paragraph style={{ fontSize: "16px", lineHeight: "1.7", color: "#374151" }}>
                   Our services are not intended for children under the age of 13. We do not knowingly 
@@ -265,7 +265,7 @@ export default function PrivacyPolicyPageComponent() {
                 <Paragraph style={{ fontSize: "16px", lineHeight: "1.7", color: "#374151" }}>
                   We may update this Privacy Policy from time to time. We will notify you of any 
                   material changes by posting the new Privacy Policy on this page and updating the 
-                  "Last Updated" date. We encourage you to review this policy periodically.
+                  &quot;Last Updated&quot; date. We encourage you to review this policy periodically.
                 </Paragraph>
               </div>
 

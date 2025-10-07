@@ -543,7 +543,7 @@ export default function MobileAppPageComponent() {
                 margin: "0 auto 48px",
                 fontWeight: "400"
               }}>
-                We're working hard to bring you the best mobile learning experience. 
+                We&apos;re working hard to bring you the best mobile learning experience. 
                 Join our waitlist to be the first to know when we launch!
               </p>
               

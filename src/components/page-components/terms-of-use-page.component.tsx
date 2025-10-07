@@ -105,8 +105,8 @@ export default function TermsOfUsePageComponent() {
                   1. Acceptance of Terms
                 </Title>
                 <Paragraph style={{ fontSize: "16px", lineHeight: "1.7", color: "#374151" }}>
-                  By accessing and using CUMI Technology's website, mobile applications, and services 
-                  (collectively, the "Service"), you accept and agree to be bound by the terms and 
+                  By accessing and using CUMI Technology&apos;s website, mobile applications, and services 
+                  (collectively, the &quot;Service&quot;), you accept and agree to be bound by the terms and 
                   provision of this agreement. If you do not agree to abide by the above, please do 
                   not use this service.
                 </Paragraph>
@@ -191,7 +191,7 @@ export default function TermsOfUsePageComponent() {
                 <Paragraph style={{ fontSize: "16px", lineHeight: "1.7", color: "#374151" }}>
                   For paid services, you agree to pay all fees as described on our website. Payments 
                   are processed securely through our payment partners. All fees are non-refundable 
-                  unless otherwise stated. We reserve the right to change our pricing with 30 days' 
+                  unless otherwise stated. We reserve the right to change our pricing with 30 days&apos; 
                   notice to existing subscribers.
                 </Paragraph>
               </div>
@@ -245,7 +245,7 @@ export default function TermsOfUsePageComponent() {
                 </Title>
                 <Paragraph style={{ fontSize: "16px", lineHeight: "1.7", color: "#374151" }}>
                   We reserve the right to modify or replace these Terms at any time. If a revision is 
-                  material, we will try to provide at least 30 days' notice prior to any new terms 
+                  material, we will try to provide at least 30 days&apos; notice prior to any new terms 
                   taking effect. What constitutes a material change will be determined at our sole 
                   discretion.
                 </Paragraph>

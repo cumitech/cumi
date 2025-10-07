@@ -4,6 +4,9 @@ import { User } from '../../../../data/entities/index';
 
 const JWT_SECRET = process.env.AUTH0_SECRET || process.env.NEXTAUTH_SECRET || 'your-secret-key';
 
+// Force dynamic rendering since we use request data
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: NextRequest) {
   try {
     const { refreshToken } = await req.json();

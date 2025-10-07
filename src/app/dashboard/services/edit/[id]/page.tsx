@@ -3,11 +3,17 @@
 import PageBreadCrumbs from "@components/shared/page-breadcrumb/page-breadcrumb.component";
 import ImageUploadField from "@components/shared/image-upload-field.component";
 import { Edit, useForm } from "@refinedev/antd";
-import { Form, Input, Select } from "antd";
+import { Form, Input, Select, message } from "antd";
 import { useEffect } from "react";
+import { useUpload } from "@hooks/shared/upload.hook";
 
 export default function ServiceEdit() {
   const { formProps, saveButtonProps, form, queryResult } = useForm({});
+  const { handleRemove } = useUpload({
+    maxSize: 5 * 1024 * 1024,
+    allowedTypes: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml'],
+    form: formProps.form,
+  });
 
   // Parse existing items data when form loads
   useEffect(() => {
@@ -35,6 +41,9 @@ export default function ServiceEdit() {
   }, [formProps.form]);
 
   const handleRemoveWithCleanup = async (file: any) => {
+    // Get the initial image URL from the query result
+    const initialImageUrl = queryResult?.data?.data?.imageUrl;
+    
     // If removing existing file, delete it from server
     if (file.url === initialImageUrl && initialImageUrl) {
       try {
