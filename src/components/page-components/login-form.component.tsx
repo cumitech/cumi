@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import {
   Button,
@@ -36,6 +36,7 @@ const { Title, Text } = Typography;
 
 export default function LoginFormComponent() {
   const router = useRouter();
+  const { update } = useSession();
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const { open } = useNotification();
@@ -51,8 +52,13 @@ try {
         redirect: false,
       });
 
-if (response?.ok) {
-        router.push("/"); // Redirect after successful login
+      if (response?.ok) {
+        // Update session to refresh authentication state
+        await update();
+        
+        // Force a page reload to ensure session is properly updated
+        window.location.href = "/";
+        
         open?.({
           type: "success",
           message: "Login Successful!",
@@ -313,7 +319,7 @@ return (
                     {}
                     <Button
                       icon={<SiGoogle style={{ fontSize: "20px" }} />}
-                      onClick={auth0SocialLogin.google}
+                      onClick={() => signIn("google", { callbackUrl: "/" })}
                       aria-label="Sign in with Google"
                       style={{
                         width: "100%",
@@ -344,8 +350,8 @@ return (
 {}
                     <Button
                       icon={<SiFacebook style={{ fontSize: "20px" }} />}
-                      onClick={auth0SocialLogin.facebook}
-                      aria-label="Sign in with Facebook"
+                      onClick={() => signIn("auth0", { callbackUrl: "/" })}
+                      aria-label="Sign in with Auth0 Universal Login"
                       style={{
                         width: "100%",
                         height: "50px",
@@ -369,7 +375,7 @@ return (
                         e.currentTarget.style.boxShadow = "none";
                       }}
                     >
-                      Continue with Facebook
+                      Continue with Auth0
                     </Button>
                   </Space>
                 </div>

@@ -36,7 +36,7 @@ return (
             animate={{ scale: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <Title level={1}>{pageTitle}</Title>
+            <Title level={2} style={{ fontSize: '2.2rem', fontWeight: '600' }}>{pageTitle}</Title>
             <Paragraph className="text-black-50 fs-5 mb-4">
               {t('banner.subtitle')}
             </Paragraph>
@@ -81,7 +81,7 @@ return (
               icon={<MailOutlined />}
               href="mailto:info@cumi.dev"
             >
-              {t('banner.contact_us')}
+              {t('banner.contact-us')}
             </Button>
           </div>
         </div>

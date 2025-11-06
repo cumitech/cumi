@@ -30,6 +30,8 @@ import {
   SearchAndFilterBar 
 } from "@components/shared";
 import { useTranslation } from "@contexts/translation.context";
+import Breadcrumb from "@components/breadcrumb/breadcrumb.component";
+import Pagination from "@components/pagination/pagination.component";
 
 const { Content } = Layout;
 const { Title, Text } = Typography;
@@ -40,6 +42,8 @@ export default function BlogPostsPageComponent() {
   const { t } = useTranslation();
   const [searchTitle, setSearchTitle] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<SortPostsType>();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
 const {
     data: postsResponse,
@@ -49,8 +53,8 @@ const {
   } = postAPI.useFetchAllPostsQuery({
     searchTitle: searchTitle,
     sortBy: sortOrder,
-    page: 1,
-    limit: 10,
+    page: currentPage,
+    limit: pageSize,
   });
 
 const posts = postsResponse || [];
@@ -79,8 +83,17 @@ return (
       <PageLayout
         showBanner={true}
         bannerTitle={t("blog.title")}
-        bannerBreadcrumbs={[{ label: t("blog.breadcrumb"), uri: "blog_posts" }]}
+        bannerBreadcrumbs={[{ label: t("blog.breadcrumb"), uri: "blog-posts" }]}
       >
+        {/* SEO Breadcrumb with Schema Markup */}
+        <div className="container py-3">
+          <Breadcrumb 
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'Blog Posts', href: '/blog-posts' }
+            ]}
+          />
+        </div>
 
 <div className="container py-5 mb-5">
         {error && <h1>{t("blog.something_wrong")}</h1>}
@@ -101,7 +114,7 @@ return (
           transition={{ duration: 0.5 }}
         >
           <Row gutter={[16, 16]} style={{ marginBottom: '2rem' }}>
-            <Col xs={24} sm={8}>
+            <Col xs={12} sm={8}>
               <Card
                 style={{
                   borderRadius: '16px',
@@ -119,7 +132,7 @@ return (
                 <Text style={{ color: '#4b5563', fontSize: '14px', fontWeight: 500 }}>Total Articles</Text>
               </Card>
             </Col>
-            <Col xs={24} sm={8}>
+            <Col xs={12} sm={8}>
               <Card
                 style={{
                   borderRadius: '16px',
@@ -137,7 +150,7 @@ return (
                 <Text style={{ color: '#4b5563', fontSize: '14px', fontWeight: 500 }}>Categories</Text>
               </Card>
             </Col>
-            <Col xs={24} sm={8}>
+            <Col xs={12} sm={8}>
               <Card
                 style={{
                   borderRadius: '16px',
@@ -305,6 +318,21 @@ return (
                       </Col>
                     ))}
                   </Row>
+                  
+                  {/* SEO Pagination with proper attributes */}
+                  {posts && posts.length > 0 && (
+                    <div style={{ marginTop: '2rem', marginBottom: '2rem' }}>
+                      <Pagination
+                        currentPage={currentPage}
+                        totalPages={Math.ceil((posts.length || 0) / pageSize)}
+                        baseUrl="/blog-posts"
+                        searchParams={{
+                          search: searchTitle,
+                          sort: sortOrder || '',
+                        }}
+                      />
+                    </div>
+                  )}
                 </motion.div>
               </div>
               <div className="col-12 col-md-4">

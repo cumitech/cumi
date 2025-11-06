@@ -7,10 +7,15 @@ declare module "next-auth" {
       name: string;
       email: string;
       image: string;
-      role: string; // ✅ Add the role property
+      role: string;
+      accountStatus: string; // ✅ Add the accountStatus property
     };
   }
   interface JWT {
-    role: string; // ✅ Ensure role exists in JWT type
+    id: string;
+    name: string;
+    email: string;
+    role: string;
+    accountStatus: string; // ✅ Add the accountStatus property
   }
 }

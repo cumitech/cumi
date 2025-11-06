@@ -5,6 +5,13 @@ export const postInteractionAPI = baseAPI.injectEndpoints({
   endpoints: (build) => ({
     getPostStats: build.query<IPostInteractionStats, { postId: string; userId?: string }>({
       query: ({ postId, userId }) => `/posts/interactions/stats?postId=${postId}&userId=${userId || ''}`,
+      transformResponse: (response: any) => {
+        // Handle the API response structure
+        if (response && response.success && response.data) {
+          return response.data;
+        }
+        return response || { likesCount: 0, dislikesCount: 0, userInteraction: null };
+      },
       providesTags: (result, error, { postId }) => [
         { type: "PostInteraction", id: postId },
         { type: "PostInteraction", id: "LIST" },
@@ -17,6 +24,13 @@ export const postInteractionAPI = baseAPI.injectEndpoints({
         method: "POST",
         body: { postId, action },
       }),
+      transformResponse: (response: any) => {
+        // Handle the API response structure
+        if (response && response.success && response.data) {
+          return response.data;
+        }
+        return response || { likesCount: 0, dislikesCount: 0, userInteraction: null };
+      },
       invalidatesTags: (result, error, { postId }) => [
         { type: "PostInteraction", id: postId },
         { type: "PostInteraction", id: "LIST" },

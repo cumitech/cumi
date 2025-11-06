@@ -23,7 +23,7 @@ const FeatureSection = () => {
       <section className={`section ${styles.section}`}>
         <div className="container">
           <div className={`titleHolder ${styles.headerCp}`}>
-            <h1 className={styles.heading}>{t("features.title")}</h1>
+            <h2 className={styles.heading}>{t("features.title")}</h2>
             <p>{t("features.subtitle")}</p>
           </div>
 
@@ -38,9 +38,9 @@ const FeatureSection = () => {
                 className={styles.content_group_image_1}
               />
               <div className={styles.content_group_1_text}>
-                <h1 className={styles.content_group_heading}>
+                <h3 className={styles.content_group_heading}>
                   {t("features.custom_solutions.title")}
-                </h1>
+                </h3>
                 <p className={styles.content_group_subheading}>
                   {t("features.custom_solutions.description")}
                 </p>
@@ -59,9 +59,9 @@ const FeatureSection = () => {
 
             <div className={styles.content_group}>
               <div className={styles.content_group_2_text}>
-                <h1 className={styles.content_group_heading}>
+                <h3 className={styles.content_group_heading}>
                   {t("features.training.title")}
-                </h1>
+                </h3>
                 <p className={styles.content_group_subheading}>
                   {t("features.training.description")}
                 </p>

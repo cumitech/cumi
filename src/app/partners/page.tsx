@@ -1,8 +1,9 @@
 import { Metadata } from "next";
 import PartnersPageComponent from "@/components/page-components/partners-page.component";
-import { generatePageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
+import { generateDynamicPageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
 
-export const metadata: Metadata = generatePageMetadata({
+export async function generateMetadata(): Promise<Metadata> {
+  return await generateDynamicPageMetadata("/partners", {
   title: "Our Partners - CUMI Trusted Collaborations",
   description: "Meet CUMI's trusted partners and collaborators. We work with industry-leading organizations to deliver exceptional solutions and drive innovation together.",
   keywords: [
@@ -47,7 +48,8 @@ export const metadata: Metadata = generatePageMetadata({
     description: "CUMI's network of trusted partners and collaborators across the technology industry",
     url: "https://cumi.dev/partners"
   }),
-});
+  });
+}
 
 export default function PartnersPage() {
   return <PartnersPageComponent />;

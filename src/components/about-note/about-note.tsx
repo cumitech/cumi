@@ -13,7 +13,7 @@ return (
     <>
      <div id="about" className="block padding-top mt-sm-0 pb-5">
         <div className="titleHolder">
-          <h1>{t('about_note.title')}</h1>
+          <h2>{t('about_note.title')}</h2>
           <p>
             {t('about_note.subtitle')}
           </p>

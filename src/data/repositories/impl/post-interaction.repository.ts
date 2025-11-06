@@ -157,7 +157,14 @@ export class PostInteractionRepository implements IPostInteractionRepository {
         userInteraction,
       };
     } catch (error) {
-      throw error;
+      console.error('Error in getStats:', error);
+      // Return zeros if query fails (e.g., table doesn't exist)
+      return {
+        postId,
+        likesCount: 0,
+        dislikesCount: 0,
+        userInteraction: null,
+      };
     }
   }
 

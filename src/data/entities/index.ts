@@ -31,6 +31,11 @@ import defineCourseProgress from "./course-progress.entity";
 import defineReview from "./review";
 import defineQuizSubmission from "./quiz-submission";
 import defineAssignmentSubmission from "./assignment-submission";
+import defineMetaData from "./meta-data";
+import defineReferral from "./referral";
+import defineReferralClick from "./referral-click";
+import defineTutorialSubcategory from "./tutorial-subcategory";
+import defineTutorial from "./tutorial";
 
 const Banner = defineBanner(sequelize, DataTypes);
 const Category = defineCategory(sequelize, DataTypes);
@@ -62,6 +67,11 @@ const CourseProgress = defineCourseProgress(sequelize, DataTypes);
 const Review = defineReview(sequelize, DataTypes);
 const QuizSubmission = defineQuizSubmission(sequelize, DataTypes);
 const AssignmentSubmission = defineAssignmentSubmission(sequelize, DataTypes);
+const MetaData = defineMetaData(sequelize, DataTypes);
+const Referral = defineReferral(sequelize, DataTypes);
+const ReferralClick = defineReferralClick(sequelize, DataTypes);
+const TutorialSubcategory = defineTutorialSubcategory(sequelize, DataTypes);
+const Tutorial = defineTutorial(sequelize, DataTypes);
 
 Event.belongsToMany(Tag, {
   through: {
@@ -147,6 +157,13 @@ PostInteraction.belongsTo(User, { foreignKey: "userId", as: "user" });
 
 Post.hasMany(PostInteraction, { foreignKey: "postId", as: "interactions" });
 PostInteraction.belongsTo(Post, { foreignKey: "postId", as: "post" });
+
+// Tutorial associations
+User.hasMany(Tutorial, { foreignKey: "authorId", as: "tutorials" });
+Tutorial.belongsTo(User, { foreignKey: "authorId", as: "User" });
+
+TutorialSubcategory.hasMany(Tutorial, { foreignKey: "subcategoryId", as: "tutorials" });
+Tutorial.belongsTo(TutorialSubcategory, { foreignKey: "subcategoryId", as: "Subcategory" });
 
 // Course associations
 User.hasMany(Course, { foreignKey: "userId", as: "courses" });
@@ -242,6 +259,13 @@ AssignmentSubmission.belongsTo(Assignment, { foreignKey: "assignmentId", as: "as
 Course.hasMany(AssignmentSubmission, { foreignKey: "courseId", as: "assignmentSubmissions" });
 AssignmentSubmission.belongsTo(Course, { foreignKey: "courseId", as: "assignmentSubmissionCourse" });
 
+// Referral associations
+Referral.hasMany(ReferralClick, { foreignKey: "referralId", as: "clicks" });
+ReferralClick.belongsTo(Referral, { foreignKey: "referralId", as: "referral" });
+
+User.hasMany(ReferralClick, { foreignKey: "userId", as: "referralClicks" });
+ReferralClick.belongsTo(User, { foreignKey: "userId", as: "user" });
+
 Module.hasMany(AssignmentSubmission, { foreignKey: "moduleId", as: "assignmentSubmissions" });
 AssignmentSubmission.belongsTo(Module, { foreignKey: "moduleId", as: "module" });
 
@@ -281,6 +305,11 @@ export {
   CourseProgress,
   Review,
   QuizSubmission,
-  AssignmentSubmission
+  AssignmentSubmission,
+  MetaData,
+  Referral,
+  ReferralClick,
+  TutorialSubcategory,
+  Tutorial
 };
 

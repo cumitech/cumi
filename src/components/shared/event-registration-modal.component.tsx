@@ -20,7 +20,7 @@ import {
 import { IEvent } from "@domain/models/event.model";
 import { useSession } from "next-auth/react";
 import PhoneNumberInput from "@components/shared/phone-number-input.component";
-import { validatePhoneNumber } from "@utils/country-codes";
+import { validatePhoneNumber, normalizePhoneNumber } from "@utils/country-codes";
 
 const { Title, Text } = Typography;
 
@@ -55,13 +55,14 @@ const handleRegistrationSubmit = async (values: any) => {
 
 setIsRegistering(true);
 
-const registrationData = {
+      const countryCode = values.countryCode || 'CM';
+      const registrationData = {
         eventId: event.id,
         userId: session.user.id,
         name: values.name,
         email: values.email,
-        phone: values.phone,
-        countryCode: values.countryCode || 'CM',
+        phone: normalizePhoneNumber(countryCode, values.phone),
+        countryCode,
         company: values.company,
         dietaryRequirements: values.dietaryRequirements,
         additionalNotes: values.additionalNotes,
@@ -198,7 +199,7 @@ return (
             { required: true, message: "Please enter your full name" },
           ]}
         >
-          <Input placeholder="Enter your full name" />
+          <Input placeholder="Enter your full name" size="large" />
         </Form.Item>
 
 <Form.Item
@@ -209,7 +210,7 @@ return (
             { type: "email", message: "Please enter a valid email" },
           ]}
         >
-          <Input placeholder="Enter your email address" />
+          <Input placeholder="Enter your email address" size="large" />
         </Form.Item>
 
 <Form.Item
@@ -233,6 +234,7 @@ return (
             placeholder="Enter your phone number"
             showMoneyServices={true}
             countryCode="CM"
+            size="large"
             onCountryCodeChange={(code) => {
               form.setFieldValue('countryCode', code);
             }}
@@ -240,13 +242,14 @@ return (
         </Form.Item>
 
 <Form.Item name="company" label="Company/Organization">
-          <Input placeholder="Enter your company or organization" />
+          <Input placeholder="Enter your company or organization" size="large" />
         </Form.Item>
 
 <Form.Item name="dietaryRequirements" label="Dietary Requirements">
           <Input.TextArea 
             placeholder="Any dietary restrictions or special requirements" 
             rows={2}
+            size="large"
           />
         </Form.Item>
 
@@ -254,6 +257,7 @@ return (
           <Input.TextArea 
             placeholder="Any additional information or special requests" 
             rows={2}
+            size="large"
           />
         </Form.Item>
 

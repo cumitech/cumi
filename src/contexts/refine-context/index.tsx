@@ -4,7 +4,7 @@ import { SessionProvider } from "next-auth/react";
 import { App } from "../../app/_refine_context";
 import { ColorModeContextProvider } from "../color-mode";
 import { TranslationProvider } from "../translation.context";
-import { LiveSupportButton } from "../../components/shared/live-support-button";
+// import { LiveSupportButton } from "../../components/shared/live-support-button";
 import ClientProvider from "../provider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
@@ -29,10 +29,10 @@ export const RefineContext = (props: any) => {
   const aiConfig = {
     provider: "openai" as const,
     apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY!,
-    model: "gpt-3.5-turbo", // or 'gpt-4'
+    model: "gpt-3.5-turbo",
     maxTokens: 150,
     temperature: 0.7,
-    maxRetries: 3,        // Number of retry attempts (default: 3)
+    maxRetries: 3,
     retryDelay: 1000, 
   };
 
@@ -43,13 +43,13 @@ export const RefineContext = (props: any) => {
           <TranslationProvider>
             <ColorModeContextProvider defaultMode={defaultMode}>
               <App {...props} />
-              <LiveSupportButton
+              {/* <LiveSupportButton
                 aiConfig={aiConfig}
                 companyName="CumiTech"
                 supportEmail="info@cumi.dev"
                 supportPhone="+237-673-687-549"
                 whatsappNumber="+237681289411"
-              />
+              /> */}
             </ColorModeContextProvider>
           </TranslationProvider>
         </ClientProvider>

@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { cookies } from "next/headers";
 import React, { Suspense } from "react";
 import { NextIntlClientProvider } from "next-intl";
+import { Poppins, Roboto } from "next/font/google";
 import "../styles/app.scss";
 import "../styles/home.scss";
 import "../styles/nav-responsive.css";
@@ -16,6 +17,21 @@ import {
 } from "../lib/seo";
 import Script from "next/script";
 import ServiceWorkerProvider from "@components/service-worker-provider";
+import TawkChat from "@components/shared/tawk.component";
+
+const poppins = Poppins({
+  weight: ['300', '400', '500', '600', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-poppins',
+});
+
+const roboto = Roboto({
+  weight: ['400', '500', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-roboto',
+});
 
 export const metadata: Metadata = generatePageMetadata({
   title: "CUMI - Leading Software Development & Digital Solutions Company",
@@ -66,7 +82,10 @@ export const metadata: Metadata = generatePageMetadata({
     images: defaultImages,
     creator: "@cumi_dev",
   },
-  schema: generateStructuredData("organization", {}),
+  schema: [
+    generateStructuredData("organization", {}),
+    generateStructuredData("website", {}),
+  ],
 });
 
 export default async function RootLayout({
@@ -82,30 +101,17 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={`${poppins.variable} ${roboto.variable}`}>
       <head>
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=5.0"
+        />
 
         {/* Preconnect to external domains */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-
-        {/* Load fonts asynchronously - prevents render blocking */}
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
-        />
 
         {/* Preload critical images */}
         <link
@@ -114,6 +120,19 @@ export default async function RootLayout({
           as="image"
           type="image/jpeg"
         />
+        <link
+          rel="preload"
+          href="/img/IMG_4491-min.jpeg"
+          as="image"
+          type="image/jpeg"
+        />
+
+        {/* DNS prefetch for external resources */}
+        <link rel="dns-prefetch" href="https://wa.me" />
+
+        {/* Resource hints for better performance */}
+        <link rel="preconnect" href="https://wa.me" />
+        <link rel="preconnect" href="https://api.whatsapp.com" />
 
         {/* SEO metadata */}
         <meta name="robots" content="index, follow" />
@@ -240,7 +259,8 @@ export default async function RootLayout({
         `}
         </Script>
       </head>
-      <body cz-shortcut-listen="false">
+
+      <body cz-shortcut-listen="false" className={`${poppins.className} ${roboto.className}`}>
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe
@@ -296,7 +316,7 @@ export default async function RootLayout({
                   </p>
                 </div>
 
-                <style jsx>{`
+                <style>{`
                   @keyframes spin {
                     0% {
                       transform: rotate(0deg);
@@ -333,8 +353,8 @@ export default async function RootLayout({
           integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
           crossOrigin="anonymous"
         ></script>
+        <TawkChat />
       </body>
     </html>
   );
 }
-

@@ -39,7 +39,7 @@ import { useState, useEffect } from "react";
 import PageBreadCrumbs from "@components/shared/page-breadcrumb/page-breadcrumb.component";
 import ImageUploadField from "@components/shared/image-upload-field.component";
 import PhoneNumberInput from "@components/shared/phone-number-input.component";
-import { validatePhoneNumber } from "@utils/country-codes";
+import { validatePhoneNumber, normalizePhoneNumber } from "@utils/country-codes";
 import dayjs from "dayjs";
 
 const { Title, Text } = Typography;
@@ -161,8 +161,10 @@ export default function SettingsPage() {
   const handleUpdateProfile = async (values: any) => {
     setLoading(true);
     try {
+      const countryCode = values.countryCode || userData.countryCode || "CM";
       const updateData = {
         ...values,
+        phoneNumber: values.phoneNumber ? normalizePhoneNumber(countryCode, values.phoneNumber) : values.phoneNumber,
         dateOfBirth: values.dateOfBirth
           ? values.dateOfBirth.toDate().toISOString()
           : null,
@@ -510,7 +512,8 @@ export default function SettingsPage() {
                 <Form.Item name="bio" label="Bio">
                   <TextArea
                     size="large"
-                    rows={4}
+                    rows={10}
+                    style={{ minHeight: "100px", borderRadius: "8px" }}
                     placeholder="Tell us about yourself..."
                     maxLength={500}
                     showCount

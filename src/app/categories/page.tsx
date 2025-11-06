@@ -1,8 +1,9 @@
 import { Metadata } from "next";
 import CategoriesPageComponent from "@components/page-components/categories-page.component";
-import { generatePageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
+import { generateDynamicPageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
 
-export const metadata: Metadata = generatePageMetadata({
+export async function generateMetadata(): Promise<Metadata> {
+  return await generateDynamicPageMetadata("/categories", {
   title: "Categories - CUMI Technology Blog Topics",
   description: "Explore CUMI's technology blog posts organized by categories including software development, web development, mobile app development, digital transformation, and programming topics.",
   keywords: [
@@ -71,7 +72,8 @@ export const metadata: Metadata = generatePageMetadata({
       "description": "Collection of technology topics and categories"
     }
   }
-});
+  });
+}
 
 export default function CategoriesPage() {
   return <CategoriesPageComponent />;

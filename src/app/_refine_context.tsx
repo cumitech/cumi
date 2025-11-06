@@ -29,7 +29,12 @@ export const App = (props: any) => {
 
   const i18nProvider = {
     translate: (key: any, options: any) => {
-      return t(key, options);
+      try {
+        return t(key, options);
+      } catch (e) {
+        // Fallback to provided defaultMessage or the key itself when message is missing
+        return options?.defaultMessage ?? key;
+      }
     },
     getLocale: () => locale,
     changeLocale: setUserLocale,

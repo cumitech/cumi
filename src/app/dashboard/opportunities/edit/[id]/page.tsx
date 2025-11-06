@@ -19,10 +19,26 @@ export default function OpportunityEdit() {
     if (opportunitiesData?.opp_type) {
       setOpportunityType(opportunitiesData.opp_type);
     }
-    if (opportunitiesData?.skills) {
-      setSkills(Array.isArray(opportunitiesData.skills) ? opportunitiesData.skills : []);
+    if (opportunitiesData?.skills !== undefined && opportunitiesData?.skills !== null) {
+      let initialSkills: string[] = [];
+      try {
+        if (typeof opportunitiesData.skills === "string") {
+          // Handle cases where skills are stored as a JSON string
+          const parsed = JSON.parse(opportunitiesData.skills);
+          if (Array.isArray(parsed)) {
+            initialSkills = parsed.filter((s) => typeof s === "string");
+          }
+        } else if (Array.isArray(opportunitiesData.skills)) {
+          initialSkills = opportunitiesData.skills.filter((s) => typeof s === "string");
+        }
+      } catch {
+        initialSkills = [];
+      }
+
+      setSkills(initialSkills);
+      formProps.form?.setFieldValue("skills", initialSkills);
     }
-  }, [opportunitiesData]);
+  }, [opportunitiesData, formProps.form]);
 
   return (
     <>
@@ -52,7 +68,14 @@ export default function OpportunityEdit() {
               },
             ]}
           >
-            <Input.TextArea size="large" />
+            <RichTextEditor
+              value={formProps.form?.getFieldValue("description")}
+              onChange={(html) =>
+                formProps.form?.setFieldValue("description", html)
+              }
+              placeholder="Enter description..."
+              height={300}
+            />
           </Form.Item>
 
           <Form.Item
@@ -362,7 +385,10 @@ export default function OpportunityEdit() {
                       mode="tags"
                       placeholder="Type skills and press Enter"
                       size="large"
-                      onChange={(value) => setSkills(value)}
+                      onChange={(value) => {
+                        setSkills(value as string[]);
+                        formProps.form?.setFieldValue("skills", value);
+                      }}
                       value={skills}
                     />
                   </Form.Item>

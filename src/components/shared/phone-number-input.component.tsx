@@ -5,8 +5,6 @@ import {
   AFRICAN_COUNTRY_CODES,
   DEFAULT_COUNTRY,
   CountryCode,
-  formatPhoneNumber,
-  validatePhoneNumber,
 } from "@utils/country-codes";
 
 const { Option } = Select;
@@ -22,6 +20,8 @@ interface PhoneNumberInputProps {
   onCountryCodeChange?: (countryCode: string) => void;
   style?: React.CSSProperties;
   className?: string;
+  error?: boolean;
+  errorMessage?: string;
 }
 
 export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
@@ -35,145 +35,156 @@ export const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
   onCountryCodeChange,
   style,
   className,
+  error = false,
+  errorMessage = "Please enter a valid phone number",
 }) => {
   const [internalCountryCode, setInternalCountryCode] =
     React.useState(countryCode);
   const [isInitialized, setIsInitialized] = React.useState(false);
 
-const selectedCountry =
+  const selectedCountry =
     AFRICAN_COUNTRY_CODES.find(
       (country) => country.code === internalCountryCode
     ) || DEFAULT_COUNTRY;
 
-// Auto-add country code on mount if field is empty
   React.useEffect(() => {
     if (!isInitialized && !value && onChange) {
-      const initialCountry = AFRICAN_COUNTRY_CODES.find(
-        (c) => c.code === countryCode
-      ) || DEFAULT_COUNTRY;
+      const initialCountry =
+        AFRICAN_COUNTRY_CODES.find((c) => c.code === countryCode) ||
+        DEFAULT_COUNTRY;
 
-onChange(`${initialCountry.phonePrefix} `);
+      onChange(`${initialCountry.phonePrefix} `);
       setIsInitialized(true);
     }
   }, [countryCode, value, onChange, isInitialized]);
 
-const handleCountryChange = (newCountryCode: string) => {
+  const handleCountryChange = (newCountryCode: string) => {
     setInternalCountryCode(newCountryCode);
 
-if (onCountryCodeChange) {
+    if (onCountryCodeChange) {
       onCountryCodeChange(newCountryCode);
     }
 
-const newCountry = AFRICAN_COUNTRY_CODES.find(
+    const newCountry = AFRICAN_COUNTRY_CODES.find(
       (c) => c.code === newCountryCode
     );
 
-// Auto-add country code prefix to the phone number
     if (newCountry && onChange) {
-      // Remove any existing country code prefix and spaces
       let cleanNumber = value.replace(/^\+\d+\s*/, "").trim();
-
-// Add the new country code prefix
-      const numberWithPrefix = cleanNumber 
+      const numberWithPrefix = cleanNumber
         ? `${newCountry.phonePrefix} ${cleanNumber}`
         : `${newCountry.phonePrefix} `;
       onChange(numberWithPrefix);
     }
   };
 
-const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     if (onChange) {
       onChange(inputValue);
     }
   };
 
-const renderCountryOption = (country: CountryCode) => (
+  const renderCountryOption = (country: CountryCode) => (
     <Option key={country.code} value={country.code}>
-      <Space>
-        <span>{country.flag}</span>
+      <Space align="center" size={4}>
+        <span style={{ fontSize: "16px" }}>{country.flag}</span>
+        <span>{country.code}</span>
         <span style={{ color: "#999", fontSize: "12px" }}>
           {country.phonePrefix}
         </span>
-        {showMoneyServices && (
-          <Space size={4}>
-            {country.mtnMoney}
-            {country.orangeMoney}
-          </Space>
+        {showMoneyServices && country.mtnMoney && (
+          <Tag color="blue" style={{ margin: 0 }}>
+            MTN
+          </Tag>
+        )}
+        {showMoneyServices && country.orangeMoney && (
+          <Tag color="orange" style={{ margin: 0 }}>
+            Orange
+          </Tag>
         )}
       </Space>
     </Option>
   );
+  // Custom select display
+  const selectDisplayRender = () => (
+    <Space align="center" size={4}>
+      <span style={{ fontSize: "16px" }}>{selectedCountry.flag}</span>
+      <span style={{ fontWeight: 500 }}>{selectedCountry.code}</span>
+      <span style={{ color: "#999", fontSize: "13px" }}>
+        {selectedCountry.phonePrefix}
+      </span>
+    </Space>
+  );
 
-const getMoneyServicesTooltip = (country: CountryCode) => {
-    const services = [];
-    if (country.mtnMoney) services.push("MTN Money");
-    if (country.orangeMoney) services.push("Orange Money");
-
-if (services.length === 0) return "No mobile money services available";
-    return `Available mobile money services: ${services.join(", ")}`;
-  };
-
-return (
-    <Input.Group
-      compact
-      style={{ width: "100%", ...style }}
-      className={className}
-    >
-      <Select
-        value={internalCountryCode}
-        onChange={handleCountryChange}
-        style={{ width: "30%" }}
-        size={size}
-        disabled={disabled}
-        showSearch
-        filterOption={(input, option) => {
-          const country = AFRICAN_COUNTRY_CODES.find(
-            (c) => c.code === option?.value
-          );
-          return country
-            ? country.name.toLowerCase().includes(input.toLowerCase()) ||
-                country.phonePrefix.includes(input)
-            : false;
-        }}
-        dropdownRender={(menu) => <div>{menu}</div>}
-      >
-        {AFRICAN_COUNTRY_CODES.map(renderCountryOption)}
-      </Select>
-
-<Input
-        value={value}
-        onChange={handlePhoneChange}
-        placeholder={placeholder}
-        prefix={<PhoneOutlined />}
-        styles={{
-          input: {
-            borderTopLeftRadius: 0,
-            borderBottomLeftRadius: 0,
-          },
-          prefix: {
-            borderTopLeftRadius: 0,
-            borderBottomLeftRadius: 0,
-          },
-          affixWrapper: {
-            borderTopLeftRadius: 0,
-            borderBottomLeftRadius: 0,
-          },
-        }}
+  return (
+    <div style={{ width: "100%", ...style }} className={className}>
+      <Input.Group
+        compact
         style={{
-          width: "70%",
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          borderRadius: "8px",
+          border: error ? "1px solid #ff4d4f" : "1px solid #d9d9d9",
+          overflow: "hidden",
         }}
-        size={size}
-        disabled={disabled}
-        addonAfter={
-          showMoneyServices ? (
-            <Tooltip title={getMoneyServicesTooltip(selectedCountry)}>
-              <InfoCircleOutlined style={{ color: "#1890ff" }} />
-            </Tooltip>
-          ) : undefined
-        }
-      />
-    </Input.Group>
+      >
+        <Select
+          value={internalCountryCode}
+          onChange={handleCountryChange}
+          style={{
+            width: "120px",
+            border: "none",
+            borderRight: "1px solid #d9d9d9",
+          }}
+          size={size}
+          disabled={disabled}
+          showSearch
+          filterOption={(input, option) => {
+            const country = AFRICAN_COUNTRY_CODES.find(
+              (c) => c.code === option?.value
+            );
+            return country
+              ? country.name.toLowerCase().includes(input.toLowerCase()) ||
+                  country.phonePrefix.includes(input)
+              : false;
+          }}
+          suffixIcon={null}
+          dropdownMatchSelectWidth={200}
+        >
+          {AFRICAN_COUNTRY_CODES.map(renderCountryOption)}
+        </Select>
+
+        <Input
+          value={value}
+          onChange={handlePhoneChange}
+          placeholder={placeholder}
+          prefix={<PhoneOutlined style={{ color: "#999" }} />}
+          style={{
+            flex: 1,
+            border: "none",
+            outline: "none",
+            boxShadow: "none",
+          }}
+          size={size}
+          disabled={disabled}
+        />
+      </Input.Group>
+
+      {error && errorMessage && (
+        <div
+          style={{
+            color: "#ff4d4f",
+            fontSize: "14px",
+            marginTop: "4px",
+            marginLeft: "2px",
+          }}
+        >
+          {errorMessage}
+        </div>
+      )}
+    </div>
   );
 };
 

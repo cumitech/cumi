@@ -24,6 +24,7 @@ export interface EmailOptions {
     filename: string;
     data: Buffer | string;
     contentType?: string;
+    cid?: string;
   }>;
 }
 
@@ -73,17 +74,254 @@ class EmailService {
   }
 
   /**
+   * Extract and convert base64 images to inline attachments (CID)
+   * This ensures images display in email clients that block base64
+   */
+  private extractAndConvertImages(html: string): {
+    processedHtml: string;
+    attachments: Array<{
+      filename: string;
+      data: Buffer | string;
+      contentType?: string;
+      cid?: string;
+    }>;
+  } {
+    if (!html) return { processedHtml: html, attachments: [] };
+    
+    const attachments: Array<{
+      filename: string;
+      data: Buffer | string;
+      contentType?: string;
+      cid?: string;
+    }> = [];
+    let imageIndex = 0;
+    
+    // Process images: convert base64 to inline attachments, convert relative URLs to absolute
+    const processedHtml = html.replace(
+      /<img\s+([^>]*src=["']([^"']*)["'][^>]*)>/gi,
+      (match, attrs, src) => {
+        let newSrc = src;
+        let newAttrs = attrs;
+        
+        // Handle base64 images - convert to inline attachment
+        if (src && src.startsWith('data:')) {
+          try {
+            // Parse data URI: data:image/png;base64,iVBORw0KGgo...
+            const dataUriMatch = src.match(/^data:([^;]+);base64,(.+)$/);
+            if (dataUriMatch) {
+              const contentType = dataUriMatch[1] || 'image/png';
+              const base64Data = dataUriMatch[2];
+              
+              // Convert base64 to Buffer
+              const imageBuffer = Buffer.from(base64Data, 'base64');
+              
+              // Generate CID
+              const cid = `image_${imageIndex++}_${Date.now()}`;
+              
+              // Determine file extension from content type
+              const ext = contentType.split('/')[1] || 'png';
+              const filename = `image_${imageIndex}.${ext}`;
+              
+              // Add as inline attachment
+              attachments.push({
+                filename,
+                data: imageBuffer,
+                contentType,
+                cid,
+              });
+              
+              // Replace src with cid: reference
+              newSrc = `cid:${cid}`;
+              newAttrs = attrs.replace(/src=["'][^"']*["']/i, `src="cid:${cid}"`);
+            }
+          } catch (error) {
+            logger.error('Error processing base64 image:', error);
+            // Keep original src if conversion fails
+            newAttrs = attrs;
+          }
+        } else {
+          // Convert relative URLs to absolute URLs
+          if (src && !src.startsWith('http://') && !src.startsWith('https://') && !src.startsWith('cid:')) {
+            // Relative URL - convert to absolute
+            if (src.startsWith('/')) {
+              newSrc = `${this.baseUrl}${src}`;
+            } else {
+              newSrc = `${this.baseUrl}/${src}`;
+            }
+            newAttrs = attrs.replace(/src=["'][^"']*["']/i, `src="${newSrc}"`);
+          }
+        }
+        
+        // Ensure style attribute exists with proper email-compatible styles
+        if (!newAttrs.includes('style=')) {
+          newAttrs += ' style="max-width: 100%; height: auto; display: block; margin: 16px 0;">';
+        } else {
+          // Update existing style to include email-compatible styles
+          newAttrs = newAttrs.replace(
+            /style=["']([^"']*)["']/i,
+            (styleMatch: string, styleContent: string) => {
+              let styles = styleContent;
+              if (!styles.includes('max-width')) {
+                styles += '; max-width: 100%';
+              }
+              if (!styles.includes('height')) {
+                styles += '; height: auto';
+              }
+              if (!styles.includes('display')) {
+                styles += '; display: block';
+              }
+              if (!styles.includes('margin')) {
+                styles += '; margin: 16px 0';
+              }
+              return `style="${styles}"`;
+            }
+          );
+        }
+        
+        return `<img ${newAttrs}>`;
+      }
+    );
+    
+    return { processedHtml, attachments };
+  }
+
+  /**
+   * Process HTML content to ensure all elements are preserved for email
+   * This ensures images, links, tables, and all rich text editor content works in emails
+   */
+  private processHtmlForEmail(html: string): string {
+    if (!html) return '';
+    
+    let processedHtml = html;
+    
+    // Process images: convert relative URLs to absolute, preserve base64, add proper styling
+    // Note: Base64 images are handled separately in extractAndConvertImages
+    processedHtml = processedHtml.replace(
+      /<img\s+([^>]*src=["']([^"']*)["'][^>]*)>/gi,
+      (match, attrs, src) => {
+        let newSrc = src;
+        let newAttrs = attrs;
+        
+        // Skip base64 and cid: images (handled separately)
+        if (src && (src.startsWith('data:') || src.startsWith('cid:'))) {
+          return match;
+        }
+        
+        // Convert relative URLs to absolute URLs
+        if (src && !src.startsWith('http://') && !src.startsWith('https://')) {
+          // Relative URL - convert to absolute
+          if (src.startsWith('/')) {
+            newSrc = `${this.baseUrl}${src}`;
+          } else {
+            newSrc = `${this.baseUrl}/${src}`;
+          }
+          newAttrs = attrs.replace(/src=["'][^"']*["']/i, `src="${newSrc}"`);
+        }
+        
+        // Ensure style attribute exists with proper email-compatible styles
+        if (!newAttrs.includes('style=')) {
+          newAttrs += ' style="max-width: 100%; height: auto; display: block; margin: 16px 0;">';
+        } else {
+          // Update existing style to include email-compatible styles
+          newAttrs = newAttrs.replace(
+            /style=["']([^"']*)["']/i,
+            (styleMatch: string, styleContent: string) => {
+              let styles = styleContent;
+              if (!styles.includes('max-width')) {
+                styles += '; max-width: 100%';
+              }
+              if (!styles.includes('height')) {
+                styles += '; height: auto';
+              }
+              if (!styles.includes('display')) {
+                styles += '; display: block';
+              }
+              if (!styles.includes('margin')) {
+                styles += '; margin: 16px 0';
+              }
+              return `style="${styles}"`;
+            }
+          );
+        }
+        
+        return `<img ${newAttrs}>`;
+      }
+    );
+    
+    // Ensure all links have proper attributes
+    processedHtml = processedHtml.replace(
+      /<a\s+([^>]*href=["'][^"']*["'][^>]*)>/gi,
+      (match, attrs) => {
+        let newAttrs = attrs;
+        
+        // Convert relative URLs to absolute URLs
+        const hrefMatch = attrs.match(/href=["']([^"']*)["']/i);
+        if (hrefMatch && hrefMatch[1]) {
+          const href = hrefMatch[1];
+          if (href && !href.startsWith('http://') && !href.startsWith('https://') && !href.startsWith('mailto:') && !href.startsWith('#') && !href.startsWith('tel:')) {
+            let newHref = href;
+            if (href.startsWith('/')) {
+              newHref = `${this.baseUrl}${href}`;
+            } else {
+              newHref = `${this.baseUrl}/${href}`;
+            }
+            newAttrs = newAttrs.replace(/href=["'][^"']*["']/i, `href="${newHref}"`);
+          }
+        }
+        
+        if (!newAttrs.includes('target=')) {
+          newAttrs += ' target="_blank"';
+        }
+        if (!newAttrs.includes('rel=')) {
+          newAttrs += ' rel="noopener noreferrer"';
+        }
+        
+        return `<a ${newAttrs}>`;
+      }
+    );
+    
+    // Ensure tables have proper styling for email clients
+    processedHtml = processedHtml.replace(
+      /<table(\s+[^>]*)?>/gi,
+      (match) => {
+        if (!match.includes('style=')) {
+          return match.replace('>', ' style="width: 100%; border-collapse: collapse;">');
+        }
+        return match;
+      }
+    );
+    
+    return processedHtml;
+  }
+
+  /**
    * Generate modern email template with CUMI branding
+   * Returns both HTML and inline attachments for images
    */
   private getEmailTemplate(params: {
     title: string;
     subtitle: string;
     content: string;
     showLogo?: boolean;
-  }): string {
+  }): {
+    html: string;
+    attachments: Array<{
+      filename: string;
+      data: Buffer | string;
+      contentType?: string;
+      cid?: string;
+    }>;
+  } {
+    // Process content to ensure all HTML elements are email-compatible
     const { title, subtitle, content, showLogo = true } = params;
     
-    return `
+    // First extract and convert base64 images to inline attachments
+    const { processedHtml: contentWithImages, attachments } = this.extractAndConvertImages(content);
+    
+    // Then process the rest of the HTML (links, tables, etc.)
+    const processedContent = this.processHtmlForEmail(contentWithImages);
+    
+    const emailHtml = `
       <!DOCTYPE html>
       <html lang="en">
       <head>
@@ -410,6 +648,41 @@ class EmailService {
             .social-links a { margin: 0 8px; font-size: 13px; }
           }
           
+          /* Email-compatible content styles */
+          .content img {
+            max-width: 100% !important;
+            height: auto !important;
+            display: block;
+            margin: 16px 0;
+          }
+          
+          .content table {
+            width: 100% !important;
+            border-collapse: collapse !important;
+            margin: 16px 0;
+          }
+          
+          .content table td,
+          .content table th {
+            padding: 8px 12px;
+            border: 1px solid #E5E7EB;
+            text-align: left;
+          }
+          
+          .content table th {
+            background-color: #F9FAFB;
+            font-weight: 600;
+          }
+          
+          .content a {
+            color: #22C55E !important;
+            text-decoration: underline;
+          }
+          
+          .content a:hover {
+            color: #16A34A !important;
+          }
+          
           /* Dark Mode Support */
           @media (prefers-color-scheme: dark) {
             .email-container { border: 1px solid #374151; }
@@ -431,22 +704,28 @@ class EmailService {
               <p>${subtitle}</p>
             </div>
             <div class="content">
-              ${content}
+              ${processedContent}
             </div>
             <div class="footer">
-              <p><strong>Best regards,</strong><br>The CUMI Team</p>
-              <div class="social-links">
+              <p><strong>CUMI Software Development</strong></p>
+              <p>Building Tomorrow's Software Today</p>
+              <div class="social-links" style="margin-top: 16px;">
                 <a href="${this.baseUrl}">Website</a> • 
-                <a href="${this.baseUrl}/contact_us">Support</a> • 
+                <a href="${this.baseUrl}/contact-us">Support</a> • 
                 <a href="${this.baseUrl}/faqs">FAQs</a>
               </div>
-              <p class="copyright">© ${new Date().getFullYear()} CUMI. All rights reserved.</p>
+              <p class="copyright" style="margin-top: 24px;">© ${new Date().getFullYear()} CUMI. All rights reserved.</p>
             </div>
           </div>
         </div>
       </body>
       </html>
     `;
+    
+    return {
+      html: emailHtml,
+      attachments
+    };
   }
 
   async sendEmail(options: EmailOptions): Promise<any> {
@@ -456,7 +735,8 @@ class EmailService {
 
       // Construct FROM address from environment variables
       const fromName = process.env.MAILGUN_FROM_NAME || 'CUMI';
-      const fromEmail = process.env.MAILGUN_FROM_EMAIL || `noreply@${this.domain}`;
+      // Ensure default sender is info@cumi.dev if not explicitly configured
+      const fromEmail = process.env.MAILGUN_FROM_EMAIL || 'info@cumi.dev';
       const from = process.env.MAILGUN_FROM || `${fromName} <${fromEmail}>`;
       
       const messageData: any = {
@@ -480,8 +760,29 @@ class EmailService {
         messageData.text = options.text;
       }
 
-      if (options.attachments) {
-        messageData.attachment = options.attachments;
+      if (options.attachments && options.attachments.length > 0) {
+        // Format attachments for Mailgun
+        // Mailgun supports inline attachments with Content-ID
+        const formattedAttachments = options.attachments.map((att) => {
+          const attachment: any = {
+            filename: att.filename,
+            data: att.data,
+          };
+          
+          // Add inline attachment with Content-ID if cid is provided
+          if (att.cid) {
+            attachment.cid = att.cid;
+          }
+          
+          if (att.contentType) {
+            attachment.contentType = att.contentType;
+          }
+          
+          return attachment;
+        });
+        
+        messageData.inline = formattedAttachments.filter(att => att.cid);
+        messageData.attachment = formattedAttachments.filter(att => !att.cid);
       }
 
       const data = await this.mailgun.messages.create(this.domain, messageData);
@@ -535,7 +836,7 @@ class EmailService {
       </div>
     `;
     
-    const html = this.getEmailTemplate({
+    const { html } = this.getEmailTemplate({
       title: 'Password Reset Request',
       subtitle: 'Secure your account with a new password',
       content
@@ -608,7 +909,7 @@ class EmailService {
       <p>If you have any questions or need assistance getting started, our support team is available 24/7 to help you succeed!</p>
     `;
     
-    const html = this.getEmailTemplate({
+    const { html } = this.getEmailTemplate({
       title: 'Welcome to CUMI!',
       subtitle: 'Your learning journey starts here 🎓',
       content
@@ -663,7 +964,7 @@ class EmailService {
       <p>You can manage your notification preferences anytime from your <a href="${this.baseUrl}/dashboard/settings" style="color: #22C55E; text-decoration: none;">account settings</a>.</p>
     `;
     
-    const html = this.getEmailTemplate({
+    const { html } = this.getEmailTemplate({
       title,
       subtitle: 'A new update from CUMI',
       content
@@ -692,10 +993,117 @@ class EmailService {
     });
   }
 
-  async sendBulkEmail(recipients: EmailRecipient[], subject: string, html: string, text: string): Promise<any> {
+  async sendActivationEmail(params: {
+    to: string;
+    userName: string;
+    activationLink: string;
+  }): Promise<any> {
+    const { to, userName, activationLink } = params;
+    
+    logger.info("🔐 Sending account activation email:", {
+      to,
+      userName,
+      activationLink: process.env.NODE_ENV === 'development' ? activationLink : '[hidden]'
+    });
+    
+    const content = `
+      <h2>Hello ${userName},</h2>
+      <p>Welcome to <strong>CUMI</strong>! We're excited to have you join our learning community. To complete your account setup and access all features, please activate your account.</p>
+      
+      <div class="success-box">
+        <p><strong>🎯 Ready to get started?</strong> Click the button below to activate your account and begin your learning journey!</p>
+      </div>
+      
+      <div class="button-container">
+        <a href="${activationLink}" class="button">🚀 Activate My Account</a>
+      </div>
+      
+      <div class="warning-box">
+        <p><strong>⏰ Important:</strong> This activation link will expire in <strong>24 hours</strong> for security reasons. If you don't activate your account within this time, you'll need to request a new activation email.</p>
+      </div>
+      
+      <div class="divider"></div>
+      
+      <p><strong>Button not working?</strong> Copy and paste this link into your browser:</p>
+      <div class="link-box">
+        <p>${activationLink}</p>
+      </div>
+      
+      <div class="features-list">
+        <h3>🎓 What you'll get with an activated account:</h3>
+        <ul>
+          <li>Full access to all courses and learning materials</li>
+          <li>Ability to enroll in courses and track progress</li>
+          <li>Registration for webinars and workshops</li>
+          <li>Community features and peer interaction</li>
+          <li>Certificate generation upon course completion</li>
+          <li>Personalized learning recommendations</li>
+        </ul>
+      </div>
+      
+      <div class="info-box">
+        <p><strong>💡 Need help?</strong> If you have any questions or need assistance with account activation, our support team is available 24/7 to help you get started!</p>
+      </div>
+      
+      <p>We're looking forward to supporting your learning journey!</p>
+    `;
+    
+    const { html } = this.getEmailTemplate({
+      title: 'Activate Your CUMI Account',
+      subtitle: 'Complete your registration and start learning',
+      content
+    });
+
+    const text = `
+      Activate Your CUMI Account
+      
+      Hello ${userName},
+      
+      Welcome to CUMI! We're excited to have you join our learning community. 
+      To complete your account setup and access all features, please activate your account.
+      
+      Click the link below to activate your account:
+      ${activationLink}
+      
+      This activation link will expire in 24 hours for security reasons.
+      
+      What you'll get with an activated account:
+      ✓ Full access to all courses and learning materials
+      ✓ Ability to enroll in courses and track progress
+      ✓ Registration for webinars and workshops
+      ✓ Community features and peer interaction
+      ✓ Certificate generation upon course completion
+      ✓ Personalized learning recommendations
+      
+      If you have any questions or need assistance, our support team is here to help!
+      
+      Best regards,
+      The CUMI Team
+    `;
+
+    return this.sendEmail({
+      to: { email: to, name: userName },
+      subject: "Activate Your CUMI Account - Complete Your Registration",
+      html,
+      text
+    });
+  }
+
+  async sendBulkEmail(
+    recipients: EmailRecipient[], 
+    subject: string, 
+    html: string, 
+    text: string,
+    attachments?: Array<{
+      filename: string;
+      data: Buffer | string;
+      contentType?: string;
+      cid?: string;
+    }>
+  ): Promise<any> {
     logger.info(`📧 Sending bulk email to ${recipients.length} recipients`);
     const sendPromises = recipients.map(recipient =>
-      this.sendEmail({ to: recipient, subject, html, text })
+      this.sendEmail({ to: recipient, subject, html, text, attachments })
     );
     return Promise.allSettled(sendPromises);
   }

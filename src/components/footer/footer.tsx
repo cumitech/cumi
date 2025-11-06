@@ -1,7 +1,29 @@
 "use client";
 import React, { useState } from "react";
-import { Button, ConfigProvider, Input, notification, Row, Col, Divider, Typography } from "antd";
-import { ArrowRightOutlined, MailOutlined, PhoneOutlined, EnvironmentOutlined, RocketOutlined, BookOutlined, UserOutlined, DashboardOutlined, FacebookFilled, TwitterSquareFilled, LinkedinFilled, GithubFilled } from "@ant-design/icons";
+import {
+  Button,
+  ConfigProvider,
+  Input,
+  notification,
+  Row,
+  Col,
+  Divider,
+  Typography,
+} from "antd";
+import {
+  ArrowRightOutlined,
+  MailOutlined,
+  PhoneOutlined,
+  EnvironmentOutlined,
+  RocketOutlined,
+  BookOutlined,
+  UserOutlined,
+  DashboardOutlined,
+  FacebookFilled,
+  TwitterSquareFilled,
+  LinkedinFilled,
+  GithubFilled,
+} from "@ant-design/icons";
 import styles from "./footer.module.css";
 import Link from "next/link";
 import Image from "next/image";
@@ -19,10 +41,10 @@ export const AppFooter: React.FC<Props> = ({ logoPath }) => {
   const [api, contextHolder] = notification.useNotification();
   const { t } = useTranslation();
 
-const handleSubscribe = async (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
 
-if (!email || !email.includes("@")) {
+    if (!email || !email.includes("@")) {
       api.warning({
         message: t("subscribe.invalid_title"),
         description: t("subscribe.invalid_email"),
@@ -31,7 +53,7 @@ if (!email || !email.includes("@")) {
       return;
     }
 
-setLoading(true);
+    setLoading(true);
     try {
       const response = await fetch("/api/subscribers", {
         method: "POST",
@@ -41,13 +63,13 @@ setLoading(true);
         body: JSON.stringify({ email, name: email.split("@")[0] }),
       });
 
-const data = await response.json();
+      const data = await response.json();
 
-if (!response.ok) {
+      if (!response.ok) {
         throw new Error(data.error || data.message || "Failed to subscribe");
       }
 
-api.success({
+      api.success({
         message: t("subscribe.success_title"),
         description: t("subscribe.success_message"),
         placement: "topRight",
@@ -67,7 +89,7 @@ api.success({
     }
   };
 
-return (
+  return (
     <>
       {contextHolder}
       <footer className={`section ${styles.section}`}>
@@ -103,7 +125,7 @@ return (
                 {t("footer.tagline")}
               </Text>
 
-{}
+              {}
               <div className={`${styles.contactInfo} d-none d-lg-block`}>
                 <div className={styles.contactItem}>
                   <MailOutlined className={styles.contactIcon} />
@@ -123,8 +145,11 @@ return (
                 </div>
               </div>
 
-{}
-              <div className={styles.socialMedia} style={{ display: "none" }}>
+              {}
+              <div
+                className={styles.socialMedia}
+                style={{ display: "flex", gap: "12px", marginTop: "20px" }}
+              >
                 <a
                   href="https://web.facebook.com/ayeahgodlove/"
                   target="_blank"
@@ -164,34 +189,35 @@ return (
               </div>
             </Col>
 
-{}
+            {}
             <Col xs={12} sm={12} md={8} lg={4} className={styles.content_group}>
               <Title level={5} className={styles.footerTitle}>
                 <RocketOutlined className={styles.titleIcon} />
                 {t("footer.discover")}
               </Title>
-              <Link href="/our_services">{t("nav.services")}</Link>
-              <Link href="/about_us">{t("nav.about_us")}</Link>
+              <Link href="/our-services">{t("nav.services")}</Link>
+              <Link href="/about-us">{t("nav.about-us")}</Link>
               <Link href="/projects">Projects</Link>
               <Link href="/partners">Partners</Link>
               <Link href="/authors">Authors</Link>
+              <Link href="/recommendations">Tools</Link>
             </Col>
 
-{}
+            {}
             <Col xs={12} sm={12} md={8} lg={4} className={styles.content_group}>
               <Title level={5} className={styles.footerTitle}>
                 <BookOutlined className={styles.titleIcon} />
                 {t("footer.info")}
               </Title>
-              <Link href="/blog_posts">{t("nav.blog_posts")}</Link>
+              <Link href="/blog-posts">{t("nav.blog-posts")}</Link>
               <Link href="/courses">Courses</Link>
               <Link href="/events">Events</Link>
               <Link href="/opportunities">Jobs</Link>
-              <Link href="/contact_us">{t("nav.contact_us")}</Link>
+              <Link href="/contact-us">{t("nav.contact-us")}</Link>
               <Link href="/faqs">FAQs</Link>
             </Col>
 
-{}
+            {}
             <Col
               xs={0}
               sm={12}
@@ -207,14 +233,10 @@ return (
               <Link href="/register">Register</Link>
               <Link href="/terms-of-use">Terms of Use</Link>
               <Link href="/privacy-policy">Privacy Policy</Link>
-              {/* <Link href="/dashboard">
-                <DashboardOutlined style={{ marginRight: '6px' }} />
-                Dashboard
-              </Link>
-              <Link href="/forgot-password">Reset Password</Link> */}
+              <Link href="/sitemap-page">Sitemap</Link>
+              <Link href="/mobile-app">Mobile App</Link>
             </Col>
 
-{}
             <Col
               xs={24}
               sm={24}

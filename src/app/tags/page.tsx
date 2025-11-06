@@ -1,8 +1,9 @@
 import { Metadata } from "next";
 import TagsPageComponent from "@components/page-components/tags-page.component";
-import { generatePageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
+import { generateDynamicPageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
 
-export const metadata: Metadata = generatePageMetadata({
+export async function generateMetadata(): Promise<Metadata> {
+  return await generateDynamicPageMetadata("/tags", {
   title: "Tags - CUMI Technology Blog Topics",
   description: "Browse all technology blog post tags and topics on CUMI's blog. Find articles by software development, web development, mobile app development, digital transformation, and programming topics.",
   keywords: [
@@ -71,7 +72,8 @@ export const metadata: Metadata = generatePageMetadata({
       "description": "Collection of technology topics and tags"
     }
   }
-});
+  });
+}
 
 export default function TagsPage() {
   return <TagsPageComponent />;

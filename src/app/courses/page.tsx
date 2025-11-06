@@ -1,8 +1,9 @@
 import { Metadata } from "next";
 import CoursesPageComponent from "@components/page-components/courses-page.component";
-import { generatePageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
+import { generateDynamicPageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
 
-export const metadata: Metadata = generatePageMetadata({
+export async function generateMetadata(): Promise<Metadata> {
+  return await generateDynamicPageMetadata("/courses", {
   title: "Courses - CUMI Software Development Training & Education",
   description: "Enroll in CUMI's comprehensive software development courses. Learn web development, mobile app development, cloud solutions, API development, and digital transformation from industry experts.",
   keywords: [
@@ -71,7 +72,8 @@ export const metadata: Metadata = generatePageMetadata({
       "description": "Collection of courses covering web development, mobile apps, and digital transformation"
     }
   }
-});
+  });
+}
 
 export default function CoursesPage() {
   return <CoursesPageComponent />;

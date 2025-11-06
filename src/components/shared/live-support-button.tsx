@@ -99,31 +99,29 @@ export const LiveSupportButton: React.FC<LiveSupportProps> = ({
   const [aiService, setAIService] = useState<AIService | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-// Initialize AI service
   useEffect(() => {
     if (aiConfig) {
       try {
         const service = new AIService(aiConfig);
         setAIService(service);
 
-// Set initial AI greeting
         const greeting: ChatMessage = {
           id: '1',
           type: 'ai',
-          message: `Hello! I'm your AI assistant for ${companyName}. How can I help you today?`,
+          message: `Hello! I'm your assistant for ${companyName}. How can I help you today?`,
           timestamp: new Date(),
         };
         setMessages([greeting]);
       } catch (error) {
-        console.error('Failed to initialize AI service:', error);
-        message.error('AI service initialization failed. Please check your configuration.');
+        console.error('Failed to initialize service:', error);
+        message.error('Service initialization failed. Please check your configuration.');
       }
     } else {
       // Fallback to demo mode
       const greeting: ChatMessage = {
         id: '1',
         type: 'ai',
-        message: 'Hello! I\'m your AI assistant (Demo Mode). How can I help you today?',
+        message: 'Hello! I\'m your assistant (Demo Mode). How can I help you today?',
         timestamp: new Date(),
       };
       setMessages([greeting]);
@@ -194,7 +192,7 @@ const errorMessage: ChatMessage = {
 
 const handleAIResponse = async (userMessage: ChatMessage) => {
     if (!aiService) {
-      // Fallback to simple responses if no AI service
+      // Fallback to simple responses if no service
       setTimeout(() => {
         const response = getSimpleResponse(userMessage.message);
         const aiMessage: ChatMessage = {

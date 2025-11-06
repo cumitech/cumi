@@ -78,29 +78,39 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       );
     }
 
-    const userItem = existingUser.toJSON()
-    // Create DTO with existing data and new updates
-    const dto = new UserRequestDto({
+    const userItem = existingUser.toJSON();
+    
+    // For partial updates, merge existing data with new updates
+    const updatedData = {
       ...userItem,
       ...body,
       // Don't allow changing password through this endpoint
       password: userItem.password,
-    });
+    };
 
-    const validationErrors = await validate(dto);
-    if (validationErrors.length > 0) {
-      return NextResponse.json(
-        {
-          validationErrors: displayValidationErrors(validationErrors),
-          success: false,
-          data: null,
-          message: "Validation failed",
-        },
-        { status: 400 }
-      );
+    // Create DTO with merged data
+    const dto = new UserRequestDto(updatedData);
+
+    // Skip validation for partial updates to avoid required field errors
+    // Only validate if we're doing a full update (has all required fields)
+    const hasAllRequiredFields = body.username && body.email && body.fullName;
+    
+    if (hasAllRequiredFields) {
+      const validationErrors = await validate(dto);
+      if (validationErrors.length > 0) {
+        return NextResponse.json(
+          {
+            validationErrors: displayValidationErrors(validationErrors),
+            success: false,
+            data: null,
+            message: "Validation failed",
+          },
+          { status: 400 }
+        );
+      }
     }
 
-    const updatedUser = await userUseCase.updateUser(dto.toUpdateData(existingUser.toJSON()));
+    const updatedUser = await userUseCase.updateUser(dto.toUpdateData(updatedData));
 
     return NextResponse.json(
       {

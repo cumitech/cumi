@@ -104,7 +104,7 @@ export async function generateMetadata({ params }: TagPageProps): Promise<Metada
         hasPart: tag.posts?.map((post: any) => ({
           "@type": "BlogPosting",
           name: post.title,
-          url: `https://cumi.dev/blog_posts/${post.slug}`,
+          url: `https://cumi.dev/blog-posts/${post.slug}`,
           keywords: tag.name,
         })) || [],
       },

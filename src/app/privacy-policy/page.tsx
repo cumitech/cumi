@@ -1,8 +1,9 @@
 import { Metadata } from "next";
 import PrivacyPolicyPageComponent from "../../components/page-components/privacy-policy-page.component";
-import { generatePageMetadata, defaultImages } from "../../lib/seo";
+import { generateDynamicPageMetadata, defaultImages } from "../../lib/seo";
 
-export const metadata: Metadata = generatePageMetadata({
+export async function generateMetadata(): Promise<Metadata> {
+  return await generateDynamicPageMetadata("/privacy-policy", {
   title: "Privacy Policy - CUMI Technology",
   description: "Learn how CUMI Technology collects, uses, and protects your personal information. Read our comprehensive privacy policy.",
   keywords: [
@@ -43,7 +44,8 @@ export const metadata: Metadata = generatePageMetadata({
     images: [defaultImages[0]],
     creator: "@cumi_dev"
   }
-});
+  });
+}
 
 export default function PrivacyPolicyPage() {
   return <PrivacyPolicyPageComponent />;

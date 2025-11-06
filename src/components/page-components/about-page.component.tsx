@@ -113,7 +113,7 @@ return (
       <PageLayout
         showBanner={true}
         bannerTitle="About Us"
-        bannerBreadcrumbs={[{ label: "About Us", uri: "about_us" }]}
+        bannerBreadcrumbs={[{ label: "About Us", uri: "about-us" }]}
       >
         {}
         <section className="py-5">

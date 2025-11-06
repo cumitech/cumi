@@ -56,7 +56,7 @@ const ServiceList: React.FC<IServiceListProps> = ({ services }) => {
                           }}
                         />
                         <a
-                          href={`/our_services/${item.slug}`}
+                          href={`/our-services/${item.slug}`}
                           className="btn btn-sm btn-dark rounded-pill"
                         >
                           Learn more

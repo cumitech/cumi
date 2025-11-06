@@ -63,7 +63,8 @@ export default function PostDetailsPage({ params }: PostDetailsPageProps) {
   }, [postResponse, post, postStats, postComments]);
 
   // Handle comment approval
-  const handleCommentApproval = async (commentId: string, isApproved: boolean) => {
+  const handleCommentApproval = async (commentId: string | undefined, isApproved: boolean) => {
+    if (!commentId) return;
     try {
       const response = await fetch(`/api/comments/${commentId}`, {
         method: "PUT",
@@ -101,7 +102,8 @@ export default function PostDetailsPage({ params }: PostDetailsPageProps) {
   };
 
   // Handle comment deletion
-  const handleCommentDeletion = async (commentId: string) => {
+  const handleCommentDeletion = async (commentId: string | undefined) => {
+    if (!commentId) return;
     try {
       const response = await fetch(`/api/comments/${commentId}`, {
         method: "DELETE",
@@ -426,7 +428,7 @@ export default function PostDetailsPage({ params }: PostDetailsPageProps) {
                   icon={<EyeOutlined />}
                   onClick={() => {
                     const slug = (post as any).slug || post.id;
-                    window.open(`/blog_posts/${slug}`, '_blank');
+                    window.open(`/blog-posts/${slug}`, '_blank');
                   }}
                   style={{
                     borderRadius: '8px',
@@ -441,7 +443,7 @@ export default function PostDetailsPage({ params }: PostDetailsPageProps) {
                   icon={<EyeOutlined />}
                   onClick={() => {
                     const slug = (post as any).slug || post.id;
-                    router.push(`/blog_posts/${slug}`);
+                    router.push(`/blog-posts/${slug}`);
                   }}
                   style={{
                     borderRadius: '8px',

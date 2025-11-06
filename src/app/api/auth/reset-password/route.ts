@@ -87,35 +87,38 @@ export async function POST(request: NextRequest) {
 
     // Send confirmation email (optional, non-blocking)
     try {
+      const { html: emailHtml, attachments: emailAttachments } = emailService['getEmailTemplate']({
+        title: 'Password Changed',
+        subtitle: 'Your account security has been updated',
+        content: `
+          <h2>Hello ${userData.fullname || userData.username},</h2>
+          <p>This is a confirmation that the password for your CUMI account <strong>${userData.email}</strong> has just been changed successfully.</p>
+          
+          <div class="success-box">
+            <p><strong>✅ Your password was updated on:</strong><br>${new Date().toLocaleString()}</p>
+          </div>
+          
+          <div class="warning-box">
+            <p><strong>⚠️ Didn't make this change?</strong><br>If you did not request this password change, please contact our support team immediately at <a href="mailto:support@cumi.dev" style="color: #F59E0B;">support@cumi.dev</a></p>
+          </div>
+          
+          <p>For your security, we recommend:</p>
+          <div class="features-list">
+            <ul>
+              <li>Use a unique password for your CUMI account</li>
+              <li>Enable two-factor authentication (coming soon)</li>
+              <li>Never share your password with anyone</li>
+              <li>Update your password regularly</li>
+            </ul>
+          </div>
+        `
+      });
+
       await emailService.sendEmail({
         to: { email: userData.email, name: userData.fullname || userData.username },
         subject: "Password Changed Successfully - CUMI",
-        html: emailService['getEmailTemplate']({
-          title: 'Password Changed',
-          subtitle: 'Your account security has been updated',
-          content: `
-            <h2>Hello ${userData.fullname || userData.username},</h2>
-            <p>This is a confirmation that the password for your CUMI account <strong>${userData.email}</strong> has just been changed successfully.</p>
-            
-            <div class="success-box">
-              <p><strong>✅ Your password was updated on:</strong><br>${new Date().toLocaleString()}</p>
-            </div>
-            
-            <div class="warning-box">
-              <p><strong>⚠️ Didn't make this change?</strong><br>If you did not request this password change, please contact our support team immediately at <a href="mailto:support@cumi.dev" style="color: #F59E0B;">support@cumi.dev</a></p>
-            </div>
-            
-            <p>For your security, we recommend:</p>
-            <div class="features-list">
-              <ul>
-                <li>Use a unique password for your CUMI account</li>
-                <li>Enable two-factor authentication (coming soon)</li>
-                <li>Never share your password with anyone</li>
-                <li>Update your password regularly</li>
-              </ul>
-            </div>
-          `
-        }),
+        html: emailHtml,
+        attachments: emailAttachments,
         text: `
 Password Changed Successfully - CUMI
 

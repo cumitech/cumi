@@ -2,57 +2,76 @@ import { withAuth } from "next-auth/middleware";
 
 export default withAuth(
   function middleware(req) {
-    console.log(req.nextauth.token);
+    // Middleware logic runs after authentication check
+    console.log(`[Middleware] Authenticated route: ${req.nextUrl.pathname}`);
   },
   {
     pages: {
-      signIn: "/auth/signin",
+      signIn: "/login",
       error: "/error",
     },
     callbacks: {
       authorized: ({ token, req }) => {
-        // Allow access if user has a valid token
-        if (!token) return false;
+        const pathname = req.nextUrl.pathname;
         
         // Check if it's an admin-only route
-        const isAdminRoute = req.nextUrl.pathname.startsWith('/dashboard/admin') || 
-                           req.nextUrl.pathname.startsWith('/api/admin');
-        
-        // Admin routes require admin role
-        if (isAdminRoute) {
+        if (pathname.startsWith('/dashboard/admin')) {
           return token?.role === "admin";
         }
         
-        // Student routes require any authenticated user
-        const isStudentRoute = req.nextUrl.pathname.startsWith('/dashboard/student') ||
-                              req.nextUrl.pathname.startsWith('/dashboard/user') ||
-                              req.nextUrl.pathname.startsWith('/dashboard/creator');
-        
-        if (isStudentRoute) {
-          return !!token; // Any authenticated user can access
-        }
-        
-        // API routes - allow authenticated users for most endpoints
-        if (req.nextUrl.pathname.startsWith('/api/')) {
-          // Admin-only API endpoints
-          const adminOnlyAPIs = ['/api/users', '/api/admin', '/api/stats'];
-          const isAdminAPI = adminOnlyAPIs.some(path => req.nextUrl.pathname.startsWith(path));
-          
-          if (isAdminAPI) {
-            return token?.role === "admin";
-          }
-          
-          // Other API endpoints - allow authenticated users
+        // All other dashboard routes require authentication
+        if (pathname.startsWith('/dashboard')) {
           return !!token;
         }
         
-        // Default: allow authenticated users
-        return !!token;
+        // Public API endpoints that don't require authentication
+        const publicAPIs = [
+          '/api/auth',
+          '/api/public-stats',
+          '/api/public-partners',
+          '/api/services',
+          '/api/partners',
+          '/api/categories',
+          '/api/posts',
+          '/api/subscribe',
+          '/api/contact-messages',
+          '/api/cloudinary',
+          '/api/uploads',
+          '/api/media',
+        ];
+        const isPublicAPI = publicAPIs.some(path => pathname.startsWith(path));
+        
+        if (isPublicAPI) {
+          return true; // Allow access without authentication
+        }
+        
+        // Admin-only API endpoints
+        const adminOnlyAPIs = ['/api/users', '/api/admin', '/api/stats'];
+        const isAdminAPI = adminOnlyAPIs.some(path => pathname.startsWith(path));
+        
+        if (isAdminAPI) {
+          return token?.role === "admin";
+        }
+        
+        // Auth-required API endpoints
+        const protectedAPIs = ['/api/enrollments', '/api/submissions', '/api/current'];
+        const isProtectedAPI = protectedAPIs.some(path => pathname.startsWith(path));
+        
+        if (isProtectedAPI) {
+          return !!token;
+        }
+        
+        // Default: allow (for other API endpoints that have their own auth logic)
+        return true;
       },
     },
   }
 );
 
 export const config = {
-  matcher: ["/api/:path*", "/dashboard/:path*"], // Protect these routes
+  // Match all dashboard and API routes
+  matcher: [
+    '/dashboard/:path*',
+    '/api/:path*',
+  ],
 };

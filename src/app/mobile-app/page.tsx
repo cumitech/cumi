@@ -1,8 +1,9 @@
 import { Metadata } from "next";
 import MobileAppPageComponent from "../../components/page-components/mobile-app-page.component";
-import { generatePageMetadata, defaultImages } from "../../lib/seo";
+import { generateDynamicPageMetadata, defaultImages } from "../../lib/seo";
 
-export const metadata: Metadata = generatePageMetadata({
+export async function generateMetadata(): Promise<Metadata> {
+  return await generateDynamicPageMetadata("/mobile-app", {
   title: "CUMI Mobile App - Coming Soon | iOS & Android",
   description: "Get ready for the CUMI Mobile App! Access your complete LMS and Creator Dashboard on iOS and Android. Expected launch Q2 2025. Join our waitlist to be notified when we launch.",
   keywords: [
@@ -48,7 +49,8 @@ export const metadata: Metadata = generatePageMetadata({
     images: [defaultImages[0]],
     creator: "@cumi_dev"
   }
-});
+  });
+}
 
 export default function MobileAppPage() {
   return <MobileAppPageComponent />;

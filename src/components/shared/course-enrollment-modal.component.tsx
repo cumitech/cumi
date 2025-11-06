@@ -25,7 +25,7 @@ import {
 import { ICourse } from "@domain/models/course";
 import { useSession } from "next-auth/react";
 import PhoneNumberInput from "@components/shared/phone-number-input.component";
-import { validatePhoneNumber } from "@utils/country-codes";
+import { validatePhoneNumber, normalizePhoneNumber } from "@utils/country-codes";
 import { showLoginRequiredNotificationSimple, getCurrentUrlForRedirect } from "@components/shared/login-required-notification";
 
 const { Title, Text } = Typography;
@@ -62,11 +62,12 @@ const handleEnrollmentSubmit = async (values: any) => {
 
 setIsEnrolling(true);
 
-const enrollmentData = {
+      const countryCode = values.countryCode || 'CM';
+      const enrollmentData = {
         courseId: course.id,
         userId: session.user.id,
-        studentPhone: values.studentPhone,
-        countryCode: values.countryCode || 'CM',
+        studentPhone: normalizePhoneNumber(countryCode, values.studentPhone),
+        countryCode,
         emergencyContact: values.emergencyContact,
         educationLevel: values.educationLevel,
         internetAccess: values.internetAccess,
@@ -217,6 +218,7 @@ return (
                 placeholder="Enter your phone number"
                 showMoneyServices={true}
                 countryCode="CM"
+                size="large"
                 onCountryCodeChange={(code) => {
                   form.setFieldValue('countryCode', code);
                 }}
@@ -231,7 +233,7 @@ return (
                 { required: true, message: "Please enter emergency contact" },
               ]}
             >
-              <Input placeholder="Emergency contact phone number" />
+              <Input placeholder="Emergency contact phone number" size="large" />
             </Form.Item>
           </Col>
         </Row>

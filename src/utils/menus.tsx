@@ -5,7 +5,18 @@ import { GrBlog, GrDashboard, GrServices } from "react-icons/gr";
 import { FaCircleQuestion, FaFireExtinguisher } from "react-icons/fa6";
 import { TbCategoryPlus } from "react-icons/tb";
 
-import { FiBook, FiGlobe, FiPaperclip, FiTag, FiMail, FiUsers, FiEdit3, FiUser } from "react-icons/fi";
+import {
+  FiBook,
+  FiGlobe,
+  FiPaperclip,
+  FiTag,
+  FiMail,
+  FiUsers,
+  FiEdit3,
+  FiUser,
+  FiShuffle,
+  FiStar,
+} from "react-icons/fi";
 import { useTranslations } from "next-intl";
 import { IoSchoolOutline } from "react-icons/io5";
 import { AiOutlineFundProjectionScreen } from "react-icons/ai";
@@ -23,6 +34,28 @@ export const useMenu = () => {
         canAccess: ["admin"],
         label: "Dashboard",
       },
+    },
+    {
+      name: "role-switcher",
+      list: "/dashboard/role-switcher",
+      icon: <FiShuffle />,
+      meta: {
+        canAccess: ["admin"],
+        label: "Role Switcher",
+        isSpecial: true, // Mark as special component
+      },
+    },
+    {
+      name: "meta-data",
+      list: "/dashboard/meta-management",
+      create: "/dashboard/meta-management/create",
+      edit: "/dashboard/meta-management/edit/:id",
+      show: "/dashboard/meta-management/show/:id",
+      meta: {
+        canAccess: ["admin"],
+        label: "SEO Meta Management",
+      },
+      icon: <FiEdit3 />,
     },
     {
       name: "posts",
@@ -85,20 +118,7 @@ export const useMenu = () => {
       },
       icon: <FcEditImage />,
     },
-    {
-      name: "media",
-      list: "/dashboard/media",
-      create: "/dashboard/media/create",
-      edit: "/dashboard/media/edit/:id",
-      show: "/dashboard/media/show/:id",
-      parentName: "settings",
-      meta: {
-        canAccess: ["admin"],
-        label: "Media",
-        parent: "settings",
-      },
-      icon: <MdBrowseGallery />,
-    },
+
     {
       name: "events",
       list: "/dashboard/events",
@@ -281,6 +301,15 @@ export const useMenu = () => {
       icon: <FiMail />,
     },
     {
+      name: "mailing-list",
+      list: "/dashboard/admin/mailing-list",
+      meta: {
+        canAccess: ["admin"],
+        label: "Mailing List",
+      },
+      icon: <FiMail />,
+    },
+    {
       name: "partners",
       list: "/dashboard/partners",
       create: "/dashboard/partners/create",
@@ -292,8 +321,19 @@ export const useMenu = () => {
       },
       icon: <FiUsers />,
     },
+    {
+      name: "referrals",
+      list: "/dashboard/referrals",
+      create: "/dashboard/referrals/create",
+      edit: "/dashboard/referrals/edit/:id",
+      show: "/dashboard/referrals/show/:id",
+      meta: {
+        canAccess: ["admin"],
+        label: "Referrals Management",
+      },
+      icon: <FiStar />,
+    },
   ];
 
   return { menus };
 };
-

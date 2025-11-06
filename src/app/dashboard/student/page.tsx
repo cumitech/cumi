@@ -56,6 +56,7 @@ import { format } from "@utils/format";
 import { useRouter } from "next/navigation";
 import { nanoid } from "nanoid";
 import EnhancedBreadcrumb from "@components/shared/enhanced-breadcrumb/enhanced-breadcrumb.component";
+import AccountActivationNotification from "@components/shared/account-activation-notification";
 import { showLoginRequiredNotificationSimple, getCurrentUrlForRedirect } from "@components/shared/login-required-notification";
 
 const { Title, Text } = Typography;
@@ -384,9 +385,9 @@ export default function StudentDashboard() {
         body: JSON.stringify({
           eventId,
           userId: session.user.id,
-          name: (session.user as any).fullName || session.user.name || "",
+          name: session.user.name || "",
           email: session.user.email || "",
-          phone: (session.user as any).phoneNumber || "",
+          phone: "",
           status: "pending",
           paymentStatus: "pending",
           registrationDate: new Date(),
@@ -543,9 +544,9 @@ export default function StudentDashboard() {
   // Handle navigate to full post
   const handleNavigateToPost = (postId: string, postSlug?: string) => {
     if (postSlug) {
-      router.push(`/blog_posts/${postSlug}`);
+      router.push(`/blog-posts/${postSlug}`);
     } else {
-      router.push(`/blog_posts/${postId}`);
+      router.push(`/blog-posts/${postId}`);
     }
   };
 
@@ -1358,6 +1359,9 @@ export default function StudentDashboard() {
         items={[{ title: t("student_dashboard.title") }]}
         showBackButton
       />
+
+      {/* Account Activation Notification */}
+      <AccountActivationNotification />
 
       <div
         style={{

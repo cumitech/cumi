@@ -27,8 +27,8 @@ setLoading(true);
     try {
       // Update the locale cookie
       document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000`;
-
-// Reload the page to apply the new locale
+      
+      // Reload the page to apply the new locale
       window.location.reload();
     } catch (error) {
       console.error("Error changing language:", error);

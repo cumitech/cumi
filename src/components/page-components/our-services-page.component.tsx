@@ -62,7 +62,7 @@ return (
       </div>
 
 <BannerComponent
-        breadcrumbs={[{ label: t("nav.services"), uri: "our_services" }]}
+        breadcrumbs={[{ label: t("nav.services"), uri: "our-services" }]}
         pageTitle={t("nav.services")}
       />
 

@@ -38,6 +38,7 @@ import { useTranslation } from "@contexts/translation.context";
 import { statsAPI } from "@store/api/stats_api";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
+import RoleSwitcher from "@components/role-switcher";
 
 const { Title, Text } = Typography;
 
@@ -46,6 +47,14 @@ export default function AdminDashboard() {
   const { t } = useTranslation();
   const router = useRouter();
   const hasRedirected = useRef(false);
+
+  // Fetch real stats data with auto-refresh for admin dashboard (only for admin users)
+  const statsQuery = statsAPI.useGetDashboardStatsQuery(undefined, {
+    pollingInterval: 30000, // Auto-refresh every 30 seconds
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+    skip: !session?.user, // Only skip if no user session
+  });
 
   // Redirect non-admin users to their appropriate dashboard (only once)
   useEffect(() => {
@@ -67,7 +76,7 @@ export default function AdminDashboard() {
         }
       }
     }
-  }, [session?.user]); // Only depend on session.user
+  }, [session?.user, router]); // Include router in dependencies
 
   // Show loading while session is loading
   if (status === "loading") {
@@ -97,14 +106,6 @@ export default function AdminDashboard() {
     );
   }
 
-  // Fetch real stats data with auto-refresh for admin dashboard (only for admin users)
-  const statsQuery = statsAPI.useGetDashboardStatsQuery(undefined, {
-    pollingInterval: 30000, // Auto-refresh every 30 seconds
-    refetchOnFocus: true,
-    refetchOnReconnect: true,
-    skip: !session?.user, // Only skip if no user session
-  });
-
   const {
     data: statsData,
     isLoading: isLoadingStats,
@@ -112,6 +113,9 @@ export default function AdminDashboard() {
     error: statsError,
     refetch: refetchStats,
   } = statsQuery;
+
+  // Type assertion to fix refetch call signature
+  const handleRefetchStats = refetchStats as () => void;
 
   // Use real stats data or fallback to 0
   const stats = statsData?.overview || {
@@ -220,6 +224,11 @@ export default function AdminDashboard() {
 
   // Get recent activities from API data
   const recentActivities = statsData?.recentActivities || [];
+
+  // Handle stats API error
+  if (statsError && !isLoadingStats) {
+    console.error('Stats API Error:', statsError);
+  }
 
   // User-specific stats for non-admin users
   const userStats = [
@@ -356,6 +365,13 @@ export default function AdminDashboard() {
       <Col span={24}>
         <PageBreadCrumbs items={["Dashboard"]} />
 
+        {/* Role Switcher */}
+        <RoleSwitcher 
+          currentRole={session?.user?.role || "admin"} 
+          size="middle"
+          showLabel={true}
+        />
+
         {/* Welcome Section */}
         <Card 
           style={{ 
@@ -368,7 +384,7 @@ export default function AdminDashboard() {
         >
           <Row align="middle" justify="space-between">
             <Col>
-              <Title level={3} style={{ margin: 0 }}>
+              <Title level={1} style={{ margin: 0, fontSize: '2rem', fontWeight: '600' }}>
                 {t("dashboard.welcome")}, {session?.user?.name || "Administrator"}! 👋
               </Title>
               <Text type="secondary">{t("dashboard.admin_subtitle")}</Text>
@@ -381,7 +397,7 @@ export default function AdminDashboard() {
                 <Button
                   type="text"
                   icon={<ReloadOutlined />}
-                  onClick={() => refetchStats()}
+                  onClick={handleRefetchStats}
                   loading={isFetchingStats}
                   title="Refresh Stats"
                 />
@@ -389,6 +405,42 @@ export default function AdminDashboard() {
             </Col>
           </Row>
         </Card>
+
+        {/* Error Message for Stats API */}
+        {statsError && (
+          <Card 
+            style={{ 
+              marginBottom: 24,
+              backgroundColor: "#fff2f0",
+              border: "1px solid #ffccc7",
+              borderRadius: "12px",
+            }}
+          >
+            <Row align="middle" justify="space-between">
+              <Col>
+                <Text style={{ color: "#ff4d4f", fontSize: "16px", fontWeight: "500" }}>
+                  ⚠️ Unable to load dashboard statistics
+                </Text>
+                <br />
+                <Text type="secondary" style={{ fontSize: "14px" }}>
+                  The dashboard is working, but some statistics may not be available. 
+                  You can try refreshing the page or contact support if the issue persists.
+                </Text>
+              </Col>
+              <Col>
+                <Button
+                  type="primary"
+                  danger
+                  icon={<ReloadOutlined />}
+                  onClick={handleRefetchStats}
+                  loading={isFetchingStats}
+                >
+                  Retry
+                </Button>
+              </Col>
+            </Row>
+          </Card>
+        )}
 
         {/* Main Statistics */}
         <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>

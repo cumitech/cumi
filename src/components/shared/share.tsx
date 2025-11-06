@@ -13,7 +13,7 @@ interface ShareProps {
   description?: string;
   slug: string;
   className?: string;
-  type?: 'blog_posts' | 'projects' | 'events' | 'courses' | 'opportunities';
+  type?: 'blog-posts' | 'projects' | 'events' | 'courses' | 'opportunities';
   showModern?: boolean;
 }
 
@@ -22,7 +22,7 @@ const Share: React.FC<ShareProps> = ({
   description,
   slug,
   className,
-  type = 'blog_posts',
+  type = 'blog-posts',
   showModern = false
 }) => {
   const [copied, setCopied] = useState(false);

@@ -15,6 +15,8 @@ export const baseAPI = createApi({
   refetchOnReconnect: true, // Refetch when reconnecting
   tagTypes: [
     "Post",
+    "Tutorial",
+    "TutorialSubcategory",
     "Course",
     "Event",
     "User",
@@ -49,6 +51,7 @@ export const baseAPI = createApi({
     "LessonProgress",
     "CourseReviews",
     "UserReviews",
+    "Referral",
   ],
   endpoints: () => ({}), // Endpoints will be injected
 });

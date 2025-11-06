@@ -1,8 +1,9 @@
 import { Metadata } from "next";
 import AuthorsPageComponent from "@components/page-components/authors-page.component";
-import { generatePageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
+import { generateDynamicPageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
 
-export const metadata: Metadata = generatePageMetadata({
+export async function generateMetadata(): Promise<Metadata> {
+  return await generateDynamicPageMetadata("/authors", {
   title: "Authors - CUMI Technology Blog Writers & Contributors",
   description: "Meet the talented authors and contributors behind CUMI's technology blog. Discover expert insights on software development, web technologies, digital transformation, and industry best practices.",
   keywords: [
@@ -71,7 +72,8 @@ export const metadata: Metadata = generatePageMetadata({
       "description": "Expert contributors and authors writing about software development and technology"
     }
   }
-});
+  });
+}
 
 export default function AuthorsPage() {
   return <AuthorsPageComponent />;

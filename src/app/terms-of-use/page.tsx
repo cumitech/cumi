@@ -1,8 +1,9 @@
 import { Metadata } from "next";
 import TermsOfUsePageComponent from "../../components/page-components/terms-of-use-page.component";
-import { generatePageMetadata, defaultImages } from "../../lib/seo";
+import { generateDynamicPageMetadata, defaultImages } from "../../lib/seo";
 
-export const metadata: Metadata = generatePageMetadata({
+export async function generateMetadata(): Promise<Metadata> {
+  return await generateDynamicPageMetadata("/terms-of-use", {
   title: "Terms of Use - CUMI Technology",
   description: "Read our terms of use and service agreement for using CUMI Technology's platform, services, and mobile applications.",
   keywords: [
@@ -43,7 +44,8 @@ export const metadata: Metadata = generatePageMetadata({
     images: [defaultImages[0]],
     creator: "@cumi_dev"
   }
-});
+  });
+}
 
 export default function TermsOfUsePage() {
   return <TermsOfUsePageComponent />;

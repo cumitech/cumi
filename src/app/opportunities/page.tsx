@@ -1,8 +1,9 @@
 import { Metadata } from "next";
 import OpportunitiesPageComponent from "@components/page-components/opportunities-page.component";
-import { generatePageMetadata, defaultImages } from "../../lib/seo";
+import { generateDynamicPageMetadata, defaultImages } from "../../lib/seo";
 
-export const metadata: Metadata = generatePageMetadata({
+export async function generateMetadata(): Promise<Metadata> {
+  return await generateDynamicPageMetadata("/opportunities", {
   title: "Opportunities - CUMI Career Opportunities & Job Openings",
   description: "Explore career opportunities at CUMI. Join our software development team with positions in web development, mobile app development, cloud solutions, and digital transformation roles.",
   keywords: [
@@ -71,7 +72,8 @@ export const metadata: Metadata = generatePageMetadata({
       "description": "Collection of software development positions and career opportunities"
     }
   }
-});
+  });
+}
 
 export default function OpportunitiesPage() {
   return <OpportunitiesPageComponent />;

@@ -464,3 +464,20 @@ export const validatePhoneNumber = (countryCode: string, phoneNumber: string): b
   return isValid; // 6-15 digits for African countries
 };
 
+// Normalize any input into E.164-like form using the provided country
+// Ensures a single space after prefix for UI consistency when storing/displaying
+export const normalizePhoneNumber = (countryCode: string, phoneNumber: string): string => {
+  const country = getCountryByCode(countryCode);
+  if (!country) return phoneNumber.trim();
+
+  // Strip existing prefix and non-digit formatting except leading + in prefix
+  const withoutPrefix = phoneNumber
+    .replace(/^\+?\d{1,4}/, '')
+    .replace(/[\s\-\(\)]/g, '')
+    .replace(/^0+/, ''); // drop leading zeros common in local formats
+
+  if (!withoutPrefix) return `${country.phonePrefix} `;
+
+  return `${country.phonePrefix} ${withoutPrefix}`;
+};
+

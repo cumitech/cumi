@@ -1,8 +1,9 @@
 import { Metadata } from "next";
 import EventsPageComponent from "@components/page-components/events-page.component";
-import { generatePageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
+import { generateDynamicPageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
 
-export const metadata: Metadata = generatePageMetadata({
+export async function generateMetadata(): Promise<Metadata> {
+  return await generateDynamicPageMetadata("/events", {
   title: "Events - CUMI Technology Workshops & Conferences",
   description: "Join CUMI's technology events, workshops, and conferences. Learn about software development, web applications, mobile app development, and digital transformation from industry experts.",
   keywords: [
@@ -71,7 +72,8 @@ export const metadata: Metadata = generatePageMetadata({
       "description": "Collection of workshops, conferences, and networking events"
     }
   }
-});
+  });
+}
 
 export default function EventsPage() {
   return <EventsPageComponent />;

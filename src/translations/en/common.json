@@ -28,7 +28,10 @@
     "student": "Student",
     "student-courses": "My Courses",
     "creator": "Creator",
-    "assignments": "Assignments"
+    "assignments": "Assignments",
+    "role-switcher": "Role Switcher",
+    "meta-management": "SEO Meta Management",
+    "referrals": "Referrals"
   },
   "settings": {
     "settings": "Settings"
@@ -56,10 +59,170 @@
     "refresh": "Refresh",
     "view": "View",
     "show": "Show",
-    "hide": "Hide"
+    "hide": "Hide",
+    "confirm": "Confirm",
+    "notAccessTitle": "You don't have permission to access this resource"
   },
   "actions": {
-    "create": "Create"
+    "create": "Create",
+    "list": "List",
+    "edit": "Edit",
+    "delete": "Delete",
+    "view": "View",
+    "save": "Save",
+    "cancel": "Cancel",
+    "update": "Update",
+    "submit": "Submit",
+    "reset": "Reset",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "import": "Import",
+    "refresh": "Refresh",
+    "show": "Show",
+    "hide": "Hide"
+  },
+  "notifications": {
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning",
+    "info": "Information",
+    "deleteSuccess": "Successfully deleted",
+    "createSuccess": "Successfully created",
+    "createError": "Validation failed",
+    "updateSuccess": "Successfully updated",
+    "editSuccess": "Successfully updated",
+    "editError": "Failed to update"
+  },
+  "projects": {
+    "projects": "Projects",
+    "titles": {
+      "list": "Projects List",
+      "create": "Create Project",
+      "edit": "Edit Project",
+      "show": "Project Details"
+    }
+  },
+  "opportunities": {
+    "opportunities": "Opportunities",
+    "titles": {
+      "list": "Opportunities List",
+      "create": "Create Opportunity",
+      "edit": "Edit Opportunity",
+      "show": "Opportunity Details"
+    }
+  },
+  "categories": {
+    "categories": "Categories",
+    "titles": {
+      "list": "Categories List",
+      "create": "Create Category",
+      "edit": "Edit Category",
+      "show": "Category Details"
+    }
+  },
+  "services": {
+    "services": "Services",
+    "titles": {
+      "list": "Services List",
+      "create": "Create Service",
+      "edit": "Edit Service",
+      "show": "Service Details"
+    }
+  },
+  "courses": {
+    "courses": "Courses",
+    "titles": {
+      "list": "Courses List",
+      "create": "Create Course",
+      "edit": "Edit Course",
+      "show": "Course Details"
+    }
+  },
+  "referrals": {
+    "referrals": "Referrals",
+    "titles": {
+      "list": "Referrals List",
+      "create": "Create Referral",
+      "edit": "Edit Referral",
+      "show": "Referral Details"
+    }
+  },
+  "lessons": {
+    "lessons": "Lessons",
+    "titles": {
+      "list": "Lessons List",
+      "create": "Create Lesson",
+      "edit": "Edit Lesson",
+      "show": "Lesson Details"
+    }
+  },
+  "events": {
+    "events": "Events",
+    "titles": {
+      "list": "Events List",
+      "create": "Create Event",
+      "edit": "Edit Event",
+      "show": "Event Details"
+    }
+  },
+  "quizes": {
+    "quizes": "Quizzes",
+    "titles": {
+      "list": "Quizzes List",
+      "create": "Create Quiz",
+      "edit": "Edit Quiz",
+      "show": "Quiz Details"
+    }
+  },
+  "users": {
+    "users": "Users",
+    "titles": {
+      "list": "Users List",
+      "create": "Create User",
+      "edit": "Edit User",
+      "show": "User Details"
+    }
+  },
+  "contact-messages": {
+    "contact-messages": "Contact Messages",
+    "titles": {
+      "list": "Contact Messages List",
+      "create": "Create Contact Message",
+      "edit": "Edit Contact Message",
+      "show": "Contact Message Details"
+    }
+  },
+  "posts": {
+    "posts": "Posts",
+    "titles": {
+      "list": "Posts List",
+      "create": "Create Post",
+      "edit": "Edit Post",
+      "show": "Post Details"
+    }
+  },
+  "meta-data": {
+    "meta-data": "SEO Meta Data",
+    "titles": {
+      "list": "Meta Data List",
+      "create": "Create Meta Data",
+      "edit": "Edit Meta Data",
+      "show": "Meta Data Details"
+    }
+  },
+  "tags": {
+    "tags": "Tags",
+    "titles": {
+      "list": "Tags List",
+      "create": "Create Tag",
+      "edit": "Edit Tag",
+      "show": "Tag Details"
+    }
   },
   "common": {
     "loading": "Loading...",

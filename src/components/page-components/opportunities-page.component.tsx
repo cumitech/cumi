@@ -150,7 +150,7 @@ export default function OpportunitiesPageComponent() {
             transition={{ duration: 0.5 }}
           >
             <Row gutter={[16, 16]} style={{ marginBottom: "2rem" }}>
-              <Col xs={24} sm={12} md={6}>
+              <Col xs={12} sm={12} md={6}>
                 <Card
                   style={{
                     borderRadius: "16px",
@@ -190,7 +190,7 @@ export default function OpportunitiesPageComponent() {
                   </Text>
                 </Card>
               </Col>
-              <Col xs={24} sm={12} md={6}>
+              <Col xs={12} sm={12} md={6}>
                 <Card
                   style={{
                     borderRadius: "16px",
@@ -231,7 +231,7 @@ export default function OpportunitiesPageComponent() {
                   </Text>
                 </Card>
               </Col>
-              <Col xs={24} sm={12} md={6}>
+              <Col xs={12} sm={12} md={6}>
                 <Card
                   style={{
                     borderRadius: "16px",
@@ -272,7 +272,7 @@ export default function OpportunitiesPageComponent() {
                   </Text>
                 </Card>
               </Col>
-              <Col xs={24} sm={12} md={6}>
+              <Col xs={12} sm={12} md={6}>
                 <Card
                   style={{
                     borderRadius: "16px",

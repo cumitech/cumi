@@ -527,6 +527,13 @@ return (
           setUploadImageFile(null);
         }}
         width={500}
+        destroyOnClose
+        maskClosable
+        centered
+        afterClose={() => {
+          setImageUrl("");
+          setUploadImageFile(null);
+        }}
       >
         <Space direction="vertical" style={{ width: "100%" }} size="large">
           <div>
@@ -572,6 +579,13 @@ return (
           setLinkText("");
           setLinkUrl("");
         }}
+        destroyOnClose
+        maskClosable
+        centered
+        afterClose={() => {
+          setLinkText("");
+          setLinkUrl("");
+        }}
       >
         <Space direction="vertical" style={{ width: "100%" }}>
           <div>
@@ -602,6 +616,9 @@ return (
         open={tableModalVisible}
         onOk={insertTable}
         onCancel={() => setTableModalVisible(false)}
+        destroyOnClose
+        maskClosable
+        centered
       >
         <Space direction="vertical" style={{ width: "100%" }}>
           <div>

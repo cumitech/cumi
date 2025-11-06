@@ -78,7 +78,7 @@ return (
           { label: t('category_detail.categories'), uri: "categories" },
           { label: category, uri: "#" },
         ]}
-        pageTitle={t('category_detail.blog_posts')}
+        pageTitle={t('category_detail.blog-posts')}
       />
 
 <div className="container py-5 mb-5">

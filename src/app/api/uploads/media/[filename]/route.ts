@@ -18,7 +18,7 @@ export async function GET(
     const fileBuffer = await readFile(filePath);
     const contentType = getContentType(filename);
     
-    return new NextResponse(fileBuffer, {
+    return new NextResponse(fileBuffer as any, {
       headers: {
         "Content-Type": contentType,
         "Cache-Control": "public, max-age=31536000, immutable",

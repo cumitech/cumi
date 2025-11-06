@@ -534,7 +534,7 @@ const LearningPage: React.FC<LearningPageProps> = () => {
         typeof window !== "undefined"
           ? encodeURIComponent(window.location.href)
           : encodeURIComponent(`/dashboard/student/courses/${courseId}/learn`);
-      router.push(`/auth/signin?callbackUrl=${callbackUrl}`);
+      router.push(`/login?callbackUrl=${callbackUrl}`);
       return;
     }
 
@@ -548,7 +548,7 @@ const LearningPage: React.FC<LearningPageProps> = () => {
           border: "1px solid #ff4d4f",
         },
       });
-      router.push("/auth/signin");
+      router.push("/login");
       return;
     }
   }, [status, session, router, api]);
@@ -617,7 +617,7 @@ const LearningPage: React.FC<LearningPageProps> = () => {
                       : encodeURIComponent(
                           `/dashboard/student/courses/${courseId}/learn`
                         );
-                  router.push(`/auth/signin?callbackUrl=${callbackUrl}`);
+                  router.push(`/login?callbackUrl=${callbackUrl}`);
                 }}
                 style={{
                   background:
@@ -854,7 +854,7 @@ const LearningPage: React.FC<LearningPageProps> = () => {
                       : encodeURIComponent(
                           `/dashboard/student/courses/${courseId}/learn`
                         );
-                  router.push(`/auth/signin?callbackUrl=${callbackUrl}`);
+                  router.push(`/login?callbackUrl=${callbackUrl}`);
                 }}
               >
                 Clear & Login
@@ -2789,7 +2789,7 @@ const LearningPage: React.FC<LearningPageProps> = () => {
                           : encodeURIComponent(
                               `/dashboard/student/courses/${courseId}/learn`
                             );
-                      router.push(`/auth/signin?callbackUrl=${callbackUrl}`);
+                      router.push(`/login?callbackUrl=${callbackUrl}`);
                     }}
                   >
                     Clear Cookies & Login

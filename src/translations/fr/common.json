@@ -28,7 +28,10 @@
     "student": "Étudiant",
     "student-courses": "Mes Cours",
     "creator": "Créateur",
-    "assignments": "Devoirs"
+    "assignments": "Devoirs",
+    "role-switcher": "Changement de Rôle",
+    "meta-management": "Gestion des Métadonnées SEO",
+    "referrals": "Recommandations"
   },
   "settings": {
     "settings": "Paramètres"
@@ -56,10 +59,158 @@
     "refresh": "Actualiser",
     "view": "Voir",
     "show": "Afficher",
-    "hide": "Masquer"
+    "hide": "Masquer",
+    "confirm": "Confirmer",
+    "notAccessTitle": "Vous n'avez pas la permission d'accéder à cette ressource"
   },
   "actions": {
-    "create": "Créer"
+    "create": "Créer",
+    "list": "Liste",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "view": "Voir",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "update": "Mettre à jour",
+    "submit": "Soumettre",
+    "reset": "Réinitialiser",
+    "close": "Fermer",
+    "back": "Retour",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "export": "Exporter",
+    "import": "Importer",
+    "refresh": "Actualiser",
+    "show": "Afficher",
+    "hide": "Masquer"
+  },
+  "notifications": {
+    "success": "Succès",
+    "error": "Erreur",
+    "warning": "Avertissement",
+    "info": "Information",
+    "deleteSuccess": "Supprimé avec succès",
+    "createSuccess": "Créé avec succès",
+    "updateSuccess": "Mis à jour avec succès"
+  },
+  "projects": {
+    "projects": "Projets",
+    "titles": {
+      "list": "Liste des Projets",
+      "create": "Créer un Projet",
+      "edit": "Modifier le Projet",
+      "show": "Détails du Projet"
+    }
+  },
+  "opportunities": {
+    "opportunities": "Opportunités",
+    "titles": {
+      "list": "Liste des Opportunités",
+      "create": "Créer une Opportunité",
+      "edit": "Modifier l'Opportunité",
+      "show": "Détails de l'Opportunité"
+    }
+  },
+  "categories": {
+    "categories": "Catégories",
+    "titles": {
+      "list": "Liste des Catégories",
+      "create": "Créer une Catégorie",
+      "edit": "Modifier la Catégorie",
+      "show": "Détails de la Catégorie"
+    }
+  },
+  "services": {
+    "services": "Services",
+    "titles": {
+      "list": "Liste des Services",
+      "create": "Créer un Service",
+      "edit": "Modifier le Service",
+      "show": "Détails du Service"
+    }
+  },
+  "courses": {
+    "courses": "Cours",
+    "titles": {
+      "list": "Liste des Cours",
+      "create": "Créer un Cours",
+      "edit": "Modifier le Cours",
+      "show": "Détails du Cours"
+    }
+  },
+  "referrals": {
+    "referrals": "Recommandations",
+    "titles": {
+      "list": "Liste des Recommandations",
+      "create": "Créer une Recommandation",
+      "edit": "Modifier la Recommandation",
+      "show": "Détails de la Recommandation"
+    }
+  },
+  "lessons": {
+    "lessons": "Leçons",
+    "titles": {
+      "list": "Liste des Leçons",
+      "create": "Créer une Leçon",
+      "edit": "Modifier la Leçon",
+      "show": "Détails de la Leçon"
+    }
+  },
+  "events": {
+    "events": "Événements",
+    "titles": {
+      "list": "Liste des Événements",
+      "create": "Créer un Événement",
+      "edit": "Modifier l'Événement",
+      "show": "Détails de l'Événement"
+    }
+  },
+  "quizes": {
+    "quizes": "Quiz",
+    "titles": {
+      "list": "Liste des Quiz",
+      "create": "Créer un Quiz",
+      "edit": "Modifier le Quiz",
+      "show": "Détails du Quiz"
+    }
+  },
+  "users": {
+    "users": "Utilisateurs",
+    "titles": {
+      "list": "Liste des Utilisateurs",
+      "create": "Créer un Utilisateur",
+      "edit": "Modifier l'Utilisateur",
+      "show": "Détails de l'Utilisateur"
+    }
+  },
+  "contact-messages": {
+    "contact-messages": "Messages de Contact",
+    "titles": {
+      "list": "Liste des Messages de Contact",
+      "create": "Créer un Message de Contact",
+      "edit": "Modifier le Message de Contact",
+      "show": "Détails du Message de Contact"
+    }
+  },
+  "posts": {
+    "posts": "Articles",
+    "titles": {
+      "list": "Liste des Articles",
+      "create": "Créer un Article",
+      "edit": "Modifier l'Article",
+      "show": "Détails de l'Article"
+    }
+  },
+  "tags": {
+    "tags": "Tags",
+    "titles": {
+      "list": "Liste des Tags",
+      "create": "Créer un Tag",
+      "edit": "Modifier le Tag",
+      "show": "Détails du Tag"
+    }
   },
   "common": {
     "loading": "Chargement...",

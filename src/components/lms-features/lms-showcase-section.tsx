@@ -97,7 +97,7 @@ export const LMSShowcaseSection = () => {
         color: "#0EA5E9",
       },
       {
-        title: t("lms.blog_posts_published"),
+        title: t("lms.blog-posts_published"),
         value: postCount > 0 ? `${postCount.toLocaleString()}+` : "0",
         icon: <FileTextOutlined />,
         loading: isLoadingPosts,

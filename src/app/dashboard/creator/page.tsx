@@ -47,6 +47,7 @@ import PostCreateModal from "@components/modals/PostCreateModal";
 import EventCreateModal from "@components/modals/EventCreateModal";
 import CourseManagementModal from "@components/modals/CourseManagementModal";
 import EnhancedBreadcrumb from "@components/shared/enhanced-breadcrumb/enhanced-breadcrumb.component";
+import AccountActivationNotification from "@components/shared/account-activation-notification";
 
 const { Title, Text } = Typography;
 
@@ -203,7 +204,8 @@ export default function CreatorDashboard() {
   };
 
   // Handle comment approval
-  const handleCommentApproval = async (commentId: string, isApproved: boolean) => {
+  const handleCommentApproval = async (commentId: string | undefined, isApproved: boolean) => {
+    if (!commentId) return;
     try {
       const response = await fetch(`/api/comments/${commentId}`, {
         method: "PUT",
@@ -244,7 +246,8 @@ export default function CreatorDashboard() {
   };
 
   // Handle comment deletion
-  const handleCommentDeletion = async (commentId: string) => {
+  const handleCommentDeletion = async (commentId: string | undefined) => {
+    if (!commentId) return;
     try {
       const response = await fetch(`/api/comments/${commentId}`, {
         method: "DELETE",
@@ -280,6 +283,7 @@ export default function CreatorDashboard() {
     record: BaseRecord,
     type: "course" | "post" | "event"
   ) => {
+    if (!record.id) return;
     try {
       const response = await fetch(`/api/${type}s/${record.id}`);
       const data = await response.json();
@@ -934,6 +938,9 @@ export default function CreatorDashboard() {
       {contextHolder}
       <EnhancedBreadcrumb items={[]} showBackButton={false} />
       <Title level={4}>{t('creator.dashboard_title')}</Title>
+      
+      {/* Account Activation Notification */}
+      <AccountActivationNotification />
       {/* Creator Statistics */}
       <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
         <Col span={24}>
@@ -1336,9 +1343,9 @@ export default function CreatorDashboard() {
             type="primary"
             onClick={() => {
               if (selectedPost?.slug) {
-                router.push(`/blog_posts/${selectedPost.slug}`);
+                router.push(`/blog-posts/${selectedPost.slug}`);
               } else {
-                router.push(`/blog_posts/${selectedPost?.id}`);
+                router.push(`/blog-posts/${selectedPost?.id}`);
               }
               setPostManagementVisible(false);
             }}

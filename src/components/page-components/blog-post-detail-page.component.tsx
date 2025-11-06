@@ -7,6 +7,8 @@ import { AppNav } from "@components/nav/nav.component";
 import CommentSection from "@components/comment/CommentSection";
 import ImageFallback from "@components/shared/image-fallback";
 import Share from "@components/shared/share";
+import ReferralsSidebar from "@components/shared/referrals-sidebar.component";
+import { renderContent } from "@utils/content-renderer";
 import { ITag } from "@domain/models/tag";
 import { bannerAPI } from "@store/api/banner_api";
 import { categoryAPI } from "@store/api/category_api";
@@ -84,6 +86,7 @@ const category = categories?.find((c) => c.id === post?.categoryId);
   const {
     data: postStatsData,
     isLoading: loadingStats,
+    refetch: refetchPostStats,
   } = postInteractionAPI.useGetPostStatsQuery(
     { postId: post?.id || '', userId: session?.user?.id },
     { 
@@ -114,21 +117,41 @@ const [handlePostInteraction] = postInteractionAPI.useHandlePostInteractionMutat
 
 if (!post?.id) return;
 
+// Prevent duplicate interactions
+    if (postStats.userInteraction === action) {
+      api.info({
+        message: t('blog_detail.already_interacted'),
+        description: t(`blog_detail.already_${action}`),
+        placement: 'topRight',
+        duration: 2,
+      });
+      return;
+    }
+
 try {
-      await handlePostInteraction({ postId: post.id, action }).unwrap();
+      const result = await handlePostInteraction({ postId: post.id, action }).unwrap();
+      
       api.success({
         message: t('common.success'),
         description: t(action === 'like' ? 'blog_detail.liked_success' : 'blog_detail.disliked_success'),
         placement: 'topRight',
         duration: 2,
       });
+      
+      // Stats will be automatically refetched by RTK Query due to invalidation
     } catch (error: any) {
-      console.error("Error updating post interaction:", error);
-      api.error({
-        message: t('common.error'),
-        description: error?.data?.message || t('blog_detail.interaction_failed'),
-        placement: 'topRight',
-      });
+      // Handle duplicate interaction gracefully
+      if (error?.data?.isDuplicate) {
+        // Don't show notification for duplicates when button is already disabled
+        // The UI already prevents this, so silent fail
+        return;
+      } else {
+        api.error({
+          message: t('common.error'),
+          description: error?.data?.message || t('blog_detail.interaction_failed'),
+          placement: 'topRight',
+        });
+      }
     }
   };
 
@@ -158,8 +181,8 @@ return (
           banner={banners ? (banners.length > 0 ? banners[0].image : "") : ""}
           breadcrumb={[
             {
-              title: t('nav.blog_posts'),
-              link: "/blog_posts",
+              title: t('nav.blog-posts'),
+              link: "/blog-posts",
             },
             {
               title: t('blog_detail.details'),
@@ -169,8 +192,8 @@ return (
         <Content>
           <section className="section pt-4">
             <div className="container">
-              <Row justify="center">
-                <Col xs={24} lg={20}>
+              <Row justify="center" gutter={[32, 0]}>
+                <Col xs={24} lg={17}>
                   {post && (
                     <Card
                       style={{
@@ -333,7 +356,7 @@ return (
                             color: "#333",
                           }}
                           dangerouslySetInnerHTML={{
-                            __html: post?.content as any,
+                            __html: post?.content ? renderContent(post.content) : '',
                           }}
                         />
 
@@ -373,7 +396,7 @@ return (
                                     transition: "all 0.3s ease",
                                   }}
                                   onClick={() => handlePostLikeDislike('like')}
-                                  disabled={!session?.user?.id}
+                                  disabled={!session?.user?.id || postStats.userInteraction === 'like'}
                                   onMouseEnter={(e) => {
                                     if (postStats.userInteraction !== 'like') {
                                       e.currentTarget.style.transform = "translateY(-2px)";
@@ -408,7 +431,7 @@ return (
                                     transition: "all 0.3s ease",
                                   }}
                                   onClick={() => handlePostLikeDislike('dislike')}
-                                  disabled={!session?.user?.id}
+                                  disabled={!session?.user?.id || postStats.userInteraction === 'dislike'}
                                   onMouseEnter={(e) => {
                                     if (postStats.userInteraction !== 'dislike') {
                                       e.currentTarget.style.transform = "translateY(-2px)";
@@ -499,7 +522,7 @@ return (
                           title={post?.title as any}
                           description={post?.description}
                           slug={post?.slug!}
-                          type="blog_posts"
+                          type="blog-posts"
                           showModern={true}
                         />
                       </div>
@@ -516,6 +539,17 @@ return (
                       />
                     </div>
                   )}
+                </Col>
+
+                {/* Referrals Sidebar */}
+                <Col xs={24} lg={7}>
+                  <div style={{ position: 'sticky', top: 20 }}>
+                    <ReferralsSidebar 
+                      category="tools" 
+                      limit={3}
+                      title="Recommended Tools"
+                    />
+                  </div>
                 </Col>
               </Row>
 

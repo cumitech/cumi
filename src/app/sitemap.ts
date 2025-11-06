@@ -37,7 +37,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // Generate dynamic URLs with enhanced metadata
     const postsData = posts?.data?.map((post: any) => ({
-      url: `${baseUrl}/blog_posts/${post?.slug}`,
+      url: `${baseUrl}/blog-posts/${post?.slug}`,
       lastModified: new Date(post?.updatedAt || post?.createdAt),
       changeFrequency: 'monthly' as const,
       priority: 0.7,
@@ -96,7 +96,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })) || [];
 
     const servicesData = services?.data?.map((service: any) => ({
-      url: `${baseUrl}/our_services/${service?.slug}`,
+      url: `${baseUrl}/our-services/${service?.slug}`,
       lastModified: new Date(service?.updatedAt || service?.createdAt),
       changeFrequency: 'monthly' as const,
       priority: 0.8,
@@ -131,25 +131,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 1,
       },
       {
-        url: `${baseUrl}/about_us`,
+        url: `${baseUrl}/about-us`,
         lastModified: new Date(),
         changeFrequency: 'monthly',
         priority: 0.8,
       },
       {
-        url: `${baseUrl}/our_services`,
+        url: `${baseUrl}/our-services`,
         lastModified: new Date(),
         changeFrequency: 'monthly',
         priority: 0.9,
       },
       {
-        url: `${baseUrl}/contact_us`,
+        url: `${baseUrl}/contact-us`,
         lastModified: new Date(),
         changeFrequency: 'monthly',
         priority: 0.7,
       },
       {
-        url: `${baseUrl}/blog_posts`,
+        url: `${baseUrl}/blog-posts`,
         lastModified: new Date(),
         changeFrequency: 'daily',
         priority: 0.9,
@@ -226,6 +226,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: 'yearly',
         priority: 0.2,
       },
+      {
+        url: `${baseUrl}/terms-of-use`,
+        lastModified: new Date(),
+        changeFrequency: 'yearly',
+        priority: 0.4,
+      },
+      {
+        url: `${baseUrl}/privacy-policy`,
+        lastModified: new Date(),
+        changeFrequency: 'yearly',
+        priority: 0.4,
+      },
+      {
+        url: `${baseUrl}/mobile-app`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.6,
+      },
     ];
 
     // Combine all URLs
@@ -252,25 +270,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 1,
       },
       {
-        url: `${baseUrl}/about_us`,
+        url: `${baseUrl}/about-us`,
         lastModified: new Date(),
         changeFrequency: 'monthly',
         priority: 0.8,
       },
       {
-        url: `${baseUrl}/our_services`,
+        url: `${baseUrl}/our-services`,
         lastModified: new Date(),
         changeFrequency: 'monthly',
         priority: 0.9,
       },
       {
-        url: `${baseUrl}/contact_us`,
+        url: `${baseUrl}/contact-us`,
         lastModified: new Date(),
         changeFrequency: 'monthly',
         priority: 0.7,
       },
       {
-        url: `${baseUrl}/blog_posts`,
+        url: `${baseUrl}/blog-posts`,
         lastModified: new Date(),
         changeFrequency: 'daily',
         priority: 0.9,

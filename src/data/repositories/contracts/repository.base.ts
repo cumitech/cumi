@@ -18,6 +18,9 @@ import { IReview } from "@domain/models/review.model";
 import { IQuizSubmission } from "@domain/models/quiz-submission.model";
 import { IAssignmentSubmission } from "@domain/models/assignment-submission.model";
 import { IUser } from "@domain/models/user";
+import { IMetaData } from "@domain/models/meta-data.model";
+import { ITutorialSubcategory } from "@domain/models/tutorial-subcategory.model";
+import { ITutorial } from "@domain/models/tutorial.model";
 
 import {
   Banner,
@@ -42,6 +45,9 @@ import {
   Review,
   QuizSubmission,
   AssignmentSubmission,
+  MetaData,
+  TutorialSubcategory,
+  Tutorial,
 } from "../../entities/index";
 
 export interface IRepository<T, U> {
@@ -241,5 +247,32 @@ export interface IAssignmentSubmissionRepository
     passRate: number;
   }>;
   updateGrade(id: string, score: number, feedback?: string, gradedBy?: string): Promise<InstanceType<typeof AssignmentSubmission> | null>;
+}
+
+export interface IMetaDataRepository
+  extends IRepository<IMetaData, InstanceType<typeof MetaData>> {
+  findByPage(page: string): Promise<InstanceType<typeof MetaData> | null>;
+  findBySchemaType(schemaType: string): Promise<InstanceType<typeof MetaData>[]>;
+  findByRobots(robots: string): Promise<InstanceType<typeof MetaData>[]>;
+  findByAuthor(author: string): Promise<InstanceType<typeof MetaData>[]>;
+  searchMetaData(searchTerm: string): Promise<InstanceType<typeof MetaData>[]>;
+  findPublished(): Promise<InstanceType<typeof MetaData>[]>;
+  findRecent(limit?: number): Promise<InstanceType<typeof MetaData>[]>;
+  findOrCreate(metaData: IMetaData): Promise<[InstanceType<typeof MetaData>, boolean]>;
+}
+
+export interface ITutorialSubcategoryRepository
+  extends IRepository<ITutorialSubcategory, InstanceType<typeof TutorialSubcategory>> {
+  findBySlug(slug: string): Promise<InstanceType<typeof TutorialSubcategory> | null>;
+  findByName(name: string): Promise<InstanceType<typeof TutorialSubcategory> | null>;
+}
+
+export interface ITutorialRepository
+  extends IRepository<ITutorial, InstanceType<typeof Tutorial>> {
+  findByTitle(title: string): Promise<InstanceType<typeof Tutorial> | null>;
+  findBySlug(slug: string): Promise<InstanceType<typeof Tutorial> | null>;
+  findBySubcategory(subcategoryId: string): Promise<InstanceType<typeof Tutorial>[] | null>;
+  findByAuthor(authorId: string): Promise<InstanceType<typeof Tutorial>[] | null>;
+  findPublished(): Promise<InstanceType<typeof Tutorial>[]>;
 }
 

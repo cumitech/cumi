@@ -5,12 +5,13 @@ import { ThemedLayoutV2 } from "@refinedev/antd";
 import { Authenticated } from "@refinedev/core";
 import { Header } from "./header";
 import { Col, Row, Spin } from "antd";
-import Login from "@app/login/page";
+import LoginFormComponent from "@components/page-components/login-form.component";
 import { AppNav } from "./nav/nav.component";
 import { AppFooter } from "./footer/footer";
 import { AppFootnote } from "./footnote/footnote";
 import { Title } from "./header/title.component";
 import { Session } from "next-auth";
+import AccountActivationNotification from "./shared/account-activation-notification";
 
 interface RoleBasedLayoutProps {
   children: React.ReactNode;
@@ -46,7 +47,7 @@ export default function RoleBasedLayout({
 
 // If no session, show login (fallback)
   if (!session?.user) {
-    return <Login />;
+    return <LoginFormComponent />;
   }
 
 // Determine user role
@@ -56,9 +57,11 @@ export default function RoleBasedLayout({
   if (userRole === "admin") {
     return (
       <ThemedLayoutV2 Header={Header} Title={Title}>
-        <Authenticated key={`${userRole}-dashboard`} fallback={<Login />}>
+        <Authenticated key={`${userRole}-dashboard`} fallback={<LoginFormComponent />}>
           <Row justify="center" align="top">
             <Col xs={22} md={20} style={{ padding: "2rem 0" }}>
+              {/* Account Activation Notification */}
+              <AccountActivationNotification />
               {children}
             </Col>
           </Row>
@@ -70,7 +73,7 @@ export default function RoleBasedLayout({
 // Creator Layout - Educational focused layout
   if (userRole === "creator") {
     return (
-      <Authenticated key={`${userRole}-dashboard`} fallback={<Login />}>
+      <Authenticated key={`${userRole}-dashboard`} fallback={<LoginFormComponent />}>
         <div
           className="creator-layout"
           style={{
@@ -104,7 +107,7 @@ export default function RoleBasedLayout({
 // Student Layout - Educational focused layout
   if (userRole === "student") {
     return (
-      <Authenticated key={`${userRole}-dashboard`} fallback={<Login />}>
+      <Authenticated key={`${userRole}-dashboard`} fallback={<LoginFormComponent />}>
         <div
           className="student-layout"
           style={{
@@ -137,7 +140,7 @@ export default function RoleBasedLayout({
 
 // User Layout - redirect to student dashboard
   return (
-    <Authenticated key={`${userRole}-dashboard`} fallback={<Login />}>
+    <Authenticated key={`${userRole}-dashboard`} fallback={<LoginFormComponent />}>
       <div
         className="student-layout"
         style={{

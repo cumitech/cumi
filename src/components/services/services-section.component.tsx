@@ -387,7 +387,7 @@ export const ServicesSection: React.FC<IServicesSectionProps> = ({
 
                         {}
                         <Link
-                          href={`/our_services/${service.slug}`}
+                          href={`/our-services/${service.slug}`}
                           style={{ marginTop: "auto" }}
                         >
                           <Button
@@ -431,7 +431,7 @@ export const ServicesSection: React.FC<IServicesSectionProps> = ({
 
         {showViewAllButton && (
           <div style={{ textAlign: "center", marginTop: "10px" }}>
-            <Link href="/our_services">
+            <Link href="/our-services">
               <Button
                 size="large"
                 shape="round"

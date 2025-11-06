@@ -22,6 +22,9 @@ import {
   Review,
   QuizSubmission,
   AssignmentSubmission,
+  Referral,
+  ReferralClick,
+  MetaData,
 } from "@data/entities/index";
 
 import { IBanner } from "@domain/models/banner.model";
@@ -46,6 +49,8 @@ import { ICourseProgress } from "@domain/models/course-progress.model";
 import { IReview } from "@domain/models/review.model";
 import { IQuizSubmission } from "@domain/models/quiz-submission.model";
 import { IAssignmentSubmission } from "@domain/models/assignment-submission.model";
+import { IReferral, IReferralClick } from "@domain/models/referral.model";
+import { IMetaData } from "@domain/models/meta-data.model";
 
 export class CategoryMapper {
   toDTO(category: InstanceType<typeof Category>): ICategory {
@@ -359,6 +364,69 @@ export class AssignmentSubmissionMapper {
       return entity;
     });
     return _submissions;
+  }
+}
+
+export class ReferralMapper {
+  toDTO(referral: InstanceType<typeof Referral>): IReferral {
+    const entity = referral.toJSON<IReferral>();
+    return entity;
+  }
+
+  toDTOs(referrals: InstanceType<typeof Referral>[]): IReferral[] {
+    const _referrals = referrals.map((referral) => {
+      const entity = referral.toJSON<IReferral>();
+      return entity;
+    });
+    return _referrals;
+  }
+}
+
+export class ReferralClickMapper {
+  toDTO(click: InstanceType<typeof ReferralClick>): IReferralClick {
+    const entity = click.toJSON<IReferralClick>();
+    return entity;
+  }
+
+  toDTOs(clicks: InstanceType<typeof ReferralClick>[]): IReferralClick[] {
+    const _clicks = clicks.map((click) => {
+      const entity = click.toJSON<IReferralClick>();
+      return entity;
+    });
+    return _clicks;
+  }
+}
+
+export class MetaDataMapper {
+  toDTO(metaData: InstanceType<typeof MetaData>): IMetaData {
+    const entity = metaData.toJSON() as any;
+    
+    // Convert keywords string to array if needed
+    if (entity.keywords && typeof entity.keywords === 'string') {
+      try {
+        entity.keywords = JSON.parse(entity.keywords);
+      } catch {
+        entity.keywords = entity.keywords.split(',').map((k: string) => k.trim());
+      }
+    } else if (!entity.keywords) {
+      entity.keywords = [];
+    }
+    
+    // Parse customSchema if it's a string
+    if (entity.customSchema && typeof entity.customSchema === 'string') {
+      try {
+        entity.customSchema = JSON.parse(entity.customSchema);
+      } catch {
+        // Keep as string if parsing fails
+      }
+    }
+    
+    return entity;
+  }
+
+  toDTOs(metaDataList: InstanceType<typeof MetaData>[]): IMetaData[] {
+    const _metaDataList = metaDataList.map((metaData) => this.toDTO(metaData));
+    return _metaDataList;
   }
 }
 

@@ -4,6 +4,9 @@ import { PostInteractionRepository } from "@data/repositories/impl/post-interact
 
 export const dynamic = 'force-dynamic';
 
+const postInteractionRepository = new PostInteractionRepository();
+const postInteractionUseCase = new PostInteractionUseCase(postInteractionRepository);
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
@@ -21,9 +24,6 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const postInteractionRepository = new PostInteractionRepository();
-    const postInteractionUseCase = new PostInteractionUseCase(postInteractionRepository);
-
     const stats = await postInteractionUseCase.getPostStats(postId, userId || undefined);
 
     return NextResponse.json({
@@ -32,33 +32,13 @@ export async function GET(request: NextRequest) {
       data: stats,
     });
   } catch (error: any) {
-    console.error("Error fetching post stats:", error);
-    
-    if (error.message && error.message.includes("doesn't exist")) {
-      return NextResponse.json(
-        {
-          success: true,
-          message: "Post interactions feature coming soon",
-          data: {
-            postId: "",
-            likesCount: 0,
-            dislikesCount: 0,
-            userInteraction: null,
-          },
-        },
-        { status: 200 }
-      );
-    }
-
     return NextResponse.json(
       {
         success: false,
         message: error.message || "Failed to fetch post stats",
         data: null,
       },
-      { status: 400 }
+      { status: 500 }
     );
   }
 }
-
-

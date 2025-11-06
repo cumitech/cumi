@@ -498,7 +498,7 @@ export default function CourseShow() {
             icon={<DeleteOutlined />} 
             size="small" 
             danger
-            onClick={() => handleDeleteModule(record.id)}
+            onClick={() => record.id && handleDeleteModule(String(record.id))}
           />
         </Space>
       ),
@@ -515,7 +515,7 @@ export default function CourseShow() {
         return (
           <Space>
             <Avatar icon={<UserOutlined />} />
-            <Text strong>{user?.fullName || "Unknown User"}</Text>
+            <Text strong>{(user as any)?.fullName || (user as any)?.fullname || "Unknown User"}</Text>
           </Space>
         );
       },
@@ -568,7 +568,7 @@ export default function CourseShow() {
             type="text"
             danger
             icon={<DeleteOutlined />}
-            onClick={() => handleDeleteEnrollment(record.id)}
+            onClick={() => record.id && handleDeleteEnrollment(String(record.id))}
           />
         </Space>
       ),
@@ -922,7 +922,7 @@ export default function CourseShow() {
                 placeholder="Select a student"
                 showSearch
                 options={users.map((user) => ({
-                  label: user.fullName,
+                  label: (user as any).fullName || (user as any).fullname || user.username,
                   value: user.id,
                 }))}
               />

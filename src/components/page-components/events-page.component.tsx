@@ -116,7 +116,7 @@ return (
           transition={{ duration: 0.5 }}
         >
           <Row gutter={[16, 16]} style={{ marginBottom: '2rem' }}>
-            <Col xs={24} sm={12} md={6}>
+            <Col xs={12} sm={12} md={6}>
               <Card
                 style={{
                   borderRadius: '16px',
@@ -134,7 +134,7 @@ return (
                 <Text style={{ color: '#4b5563', fontSize: '14px', fontWeight: 500 }}>Total</Text>
               </Card>
             </Col>
-            <Col xs={24} sm={12} md={6}>
+            <Col xs={12} sm={12} md={6}>
               <Card
                 style={{
                   borderRadius: '16px',
@@ -152,7 +152,7 @@ return (
                 <Text style={{ color: '#4b5563', fontSize: '14px', fontWeight: 500 }}>Workshops</Text>
               </Card>
             </Col>
-            <Col xs={24} sm={12} md={6}>
+            <Col xs={12} sm={12} md={6}>
               <Card
                 style={{
                   borderRadius: '16px',
@@ -170,7 +170,7 @@ return (
                 <Text style={{ color: '#4b5563', fontSize: '14px', fontWeight: 500 }}>Seminars</Text>
               </Card>
             </Col>
-            <Col xs={24} sm={12} md={6}>
+            <Col xs={12} sm={12} md={6}>
               <Card
                 style={{
                   borderRadius: '16px',

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import {
   Col,
   Row,
@@ -12,6 +12,9 @@ import {
   Tag,
   Button,
   Tooltip,
+  Switch,
+  message,
+  Modal,
 } from "antd";
 import {
   UserOutlined,
@@ -20,46 +23,76 @@ import {
   EyeOutlined,
   EditOutlined,
   DeleteOutlined,
+  CheckCircleOutlined,
+  StopOutlined,
 } from "@ant-design/icons";
 import { useTable } from "@refinedev/antd";
 import { BaseRecord } from "@refinedev/core";
 import { format } from "@utils/format";
 import EnhancedBreadcrumb from "@components/shared/enhanced-breadcrumb/enhanced-breadcrumb.component";
+import { useTranslation } from "@contexts/translation.context";
+import { userAPI } from "@store/api/user_api";
 
 const { Title } = Typography;
 
 export default function UsersPage() {
+  const { t } = useTranslation();
+  const [messageApi, contextHolder] = message.useMessage();
   const { tableProps, tableQueryResult } = useTable({
     syncWithLocation: true,
   });
 
-  // Mock stats for users dashboard - replace with real API call
+  // Fetch all users for stats calculation
+  const { data: allUsers, refetch: refetchUsers } = userAPI.useFetchAllUsersQuery();
+  
+  // Use RTK Query mutation for status updates
+  const [updateUserStatus] = userAPI.useUpdateUserStatusMutation();
+
+  // Calculate stats from API data
   const userStats = [
     {
       title: "Total Users",
-      value: tableQueryResult?.data?.total || 0,
+      value: allUsers?.length || 0,
       icon: <UserOutlined />,
       color: "#52c41a",
     },
     {
       title: "Active Users",
-      value: tableQueryResult?.data?.data?.filter((user: any) => user.status === "active")?.length || 0,
+      value: allUsers?.filter((user: any) => user.accountStatus === "active")?.length || 0,
       icon: <TeamOutlined />,
       color: "#1890ff",
     },
     {
       title: "Creators",
-      value: tableQueryResult?.data?.data?.filter((user: any) => user.role === "creator")?.length || 0,
+      value: allUsers?.filter((user: any) => user.role === "creator")?.length || 0,
       icon: <BookOutlined />,
       color: "#722ed1",
     },
     {
       title: "Students",
-      value: tableQueryResult?.data?.data?.filter((user: any) => user.role === "student")?.length || 0,
+      value: allUsers?.filter((user: any) => user.role === "student")?.length || 0,
       icon: <UserOutlined />,
       color: "#13c2c2",
     },
   ];
+
+  // Handle user status toggle
+  const handleStatusToggle = async (userId: string, currentStatus: string) => {
+    try {
+      const newStatus = currentStatus === "active" ? "inactive" : "active";
+      
+      await updateUserStatus({
+        userId,
+        accountStatus: newStatus,
+      }).unwrap();
+
+      messageApi.success(`User ${newStatus === "active" ? "activated" : "deactivated"} successfully`);
+      refetchUsers(); // Refresh the data
+      tableQueryResult.refetch(); // Refresh the table
+    } catch (error: any) {
+      messageApi.error(error?.data?.message || error?.message || "Failed to update user status");
+    }
+  };
 
   const userColumns = [
     {
@@ -112,6 +145,34 @@ export default function UsersPage() {
       },
     },
     {
+      title: "Status",
+      dataIndex: "accountStatus",
+      key: "accountStatus",
+      width: 120,
+      filters: [
+        { text: "Active", value: "active" },
+        { text: "Inactive", value: "inactive" },
+        { text: "Suspended", value: "suspended" },
+        { text: "Banned", value: "banned" },
+        { text: "Pending", value: "pending" },
+      ],
+      onFilter: (value: any, record: any) => record.accountStatus === value,
+      render: (value: string) => {
+        const statusConfig = {
+          active: { color: "green", text: "Active" },
+          inactive: { color: "orange", text: "Inactive" },
+          suspended: { color: "red", text: "Suspended" },
+          banned: { color: "red", text: "Banned" },
+          pending: { color: "blue", text: "Pending" },
+        };
+        const config = statusConfig[value as keyof typeof statusConfig] || {
+          color: "default",
+          text: value,
+        };
+        return <Tag color={config.color}>{config.text}</Tag>;
+      },
+    },
+    {
       title: "Phone",
       dataIndex: "phoneNumber",
       key: "phoneNumber",
@@ -138,9 +199,9 @@ export default function UsersPage() {
       render: (v: string) => (v ? new Date(v).toLocaleDateString() : "-"),
     },
     {
-      title: "Actions",
+      title: t('common.actions'),
       key: "actions",
-      width: 200,
+      width: 250,
       render: (_: any, record: BaseRecord) => (
         <Space size="small">
           <Tooltip title="View details">
@@ -160,6 +221,16 @@ export default function UsersPage() {
               style={{ borderRadius: 8 }}
             />
           </Tooltip>
+          <Tooltip title={record.accountStatus === "active" ? "Deactivate user" : "Activate user"}>
+            <Button
+              icon={record.accountStatus === "active" ? <StopOutlined /> : <CheckCircleOutlined />}
+              size="small"
+              type={record.accountStatus === "active" ? "default" : "primary"}
+              ghost
+              style={{ borderRadius: 8 }}
+              onClick={() => record.id && handleStatusToggle(String(record.id), record.accountStatus)}
+            />
+          </Tooltip>
           <Tooltip title="Delete user">
             <Button
               icon={<DeleteOutlined />}
@@ -176,10 +247,11 @@ export default function UsersPage() {
 
   return (
     <div>
+      {contextHolder}
       <EnhancedBreadcrumb
         items={[
           { title: "Dashboard", href: "/dashboard/creator" },
-          { title: "Users" },
+          { title: t('dashboard.users') },
         ]}
         showBackButton
       />

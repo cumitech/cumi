@@ -6,29 +6,36 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const ImageFallback = (props: any) => {
-  const { src, fallback, ...rest } = props;
-  const [imgSrc, setImgSrc] = useState(src);
+  const { src, fallback = "/favicon.svg", ...rest } = props;
+  const [imgSrc, setImgSrc] = useState(src || fallback);
 
-useEffect(() => {
+  useEffect(() => {
     setImgSrc(src);
   }, [src]);
   const { width } = useWindowSize();
 
+  const isFill = Boolean((rest as any).fill);
+  const displaySrc = imgSrc || fallback;
+
   return (
     <Image
       {...rest}
-      src={imgSrc}
+      src={displaySrc}
       alt={props.alt || ""}
       onError={() => {
         setImgSrc(fallback);
       }}
-      style={{
-        objectFit: "cover",
-        maxWidth: "100%",
-        minHeight: width > 767 ? "450px" : "350px",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
+      style={
+        isFill
+          ? { objectFit: "cover", backgroundSize: "cover", backgroundPosition: "center" }
+          : {
+              objectFit: "cover",
+              maxWidth: "100%",
+              minHeight: width > 767 ? "450px" : "350px",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }
+      }
       quality={100}
     />
   );

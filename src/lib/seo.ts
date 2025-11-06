@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { getPageMetadata } from '@utils/meta-data-utils';
 
 const url = process.env.NEXTAUTH_URL || "https://cumi.dev";
 
@@ -67,6 +68,7 @@ interface PageMetadataOptions {
     creator?: string;
   };
   schema?: any;
+  locale?: string;
 }
 
 export function generatePageMetadata(options: PageMetadataOptions): Metadata {
@@ -82,7 +84,8 @@ export function generatePageMetadata(options: PageMetadataOptions): Metadata {
     alternates,
     openGraph,
     twitter,
-    schema
+    schema,
+    locale = 'en'
   } = options;
 
   const allKeywords = [...baseKeywords, ...keywords].join(", ");
@@ -186,7 +189,7 @@ export function generateStructuredData(type: string, data: any) {
         "dateModified": data.updatedAt,
         "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": `${baseUrl}/blog_posts/${data.slug}`
+          "@id": `${baseUrl}/blog-posts/${data.slug}`
         }
       };
       
@@ -250,23 +253,125 @@ export function generateStructuredData(type: string, data: any) {
         "@context": "https://schema.org",
         "@type": "Organization",
         "name": "CUMI",
-        "description": "Leading software development and digital solutions company",
+        "alternateName": "CUMI Technologies",
+        "description": "Leading software development and digital solutions company specializing in web development, mobile apps, and custom software solutions",
         "url": baseUrl,
-        "logo": `${baseUrl}/logo.png`,
+        "logo": {
+          "@type": "ImageObject",
+          "url": `${baseUrl}/cumi-green.jpg`,
+          "width": 160,
+          "height": 90
+        },
+        "image": `${baseUrl}/cumi-green.jpg`,
+        "foundingDate": "2020",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Douala",
+          "addressCountry": "Cameroon"
+        },
         "contactPoint": {
           "@type": "ContactPoint",
-          "telephone": "+1-XXX-XXX-XXXX",
+          "telephone": "+237-681-289-411",
           "contactType": "customer service",
-          "email": "info@cumi.dev"
+          "email": "info@cumi.dev",
+          "availableLanguage": ["English", "French"]
         },
         "sameAs": [
-          "https://twitter.com/cumi_dev",
-          "https://linkedin.com/company/cumi"
+          "https://web.facebook.com/ayeahgodlove/",
+          "https://twitter.com/GodloveAyeah",
+          "https://www.linkedin.com/in/ayeah-godlove-akoni-0820a0164/",
+          "https://github.com/ayeahgodlove"
+        ],
+        "serviceArea": {
+          "@type": "Country",
+          "name": "Cameroon"
+        },
+        "knowsAbout": [
+          "Software Development",
+          "Web Development",
+          "Mobile App Development",
+          "Digital Solutions",
+          "Technology Consulting",
+          "Custom Software",
+          "Business Automation",
+          "Digital Transformation"
         ]
+      };
+      
+    case 'website':
+      return {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "CUMI - Software Development & Digital Solutions",
+        "url": baseUrl,
+        "description": "Transform your business with CUMI's cutting-edge software development, web applications, mobile apps, and digital solutions",
+        "publisher": {
+          "@type": "Organization",
+          "name": "CUMI",
+          "logo": {
+            "@type": "ImageObject",
+            "url": `${baseUrl}/cumi-green.jpg`
+          }
+        },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": `${baseUrl}/search?q={search_term_string}`
+          },
+          "query-input": "required name=search_term_string"
+        }
+      };
+      
+    case 'service':
+      return {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": data.title,
+        "description": data.description,
+        "provider": {
+          "@type": "Organization",
+          "name": "CUMI",
+          "url": baseUrl
+        },
+        "serviceType": data.category || "Software Development",
+        "areaServed": {
+          "@type": "Country",
+          "name": "Cameroon"
+        }
       };
       
     default:
       return null;
   }
+}
+
+/**
+ * Generate dynamic metadata for a page using the meta-data system
+ * This function will check if custom meta data exists for the page,
+ * and fall back to generated metadata if not found
+ */
+export async function generateDynamicPageMetadata(
+  pagePath: string,
+  fallbackOptions: PageMetadataOptions
+): Promise<Metadata> {
+  try {
+    // Try to get custom meta data first
+    const dynamicMetadata = await getPageMetadata(
+      pagePath,
+      fallbackOptions.title,
+      fallbackOptions.description
+    );
+    
+    // If we got custom metadata, use it
+    if (dynamicMetadata) {
+      return dynamicMetadata;
+    }
+  } catch (error) {
+    console.error('Error getting dynamic metadata:', error);
+  }
+  
+  // Fall back to generating metadata with the provided options
+  return generatePageMetadata(fallbackOptions);
 }
 

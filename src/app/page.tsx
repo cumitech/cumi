@@ -1,8 +1,9 @@
 import { Metadata } from "next";
 import HomePageComponent from "@components/page-components/home-page.component";
-import { generatePageMetadata, generateStructuredData, defaultImages } from "../lib/seo";
+import { generateDynamicPageMetadata, generateStructuredData, defaultImages } from "../lib/seo";
 
-export const metadata: Metadata = generatePageMetadata({
+export async function generateMetadata(): Promise<Metadata> {
+  return await generateDynamicPageMetadata("/", {
   title: "CUMI - Leading Software Development & Digital Solutions Company",
   description: "Transform your business with CUMI's cutting-edge software development, web applications, mobile apps, and digital solutions. Expert team delivering innovative technology solutions for startups to enterprises.",
   keywords: [
@@ -67,8 +68,9 @@ export const metadata: Metadata = generatePageMetadata({
       "Database Design",
       "User Experience Design"
     ]
-  }),
-});
+  })
+  });
+}
 
 export default function IndexPage() {
   return <HomePageComponent />;

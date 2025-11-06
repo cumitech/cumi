@@ -71,7 +71,7 @@ export default function CommentSection({ postId, postTitle, postSlug }: CommentS
     pollingInterval: 30000, // Poll every 30 seconds for new comments
   });
 
-const [createComment, { isLoading: submitting }] = commentAPI.useCreateCommentMutation();
+  const [createComment, { isLoading: submitting }] = commentAPI.useCreateCommentMutation();
   const [handleCommentInteraction] = commentInteractionAPI.useHandleCommentInteractionMutation();
 
 // Get current URL for sharing
@@ -139,6 +139,66 @@ const shareMenuItems = [
     },
   ];
 
+// Extract all comment IDs to fetch stats for them
+  const extractCommentIds = React.useCallback((comments: any[]): string[] => {
+    const ids: string[] = [];
+    comments.forEach(comment => {
+      ids.push(comment.id);
+      if (comment.replies && comment.replies.length > 0) {
+        ids.push(...extractCommentIds(comment.replies));
+      }
+    });
+    return ids;
+  }, []);
+
+  const allCommentIds = React.useMemo(() => {
+    if (!commentsData) return [];
+    const commentsArray = Array.isArray(commentsData) 
+      ? commentsData 
+      : (commentsData as any)?.data || [];
+    if (!Array.isArray(commentsArray)) return [];
+    return extractCommentIds(commentsArray);
+  }, [commentsData, extractCommentIds]);
+
+  // Fetch stats for ALL comments at once when data changes
+  const [commentStatsMap, setCommentStatsMap] = React.useState<Record<string, { likesCount: number; dislikesCount: number; userInteraction: 'like' | 'dislike' | null }>>({});
+
+  const idsKey = React.useMemo(() => allCommentIds.join(','), [allCommentIds]);
+
+  React.useEffect(() => {
+    const fetchAllStats = async () => {
+      if (allCommentIds.length === 0) return;
+      
+      const statsMap: Record<string, { likesCount: number; dislikesCount: number; userInteraction: 'like' | 'dislike' | null }> = {};
+      
+      // Fetch stats for each comment
+      await Promise.all(
+        allCommentIds.map(async (id) => {
+          try {
+            const response = await fetch(`/api/comments/interactions/stats?commentId=${id}&userId=${session?.user?.id || ''}`);
+            const data = await response.json();
+            if (data.success && data.data) {
+              statsMap[id] = {
+                likesCount: data.data.likesCount ?? 0,
+                dislikesCount: data.data.dislikesCount ?? 0,
+                userInteraction: data.data.userInteraction ?? null,
+              };
+            } else {
+              statsMap[id] = { likesCount: 0, dislikesCount: 0, userInteraction: null };
+            }
+          } catch (error) {
+            console.error(`Failed to fetch stats for comment ${id}:`, error);
+            statsMap[id] = { likesCount: 0, dislikesCount: 0, userInteraction: null };
+          }
+        })
+      );
+      
+      setCommentStatsMap(statsMap);
+    };
+
+    fetchAllStats();
+  }, [idsKey, allCommentIds, allCommentIds.length, session?.user?.id]);
+
 // Process comments with stats - backend already provides tree structure
   const comments: CommentWithStats[] = React.useMemo(() => {
     if (!commentsData) return [];
@@ -155,11 +215,12 @@ if (!Array.isArray(commentsArray)) {
 
     // Recursively add stats to comments and their replies
     const addStatsToComment = (comment: IComment): CommentWithStats => {
+      const stats = commentStatsMap[comment.id] || { likesCount: 0, dislikesCount: 0, userInteraction: null };
       const withStats = {
         ...comment,
-        likesCount: 0,
-        dislikesCount: 0,
-        userInteraction: null,
+        likesCount: stats.likesCount,
+        dislikesCount: stats.dislikesCount,
+        userInteraction: stats.userInteraction,
         // Recursively process replies if they exist
         replies: comment.replies 
           ? comment.replies.map((reply: any) => addStatsToComment(reply))
@@ -174,7 +235,7 @@ if (!Array.isArray(commentsArray)) {
     const processedComments = commentsArray.map(comment => addStatsToComment(comment));
 
     return processedComments;
-  }, [commentsData]);
+  }, [commentsData, commentStatsMap]);
 
 // Handle like/dislike
   const handleLikeDislike = async (commentId: string, action: 'like' | 'dislike') => {
@@ -187,8 +248,52 @@ if (!Array.isArray(commentsArray)) {
       return;
     }
 
+// Find the comment to check if user already interacted
+    const findComment = (comments: CommentWithStats[]): CommentWithStats | undefined => {
+      for (const comment of comments) {
+        if (comment.id === commentId) return comment;
+        if (comment.replies) {
+          const found = findComment(comment.replies);
+          if (found) return found;
+        }
+      }
+      return undefined;
+    };
+
+    const comment = findComment(comments);
+    
+    // Prevent duplicate interactions
+    if (comment && comment.userInteraction === action) {
+      api.info({
+        message: t('comments.already_interacted'),
+        description: t(`comments.already_${action}`),
+        placement: 'topRight',
+        duration: 2,
+      });
+      return;
+    }
+
 try {
       await handleCommentInteraction({ commentId, action }).unwrap();
+      
+      // Refetch the specific comment's stats
+      try {
+        const response = await fetch(`/api/comments/interactions/stats?commentId=${commentId}&userId=${session?.user?.id || ''}`);
+        const data = await response.json();
+        if (data.success && data.data) {
+          setCommentStatsMap(prev => ({
+            ...prev,
+            [commentId]: {
+              likesCount: data.data.likesCount ?? 0,
+              dislikesCount: data.data.dislikesCount ?? 0,
+              userInteraction: data.data.userInteraction ?? null,
+            }
+          }));
+        }
+      } catch (fetchError) {
+        console.error('Failed to refetch stats:', fetchError);
+      }
+      
       api.success({
         message: t('common.success'),
         description: t(`comments.${action}_success`),
@@ -196,12 +301,23 @@ try {
         duration: 2,
       });
     } catch (error: any) {
-      console.error("Error updating interaction:", error);
-      api.error({
-        message: t('common.error'),
-        description: error?.data?.message || t('comments.interaction_failed'),
-        placement: 'topRight',
-      });
+      // Only log unexpected errors, not duplicate interactions
+      if (!error?.data?.isDuplicate) {
+        console.error("Error updating interaction:", error);
+      }
+      
+      // Handle duplicate interaction gracefully
+      if (error?.data?.isDuplicate) {
+        // Don't show notification for duplicates when button is already disabled
+        // The UI already prevents this, so silent fail
+        return;
+      } else {
+        api.error({
+          message: t('common.error'),
+          description: error?.data?.message || t('comments.interaction_failed'),
+          placement: 'topRight',
+        });
+      }
     }
   };
 
@@ -353,13 +469,14 @@ return (
                 style={{ 
                   color: comment.userInteraction === 'like' ? "#1890ff" : "#666",
                   backgroundColor: comment.userInteraction === 'like' ? "#e6f7ff" : "transparent",
+                  border: comment.userInteraction === 'like' ? '1px solid #91d5ff' : 'none',
                   padding: "0 8px",
                   height: "28px",
                   borderRadius: "4px",
                   fontSize: "12px"
                 }}
                 onClick={() => handleLikeDislike(comment.id, 'like')}
-                disabled={!session?.user?.id}
+                disabled={!session?.user?.id || comment.userInteraction === 'like'}
               >
                 {comment.likesCount || 0}
               </Button>
@@ -371,13 +488,14 @@ return (
                 style={{ 
                   color: comment.userInteraction === 'dislike' ? "#ff4d4f" : "#666",
                   backgroundColor: comment.userInteraction === 'dislike' ? "#fff2f0" : "transparent",
+                  border: comment.userInteraction === 'dislike' ? '1px solid #ffccc7' : 'none',
                   padding: "0 8px",
                   height: "28px",
                   borderRadius: "4px",
                   fontSize: "12px"
                 }}
                 onClick={() => handleLikeDislike(comment.id, 'dislike')}
-                disabled={!session?.user?.id}
+                disabled={!session?.user?.id || comment.userInteraction === 'dislike'}
               >
                 {comment.dislikesCount || 0}
               </Button>
@@ -493,10 +611,11 @@ return (
           >
             <TextArea
               rows={4}
+              style={{ minHeight: "100px", borderRadius: "8px" }}
               placeholder={replyingTo ? t('comments.reply_placeholder') : t('comments.comment_placeholder')}
               maxLength={1000}
               showCount
-              style={{ borderRadius: "8px" }}
+              // style={{ borderRadius: "8px" }}
             />
           </Form.Item>
           <Form.Item style={{ marginBottom: 0 }}>

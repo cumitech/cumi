@@ -165,7 +165,7 @@ export const useLearningPage = () => {
       const callbackUrl = typeof window !== 'undefined' 
         ? encodeURIComponent(window.location.href)
         : encodeURIComponent(`/dashboard/student/courses/${courseId}/learn`);
-      router.push(`/auth/signin?callbackUrl=${callbackUrl}`);
+      router.push(`/login?callbackUrl=${callbackUrl}`);
       return;
     }
 
@@ -178,7 +178,7 @@ export const useLearningPage = () => {
           border: '1px solid #ff4d4f',
         }
       });
-      router.push("/auth/signin");
+      router.push("/login");
       return;
     }
   }, [status, session, router, api]);

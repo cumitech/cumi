@@ -12,7 +12,21 @@ export const userAPI = baseAPI.injectEndpoints({
     fetchAllUsers: build.query<IUser[], number | void>({
       query: (page = 1) => `/users?page=${page}`,
     }),
+    updateUserStatus: build.mutation<IUser, { userId: string; accountStatus: string }>({
+      query: ({ userId, accountStatus }) => ({
+        url: `/users/${userId}`,
+        method: 'PUT',
+        body: { accountStatus },
+      }),
+    }),
   }),
   overrideExisting: true,
 });
+
+export const {
+  useGetSingleUserQuery,
+  useGetUserByUsernameQuery,
+  useFetchAllUsersQuery,
+  useUpdateUserStatusMutation,
+} = userAPI;
 

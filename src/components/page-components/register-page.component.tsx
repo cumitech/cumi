@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import {
   Button,
@@ -18,11 +18,6 @@ import {
   SiAuth0,
   SiGoogle,
   SiFacebook,
-  SiTwitter,
-  SiGithub,
-  SiLinkedin,
-  SiMicrosoft,
-  SiApple,
 } from "react-icons/si";
 import Link from "next/link";
 import {
@@ -43,6 +38,7 @@ const { Title, Text } = Typography;
 
 export default function RegisterPageComponent() {
   const router = useRouter();
+  const { update } = useSession();
   const [loading, setLoading] = useState(false);
   const { open } = useNotification();
 
@@ -60,7 +56,12 @@ try {
       });
 
 if (response?.ok) {
-        router.push("/"); // Redirect after successful registration
+        // Update session to refresh authentication state
+        await update();
+        
+        // Force a page reload to ensure session is properly updated
+        window.location.href = "/";
+        
         open?.({
           type: "success",
           message: "Registration Successful!",

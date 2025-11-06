@@ -35,7 +35,7 @@ const BlogPostItem = ({ post, users, categories }: PostItemProps) => {
       key={post.id}
       className="bg-white border-0 shadow"
       cover={
-        <Link href={`/blog_posts/${post.slug}`}>
+        <Link href={`/blog-posts/${post.slug}`}>
           <Image
             alt={post.title}
             src={post.imageUrl}
@@ -56,7 +56,7 @@ const BlogPostItem = ({ post, users, categories }: PostItemProps) => {
         <ReadMoreButton
           key="read-more"
           icon={<EyeOutlined />}
-          onClick={() => window.location.href = `/blog_posts/${post.slug}`}
+          onClick={() => window.location.href = `/blog-posts/${post.slug}`}
           style={{
             background: 'transparent',
             border: '2px solid rgba(102, 126, 234, 0.3)',
@@ -87,7 +87,7 @@ const BlogPostItem = ({ post, users, categories }: PostItemProps) => {
     >
       <Meta
         title={
-          <Link href={`/blog_posts/${post.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+          <Link href={`/blog-posts/${post.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
             <Title level={4} style={{ marginBottom: 10, textWrap: "wrap" }}>
               {post.title}
             </Title>

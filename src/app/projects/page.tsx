@@ -1,8 +1,9 @@
 import { Metadata } from "next";
 import ProjectsPageComponent from "@components/page-components/projects-page.component";
-import { generatePageMetadata, defaultImages } from "../../lib/seo";
+import { generateDynamicPageMetadata, defaultImages } from "../../lib/seo";
 
-export const metadata: Metadata = generatePageMetadata({
+export async function generateMetadata(): Promise<Metadata> {
+  return await generateDynamicPageMetadata("/projects", {
   title: "Our Projects - CUMI Software Development Portfolio",
   description: "Explore CUMI's portfolio of innovative software development projects including web applications, mobile apps, cloud solutions, and digital transformation projects built with cutting-edge technologies.",
   keywords: [
@@ -71,7 +72,8 @@ export const metadata: Metadata = generatePageMetadata({
       "description": "Collection of web applications, mobile apps, and digital transformation projects"
     }
   }
-});
+  });
+}
 
 export default function ProjectsPage() {
   return <ProjectsPageComponent />;

@@ -1,4 +1,4 @@
-// services/aiService.ts
+// services/chatService.ts
 export interface AIServiceConfig {
     apiKey: string;
     model?: string;
@@ -57,7 +57,7 @@ class AIService {
 
             if (!response.ok) {
                 const errorBody = await response.text();
-                let errorMessage = `OpenAI API error: ${response.status} ${response.statusText}`;
+                let errorMessage = `API error: ${response.status} ${response.statusText}`;
                 
                 try {
                     const errorData = JSON.parse(errorBody);
@@ -109,7 +109,7 @@ class AIService {
                 },
             };
         } catch (error) {
-            console.error('OpenAI Service Error:', error);
+            console.error('Service Error:', error);
             
             // Return user-friendly error messages
             if (error instanceof Error) {
@@ -166,7 +166,7 @@ class AIService {
 
                 if (!response.ok) {
                     const errorBody = await response.text();
-                    let errorMessage = `OpenAI API error: ${response.status}`;
+                    let errorMessage = `API error: ${response.status}`;
                     
                     try {
                         const errorData = JSON.parse(errorBody);
@@ -219,7 +219,7 @@ class AIService {
                     }
                 }
             } catch (error) {
-                console.error('OpenAI Streaming Error:', error);
+                console.error('Streaming Error:', error);
                 
                 // Handle specific error types with user-friendly messages
                 let userMessage = 'I\'m experiencing technical difficulties. Please try again in a moment.';

@@ -13,6 +13,7 @@ const PostInteraction = (sequelizeInstance: Sequelize, DataTypes: any) => {
       postId: {
         type: DataTypes.STRING(10),
         allowNull: false,
+        field: 'postId', // Explicit field mapping
         references: {
           model: 'posts',
           key: 'id',
@@ -21,6 +22,7 @@ const PostInteraction = (sequelizeInstance: Sequelize, DataTypes: any) => {
       userId: {
         type: DataTypes.STRING(10),
         allowNull: false,
+        field: 'userId', // Explicit field mapping
         references: {
           model: 'users',
           key: 'id',
@@ -29,6 +31,7 @@ const PostInteraction = (sequelizeInstance: Sequelize, DataTypes: any) => {
       action: {
         type: DataTypes.ENUM('like', 'dislike'),
         allowNull: false,
+        field: 'action', // Explicit field mapping
       },
       createdAt: {
         type: DataTypes.DATE,

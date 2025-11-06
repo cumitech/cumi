@@ -5,6 +5,7 @@ import { AppFooter } from "@components/footer/footer";
 import { AppFootnote } from "@components/footnote/footnote";
 import { AppNav } from "@components/nav/nav.component";
 import Share from "@components/shared/share";
+import ReferralsSidebar from "@components/shared/referrals-sidebar.component";
 import {
   Col,
   Layout,
@@ -35,6 +36,18 @@ import { useTranslation } from "@contexts/translation.context";
 
 const { Content } = Layout;
 const { Title, Paragraph, Text } = Typography;
+
+// Basic HTML tag stripper to ensure public pages do not render raw HTML
+const stripHtml = (input: string | null | undefined): string => {
+  if (!input) return "";
+  return input
+    .replace(/<[^>]*>/g, "")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .trim();
+};
 
 interface OpportunityDetailPageComponentProps {
   opportunitySlug: string;
@@ -175,8 +188,8 @@ return (
               className="container py-5"
               style={{ backgroundColor: "white" }}
             >
-              <Row justify="center">
-                <Col xs={24} lg={18}>
+              <Row justify="center" gutter={[32, 0]}>
+                <Col xs={24} lg={14}>
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -267,7 +280,7 @@ return (
                       </div>
 
 <Row gutter={[16, 16]} className="mb-4">
-                        <Col xs={24} sm={12} md={6}>
+                        <Col xs={12} sm={12} md={6}>
                           <Card
                             style={{
                               borderRadius: "12px",
@@ -308,7 +321,7 @@ return (
                             </Text>
                           </Card>
                         </Col>
-                        <Col xs={24} sm={12} md={6}>
+                        <Col xs={12} sm={12} md={6}>
                           <Card
                             bordered={false}
                             style={{
@@ -350,7 +363,7 @@ return (
                           </Card>
                         </Col>
                         {(opportunity.amount || opportunity.salaryRange) && (
-                          <Col xs={24} sm={12} md={6}>
+                          <Col xs={12} sm={12} md={6}>
                             <Card
                               style={{
                                 borderRadius: "12px",
@@ -394,7 +407,7 @@ return (
                           </Col>
                         )}
                         {opportunity.duration && (
-                          <Col xs={24} sm={12} md={6}>
+                          <Col xs={12} sm={12} md={6}>
                             <Card
                               style={{
                                 borderRadius: "12px",
@@ -478,7 +491,7 @@ return (
                          >
                            {t("opportunity_detail.description")}
                          </Title>
-                        <Paragraph
+                        <div
                           style={{
                             fontSize: "15px",
                             lineHeight: 1.8,
@@ -489,9 +502,10 @@ return (
                             borderLeft: "4px solid #22C55E",
                             borderRadius: "0 12px 12px 0",
                           }}
-                        >
-                          {opportunity.description}
-                        </Paragraph>
+                          dangerouslySetInnerHTML={{
+                            __html: (opportunity.description as unknown as string) || "",
+                          }}
+                        />
                       </div>
 
 <div className="mb-4">
@@ -505,7 +519,7 @@ return (
                         >
                           {t("opportunity_detail.requirements")}
                         </Title>
-                        <Paragraph
+                        <div
                           style={{
                             fontSize: "15px",
                             lineHeight: 1.8,
@@ -516,9 +530,10 @@ return (
                             borderLeft: "4px solid #f59e0b",
                             borderRadius: "0 12px 12px 0",
                           }}
-                        >
-                          {opportunity.requirements}
-                        </Paragraph>
+                          dangerouslySetInnerHTML={{
+                            __html: (opportunity.requirements as unknown as string) || "",
+                          }}
+                        />
                       </div>
 
 {}
@@ -816,6 +831,17 @@ return skillsArray && skillsArray.length > 0 ? (
                       </div>
                     </Card>
                   </motion.div>
+                </Col>
+
+                {/* Referrals Sidebar */}
+                <Col xs={24} lg={10}>
+                  <div style={{ position: 'sticky', top: 20 }}>
+                    <ReferralsSidebar 
+                      category="tools" 
+                      limit={3}
+                      title="Recommended Tools"
+                    />
+                  </div>
                 </Col>
               </Row>
             </div>

@@ -1,138 +1,75 @@
-"use client";
+import { Metadata } from "next";
+import { generateDynamicPageMetadata, generateStructuredData, defaultImages } from "../../../lib/seo";
+import ForgotPasswordPageComponent from "../../../components/page-components/forgot-password-component";
 
-import React, { useState } from "react";
-import { Form, Input, Button, Card, message, Typography, Space } from "antd";
-import { MailOutlined, LockOutlined } from "@ant-design/icons";
-import { useRouter } from "next/navigation";
-
-const { Title, Text } = Typography;
-
-export default function ForgotPasswordPage() {
-  const [form] = Form.useForm();
-  const [loading, setLoading] = useState(false);
-  const [emailSent, setEmailSent] = useState(false);
-  const router = useRouter();
-
-  const handleSubmit = async (values: { email: string }) => {
-    setLoading(true);
-    try {
-      const response = await fetch('/api/auth/forgot-password', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
-      });
-
-      const data = await response.json();
-      
-      if (response.ok) {
-        setEmailSent(true);
-        message.success('If the email exists, a password reset link has been sent');
-      } else {
-        message.error(data.error || 'Failed to send reset email');
+export async function generateMetadata(): Promise<Metadata> {
+  return await generateDynamicPageMetadata("/auth/forgot-password", {
+    title: "Forgot Password - Reset Your CUMI Account",
+    description: "Reset your CUMI account password securely. Enter your email address to receive a password reset link. Secure password recovery for your learning platform account.",
+    keywords: [
+      "forgot password",
+      "password reset",
+      "CUMI password recovery",
+      "account recovery",
+      "reset password",
+      "password help",
+      "account access",
+      "secure password reset",
+      "email password reset",
+      "user account recovery",
+      "login help",
+      "password assistance",
+      "account security",
+      "password recovery email",
+      "reset account access",
+      "forgot login",
+      "password reset link",
+      "account password help",
+      "secure account recovery",
+      "password reset process"
+    ],
+    url: "https://cumi.dev/auth/forgot-password",
+    alternates: {
+      canonical: "https://cumi.dev/auth/forgot-password"
+    },
+    image: defaultImages[0],
+    images: [
+      {
+        url: defaultImages[0],
+        width: 1200,
+        height: 630,
+        alt: "CUMI Password Reset - Secure Account Recovery"
       }
-    } catch (error) {
-      message.error('Failed to send reset email');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (emailSent) {
-    return (
-      <div style={{ 
-        minHeight: '100vh', 
-        display: 'flex', 
-        alignItems: 'center', 
-        justifyContent: 'center',
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-      }}>
-        <Card style={{ width: 400, textAlign: 'center' }}>
-          <Space direction="vertical" size="large" style={{ width: '100%' }}>
-            <MailOutlined style={{ fontSize: 48, color: '#52c41a' }} />
-            <Title level={3}>Check Your Email</Title>
-            <Text>
-              We&apos;ve sent a password reset link to your email address. 
-              Please check your inbox and follow the instructions to reset your password.
-            </Text>
-            <Text type="secondary">
-              The link will expire in 1 hour for security reasons.
-            </Text>
-            <Button 
-              type="primary" 
-              onClick={() => router.push('/auth/signin')}
-              style={{ width: '100%' }}
-            >
-              Back to Sign In
-            </Button>
-          </Space>
-        </Card>
-      </div>
-    );
-  }
-
-  return (
-    <div style={{ 
-      minHeight: '100vh', 
-      display: 'flex', 
-      alignItems: 'center', 
-      justifyContent: 'center',
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-    }}>
-      <Card style={{ width: 400 }}>
-        <Space direction="vertical" size="large" style={{ width: '100%' }}>
-          <div style={{ textAlign: 'center' }}>
-            <LockOutlined style={{ fontSize: 48, color: '#1890ff' }} />
-            <Title level={2}>Forgot Password?</Title>
-            <Text type="secondary">
-              Enter your email address and we&apos;ll send you a link to reset your password.
-            </Text>
-          </div>
-
-          <Form
-            form={form}
-            layout="vertical"
-            onFinish={handleSubmit}
-            size="large"
-          >
-            <Form.Item
-              name="email"
-              label="Email Address"
-              rules={[
-                { required: true, message: 'Please enter your email address' },
-                { type: 'email', message: 'Please enter a valid email address' }
-              ]}
-            >
-              <Input
-                prefix={<MailOutlined />}
-                placeholder="Enter your email address"
-              />
-            </Form.Item>
-
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                loading={loading}
-                style={{ width: '100%' }}
-              >
-                Send Reset Link
-              </Button>
-            </Form.Item>
-          </Form>
-
-          <div style={{ textAlign: 'center' }}>
-            <Button 
-              type="link" 
-              onClick={() => router.push('/auth/signin')}
-            >
-              Back to Sign In
-            </Button>
-          </div>
-        </Space>
-      </Card>
-    </div>
-  );
+    ],
+    openGraph: {
+      type: "website",
+      title: "Forgot Password - Reset Your CUMI Account",
+      description: "Securely reset your CUMI account password. Enter your email to receive a password reset link and regain access to your account.",
+      images: [defaultImages[0]],
+      siteName: "CUMI",
+      locale: "en_US",
+      url: "https://cumi.dev/auth/forgot-password"
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Reset Your CUMI Password - Secure Recovery",
+      description: "Forgot your CUMI password? Reset it securely by entering your email address to receive a password reset link.",
+      images: [defaultImages[0]],
+      creator: "@cumi_dev"
+    },
+    schema: generateStructuredData('webpage', {
+      name: "Forgot Password - CUMI Account Recovery",
+      description: "Secure password reset page for CUMI users to recover their account access",
+      url: "https://cumi.dev/auth/forgot-password",
+      isPartOf: {
+        "@type": "WebSite",
+        "name": "CUMI",
+        "url": "https://cumi.dev"
+      }
+    })
+  });
 }
 
+export default function ForgotPasswordPage() {
+  return <ForgotPasswordPageComponent />;
+}
