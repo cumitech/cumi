@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import CourseDetailPageComponent from "@components/page-components/course-detail-page.component";
 import { generatePageMetadata, generateStructuredData, fetchApiData, defaultImages } from "../../../lib/seo";
+import SchemaRenderer from "@components/shared/schema-renderer.component";
 
 interface CourseDetailPageProps {
   params: { slug: string };
@@ -137,6 +138,54 @@ export async function generateMetadata({ params }: CourseDetailPageProps): Promi
   });
 }
 
-export default function CourseDetailPage({ params }: CourseDetailPageProps) {
-  return <CourseDetailPageComponent courseSlug={params.slug} />;
+export default async function CourseDetailPage({ params }: CourseDetailPageProps) {
+  const course = await fetchCourseDetails(params.slug);
+  
+  const courseSchema = course ? {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": course.title,
+    "description": course.description,
+    "provider": {
+      "@type": "Organization",
+      "name": "CUMI",
+      "url": "https://cumi.dev",
+      "logo": "https://cumi.dev/img/cumi-green.jpg"
+    },
+    "courseMode": course.isOnline ? "online" : "blended",
+    "educationalLevel": course.difficulty || "beginner",
+    "coursePrerequisites": course.prerequisites,
+    "syllabusSections": course.lessons?.map((lesson: any) => ({
+      "@type": "Syllabus",
+      "name": lesson.title,
+      "description": lesson.description
+    })) || [],
+    "offers": course.price ? {
+      "@type": "Offer",
+      "price": course.price,
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    } : {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    },
+    "image": course.imageUrl || defaultImages[2],
+    "inLanguage": "en",
+    "teaches": course.objectives,
+    "timeRequired": course.duration
+  } : null;
+
+  return (
+    <>
+      {courseSchema && (
+        <SchemaRenderer 
+          schemas={courseSchema} 
+          includeDefaults={false}
+        />
+      )}
+      <CourseDetailPageComponent courseSlug={params.slug} />
+    </>
+  );
 }

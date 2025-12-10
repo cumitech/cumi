@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import HomePageComponent from "@components/page-components/home-page.component";
 import { generateDynamicPageMetadata, generateStructuredData, defaultImages } from "../lib/seo";
+import SchemaRenderer from "@components/shared/schema-renderer.component";
 
 export async function generateMetadata(): Promise<Metadata> {
   return await generateDynamicPageMetadata("/", {
@@ -73,6 +74,32 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function IndexPage() {
-  return <HomePageComponent />;
+  const homePageSchema = generateStructuredData("organization", {
+    name: "CUMI",
+    description: "Leading software development company specializing in web applications, mobile apps, and digital transformation solutions",
+    url: "https://cumi.dev",
+    foundingDate: "2020",
+    numberOfEmployees: "50+",
+    industry: "Software Development",
+    services: [
+      "Web Development",
+      "Mobile App Development", 
+      "Digital Transformation",
+      "Cloud Solutions",
+      "API Development",
+      "Database Design",
+      "User Experience Design"
+    ]
+  });
+
+  return (
+    <>
+      <SchemaRenderer 
+        schemas={homePageSchema} 
+        includeDefaults={false}
+      />
+      <HomePageComponent />
+    </>
+  );
 }
 

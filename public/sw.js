@@ -1,9 +1,7 @@
-const CACHE_VERSION = 'v1.0.1'; // Updated to force refresh
+const CACHE_VERSION = 'v1.2.0'; // Updated to exclude CDN resources from service worker
 const STATIC_CACHE = `static-${CACHE_VERSION}`;
-const DYNAMIC_CACHE = `dynamic-${CACHE_VERSION}`;
 const IMAGE_CACHE = `images-${CACHE_VERSION}`;
-const API_CACHE = `api-${CACHE_VERSION}`;
-const FONT_CACHE = `fonts-${CACHE_VERSION}`;
+const CACHE_ALLOWLIST = [STATIC_CACHE, IMAGE_CACHE];
 
 // Resources to cache immediately
 const STATIC_ASSETS = [
@@ -44,13 +42,7 @@ self.addEventListener('activate', (event) => {
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cache) => {
-          if (
-            cache !== STATIC_CACHE &&
-            cache !== DYNAMIC_CACHE &&
-            cache !== IMAGE_CACHE &&
-            cache !== API_CACHE &&
-            cache !== FONT_CACHE
-          ) {
+          if (!CACHE_ALLOWLIST.includes(cache)) {
             console.log('[Service Worker] Deleting old cache:', cache);
             return caches.delete(cache);
           }
@@ -92,105 +84,27 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // API requests - Network first, cache fallback
-  if (url.pathname.startsWith('/api/')) {
-    event.respondWith(
-      fetch(request)
-        .then((response) => {
-          // Clone the response before caching
-          const responseClone = response.clone();
-          
-          // Only cache successful GET requests
-          if (response.ok && request.method === 'GET') {
-            caches.open(API_CACHE).then((cache) => {
-              cache.put(request, responseClone);
-            });
-          }
-          
-          return response;
-        })
-        .catch(() => {
-          // Fallback to cache if network fails
-          return caches.match(request).then((cachedResponse) => {
-            return cachedResponse || new Response(
-              JSON.stringify({ 
-                error: 'Offline', 
-                message: 'No internet connection' 
-              }),
-              {
-                status: 503,
-                headers: { 'Content-Type': 'application/json' }
-              }
-            );
-          });
-        })
-    );
-    return;
-  }
-
-  // Images - Cache first, network fallback
+  // Skip CDN resources (Bootstrap, etc.) - let browser handle them directly
+  // This avoids CORS issues, integrity hash problems, and service worker conflicts
   if (
-    request.destination === 'image' ||
-    url.pathname.match(/\.(jpg|jpeg|png|gif|webp|svg|ico)$/)
+    url.hostname === 'cdn.jsdelivr.net' ||
+    url.hostname === 'cdnjs.cloudflare.com' ||
+    url.hostname === 'unpkg.com' ||
+    url.hostname === 'cdn.jsdelivr.com'
   ) {
-    event.respondWith(
-      caches.match(request).then((cachedResponse) => {
-        return (
-          cachedResponse ||
-          fetch(request).then((response) => {
-            return caches.open(IMAGE_CACHE).then((cache) => {
-              cache.put(request, response.clone());
-              return response;
-            });
-          })
-        );
-      })
-    );
+    // Let browser handle CDN resources directly (no service worker interference)
     return;
   }
 
-  // Static assets (_next/static) - Cache first
-  if (url.pathname.startsWith('/_next/static/')) {
-    event.respondWith(
-      caches.match(request).then((cachedResponse) => {
-        return (
-          cachedResponse ||
-          fetch(request).then((response) => {
-            return caches.open(STATIC_CACHE).then((cache) => {
-              cache.put(request, response.clone());
-              return response;
-            });
-          })
-        );
-      })
-    );
-    return;
-  }
-
-  // HTML pages - Network first, cache fallback
+  // HTML pages - always fetch network for latest content
   if (
     request.headers.get('accept')?.includes('text/html') ||
     request.destination === 'document'
   ) {
     event.respondWith(
-      fetch(request)
-        .then((response) => {
-          const responseClone = response.clone();
-          caches.open(DYNAMIC_CACHE).then((cache) => {
-            cache.put(request, responseClone);
-          });
-          return response;
-        })
-        .catch(() => {
-          return caches.match(request).then((cachedResponse) => {
-            // Return cached page or a simple offline response
-            if (cachedResponse) {
-              return cachedResponse;
-            }
-            
-            // Return a simple HTML page instead of routing to /offline
-            return new Response(
-              `<!DOCTYPE html>
+      fetch(request).catch(() =>
+        new Response(
+          `<!DOCTYPE html>
               <html>
                 <head>
                   <meta charset="UTF-8">
@@ -231,28 +145,70 @@ self.addEventListener('fetch', (event) => {
                   </div>
                 </body>
               </html>`,
-              {
-                headers: { 'Content-Type': 'text/html' }
-              }
-            );
-          });
-        })
+          {
+            headers: { 'Content-Type': 'text/html' },
+          }
+        )
+      )
     );
     return;
   }
 
-  // Other resources - Network first, cache fallback
+  // Static assets (_next/static) and essential assets - cache-first
+  if (url.pathname.startsWith('/_next/static/') || STATIC_ASSETS.includes(url.pathname)) {
+    event.respondWith(
+      caches.match(request).then((cachedResponse) => {
+        if (cachedResponse) {
+          return cachedResponse;
+        }
+
+        return fetch(request).then((response) => {
+          if (response.ok) {
+            caches.open(STATIC_CACHE).then((cache) => cache.put(request, response.clone()));
+          }
+          return response;
+        });
+      })
+    );
+    return;
+  }
+
+  // Images - network-first with tiny cache fallback
+  if (
+    request.destination === 'image' ||
+    url.pathname.match(/\.(jpg|jpeg|png|gif|webp|svg|ico)$/)
+  ) {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          const cloned = response.clone();
+          caches.open(IMAGE_CACHE).then(async (cache) => {
+            await cache.put(request, cloned);
+            limitCacheEntries(cache, 40);
+          });
+          return response;
+        })
+        .catch(() => caches.match(request))
+    );
+    return;
+  }
+
+  // Other requests - network only for latest content
   event.respondWith(
     fetch(request)
-      .then((response) => {
-        const responseClone = response.clone();
-        caches.open(DYNAMIC_CACHE).then((cache) => {
-          cache.put(request, responseClone);
-        });
-        return response;
-      })
       .catch(() => {
-        return caches.match(request);
+        // If fetch fails, try cache, but always return a Response
+        return caches.match(request).then((cachedResponse) => {
+          // If no cache match, return a minimal error response instead of undefined
+          if (!cachedResponse) {
+            return new Response('Resource not available', {
+              status: 503,
+              statusText: 'Service Unavailable',
+              headers: { 'Content-Type': 'text/plain' }
+            });
+          }
+          return cachedResponse;
+        });
       })
   );
 });
@@ -269,6 +225,14 @@ self.addEventListener('sync', (event) => {
 async function syncData() {
   console.log('[Service Worker] Syncing data...');
   // Implement sync logic here
+}
+
+async function limitCacheEntries(cache, maxItems) {
+  const keys = await cache.keys();
+  if (keys.length > maxItems) {
+    await cache.delete(keys[0]);
+    return limitCacheEntries(cache, maxItems);
+  }
 }
 
 // Push notifications

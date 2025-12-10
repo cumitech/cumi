@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import TutorialsPageComponent from "@components/page-components/tutorials-page.component";
 import { generateDynamicPageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
+import SchemaRenderer from "@components/shared/schema-renderer.component";
 
 export async function generateMetadata(): Promise<Metadata> {
   return await generateDynamicPageMetadata("/tutorials", {
@@ -77,6 +78,24 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function TutorialsPage() {
-  return <TutorialsPageComponent />;
+  const tutorialsSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "CUMI Tutorials",
+    "description": "Comprehensive tutorials and learning guides for software development",
+    "url": "https://cumi.dev/tutorials",
+    "mainEntity": {
+      "@type": "ItemList",
+      "name": "Tutorials",
+      "description": "Programming and software development tutorials"
+    }
+  };
+
+  return (
+    <>
+      <SchemaRenderer schemas={tutorialsSchema} includeDefaults={false} />
+      <TutorialsPageComponent />
+    </>
+  );
 }
 

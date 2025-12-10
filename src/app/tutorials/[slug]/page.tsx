@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import TutorialDetailPageComponent from "@components/page-components/tutorial-detail-page.component";
 import { generatePageMetadata, generateStructuredData, defaultImages } from "../../../lib/seo";
+import SchemaRenderer from "@components/shared/schema-renderer.component";
 
 interface TutorialDetailPageProps {
   params: { slug: string };
@@ -105,7 +106,26 @@ export async function generateMetadata({ params }: TutorialDetailPageProps): Pro
   });
 }
 
-export default function TutorialDetailPage({ params }: TutorialDetailPageProps) {
-  return <TutorialDetailPageComponent slug={params.slug} />;
+export default async function TutorialDetailPage({ params }: TutorialDetailPageProps) {
+  const tutorial = await fetchTutorialDetails(params.slug);
+  
+  const tutorialSchema = tutorial ? generateStructuredData('article', {
+    title: tutorial.title,
+    description: tutorial.description,
+    imageUrl: tutorial.imageUrl,
+    authorName: tutorial.authorName,
+    createdAt: tutorial.createdAt,
+    updatedAt: tutorial.updatedAt,
+    slug: params.slug
+  }) : null;
+
+  return (
+    <>
+      {tutorialSchema && (
+        <SchemaRenderer schemas={tutorialSchema} includeDefaults={false} />
+      )}
+      <TutorialDetailPageComponent slug={params.slug} />
+    </>
+  );
 }
 

@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import PartnersPageComponent from "@/components/page-components/partners-page.component";
 import { generateDynamicPageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
+import SchemaRenderer from "@components/shared/schema-renderer.component";
 
 export async function generateMetadata(): Promise<Metadata> {
   return await generateDynamicPageMetadata("/partners", {
@@ -52,7 +53,18 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function PartnersPage() {
-  return <PartnersPageComponent />;
+  const partnersSchema = generateStructuredData("organization", {
+    name: "CUMI Partners",
+    description: "CUMI's network of trusted partners and collaborators across the technology industry",
+    url: "https://cumi.dev/partners"
+  });
+
+  return (
+    <>
+      <SchemaRenderer schemas={partnersSchema} includeDefaults={false} />
+      <PartnersPageComponent />
+    </>
+  );
 }
 
 

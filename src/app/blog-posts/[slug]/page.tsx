@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import BlogPostDetailPageComponent from "@components/page-components/blog-post-detail-page.component";
 import { generatePageMetadata, generateStructuredData, fetchApiData, defaultImages } from "../../../lib/seo";
+import SchemaRenderer from "@components/shared/schema-renderer.component";
 
 interface BlogPostDetailPageProps {
   params: { slug: string };
@@ -105,6 +106,28 @@ export async function generateMetadata({ params }: BlogPostDetailPageProps): Pro
   });
 }
 
-export default function BlogPostDetailPage({ params }: BlogPostDetailPageProps) {
-  return <BlogPostDetailPageComponent slug={params.slug} />;
+export default async function BlogPostDetailPage({ params }: BlogPostDetailPageProps) {
+  const post = await fetchBlogPostDetails(params.slug);
+  
+  const blogPostSchema = post ? generateStructuredData('blogPost', {
+    title: post.title,
+    description: post.description,
+    imageUrl: post.imageUrl,
+    authorName: post.authorName,
+    createdAt: post.createdAt,
+    updatedAt: post.updatedAt,
+    slug: params.slug
+  }) : null;
+
+  return (
+    <>
+      {blogPostSchema && (
+        <SchemaRenderer 
+          schemas={blogPostSchema} 
+          includeDefaults={false}
+        />
+      )}
+      <BlogPostDetailPageComponent slug={params.slug} />
+    </>
+  );
 }

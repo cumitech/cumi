@@ -16,6 +16,7 @@ import {
   LanguageSelector,
   useTranslation,
 } from "@contexts/translation.context";
+import { getBaseUrl } from "@utils/get-base-url";
 
 type Props = {
   logoPath: string;
@@ -38,7 +39,8 @@ export const AppNav: React.FC<Props> = ({ logoPath }) => {
   const handleLogout = useCallback(async () => {
     setIsNavigating(true);
     try {
-      await signOut({ callbackUrl: "/" });
+      const baseUrl = getBaseUrl();
+      await signOut({ callbackUrl: `${baseUrl}/` });
     } catch (error) {
       console.error("Logout error:", error);
     } finally {

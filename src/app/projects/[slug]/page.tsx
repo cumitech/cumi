@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import ProjectDetailPageComponent from "@components/page-components/project-detail-page.component";
 import { generatePageMetadata, generateStructuredData, defaultImages } from "../../../lib/seo";
+import SchemaRenderer from "@components/shared/schema-renderer.component";
 
 interface ProjectDetailPageProps {
   params: { slug: string };
@@ -116,6 +117,24 @@ export async function generateMetadata({ params }: ProjectDetailPageProps): Prom
   });
 }
 
-export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
-  return <ProjectDetailPageComponent slug={params.slug} />;
+export default async function ProjectDetailPage({ params }: ProjectDetailPageProps) {
+  const project = await fetchProjectDetails(params.slug);
+  
+  const projectSchema = project ? generateStructuredData('project', {
+    title: project.title,
+    description: project.description,
+    imageUrl: project.imageUrl,
+    createdAt: project.createdAt,
+    updatedAt: project.updatedAt,
+    id: params.slug
+  }) : null;
+
+  return (
+    <>
+      {projectSchema && (
+        <SchemaRenderer schemas={projectSchema} includeDefaults={false} />
+      )}
+      <ProjectDetailPageComponent slug={params.slug} />
+    </>
+  );
 }

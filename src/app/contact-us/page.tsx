@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import ContactUsPageComponent from "@components/page-components/contact-us-page.component";
 import { generateDynamicPageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
+import SchemaRenderer from "@components/shared/schema-renderer.component";
 
 export async function generateMetadata(): Promise<Metadata> {
   return await generateDynamicPageMetadata("/contact-us", {
@@ -95,6 +96,41 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function ContactUsPage() {
-  return <ContactUsPageComponent />;
+  const contactSchema = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Contact CUMI",
+    "description": "Contact CUMI for software development services and digital transformation solutions",
+    "mainEntity": {
+      "@type": "Organization",
+      "name": "CUMI",
+      "url": "https://cumi.dev",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "email": "info@cumi.dev",
+        "telephone": "+237-681-289-411",
+        "availableLanguage": ["English", "French"]
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "CM",
+        "addressLocality": "Douala",
+        "addressRegion": "Littoral"
+      },
+      "sameAs": [
+        "https://web.facebook.com/ayeahgodlove/",
+        "https://twitter.com/GodloveAyeah",
+        "https://www.linkedin.com/in/ayeah-godlove-akoni-0820a0164/"
+      ]
+    }
+  };
+
+  return (
+    <>
+      <SchemaRenderer schemas={contactSchema} includeDefaults={false} />
+      <ContactUsPageComponent />
+    </>
+  );
 }
 

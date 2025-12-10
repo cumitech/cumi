@@ -5,6 +5,7 @@ import { UserOutlined, SettingOutlined, LogoutOutlined, DashboardOutlined } from
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { getBaseUrl } from "@utils/get-base-url";
 
 const { Text } = Typography;
 
@@ -16,8 +17,9 @@ export default function UserProfileDropdown() {
 const handleLogout = async () => {
     setLoading(true);
     try {
+      const baseUrl = getBaseUrl();
       await signOut({ 
-        callbackUrl: "/login",
+        callbackUrl: `${baseUrl}/login`,
         redirect: true 
       });
     } catch (error) {

@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import ProjectsPageComponent from "@components/page-components/projects-page.component";
 import { generateDynamicPageMetadata, defaultImages } from "../../lib/seo";
+import SchemaRenderer from "@components/shared/schema-renderer.component";
 
 export async function generateMetadata(): Promise<Metadata> {
   return await generateDynamicPageMetadata("/projects", {
@@ -76,6 +77,24 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function ProjectsPage() {
-  return <ProjectsPageComponent />;
+  const projectsSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "CUMI Software Development Portfolio",
+    "description": "Portfolio of innovative software development projects and digital solutions",
+    "url": "https://cumi.dev/projects",
+    "mainEntity": {
+      "@type": "ItemList",
+      "name": "Software Development Projects",
+      "description": "Collection of web applications, mobile apps, and digital transformation projects"
+    }
+  };
+
+  return (
+    <>
+      <SchemaRenderer schemas={projectsSchema} includeDefaults={false} />
+      <ProjectsPageComponent />
+    </>
+  );
 }
 

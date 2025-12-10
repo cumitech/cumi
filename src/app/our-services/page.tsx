@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import OurServicesPageComponent from "@components/page-components/our-services-page.component";
 import { generateDynamicPageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
+import SchemaRenderer from "@components/shared/schema-renderer.component";
 
 export async function generateMetadata(): Promise<Metadata> {
   return await generateDynamicPageMetadata("/our-services", {
@@ -114,6 +115,59 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function OurServicesPage() {
-  return <OurServicesPageComponent />;
+  const servicesSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Software Development Services",
+    "description": "Comprehensive software development services including web applications, mobile apps, cloud solutions, and digital transformation",
+    "provider": {
+      "@type": "Organization",
+      "name": "CUMI",
+      "url": "https://cumi.dev"
+    },
+    "serviceType": "Software Development",
+    "areaServed": "Worldwide",
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Software Development Services",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Web Application Development"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Mobile App Development"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Cloud Solutions"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Digital Transformation"
+          }
+        }
+      ]
+    }
+  };
+
+  return (
+    <>
+      <SchemaRenderer schemas={servicesSchema} includeDefaults={false} />
+      <OurServicesPageComponent />
+    </>
+  );
 }
 

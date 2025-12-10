@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import OpportunityDetailPageComponent from "@components/page-components/opportunity-detail-page.component";
 import { generatePageMetadata, generateStructuredData, fetchApiData, defaultImages } from "../../../lib/seo";
+import SchemaRenderer from "@components/shared/schema-renderer.component";
 
 interface OpportunityDetailPageProps {
   params: { slug: string };
@@ -137,6 +138,50 @@ export async function generateMetadata({ params }: OpportunityDetailPageProps): 
   });
 }
 
-export default function OpportunityDetailPage({ params }: OpportunityDetailPageProps) {
-  return <OpportunityDetailPageComponent opportunitySlug={params.slug} />;
+export default async function OpportunityDetailPage({ params }: OpportunityDetailPageProps) {
+  const opportunity = await fetchOpportunityDetails(params.slug);
+  
+  const opportunitySchema = opportunity ? {
+    "@context": "https://schema.org",
+    "@type": "JobPosting",
+    "title": opportunity.title,
+    "description": opportunity.description,
+    "datePosted": new Date(opportunity.createdAt).toISOString(),
+    "validThrough": opportunity.deadline ? new Date(opportunity.deadline).toISOString() : undefined,
+    "employmentType": opportunity.type || "FULL_TIME",
+    "hiringOrganization": {
+      "@type": "Organization",
+      "name": "CUMI",
+      "url": "https://cumi.dev",
+      "logo": "https://cumi.dev/cumi-green.jpg"
+    },
+    "jobLocation": opportunity.location ? {
+      "@type": "Place",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": opportunity.location
+      }
+    } : undefined,
+    "baseSalary": opportunity.salary ? {
+      "@type": "MonetaryAmount",
+      "currency": "USD",
+      "value": {
+        "@type": "QuantitativeValue",
+        "value": opportunity.salary,
+        "unitText": "YEAR"
+      }
+    } : undefined,
+    "qualifications": opportunity.requirements,
+    "responsibilities": opportunity.responsibilities,
+    "skills": opportunity.skills
+  } : null;
+
+  return (
+    <>
+      {opportunitySchema && (
+        <SchemaRenderer schemas={opportunitySchema} includeDefaults={false} />
+      )}
+      <OpportunityDetailPageComponent opportunitySlug={params.slug} />
+    </>
+  );
 }

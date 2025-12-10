@@ -41,10 +41,10 @@ export default function LoginFormComponent() {
   const [showPassword, setShowPassword] = useState(false);
   const { open } = useNotification();
 
-const onFinish = async (values: any) => {
+  const onFinish = async (values: any) => {
     setLoading(true);
 
-try {
+    try {
       const response = await signIn("credentials", {
         email: values.email,
         password: values.password,
@@ -55,10 +55,10 @@ try {
       if (response?.ok) {
         // Update session to refresh authentication state
         await update();
-        
+
         // Force a page reload to ensure session is properly updated
         window.location.href = "/";
-        
+
         open?.({
           type: "success",
           message: "Login Successful!",
@@ -69,7 +69,8 @@ try {
         open?.({
           type: "error",
           message: "Login Failed!",
-          description: response?.error || "Invalid email or password. Please try again.",
+          description:
+            response?.error || "Invalid email or password. Please try again.",
           key: "login-error",
         });
       }
@@ -86,11 +87,11 @@ try {
     }
   };
 
-return (
+  return (
     <>
       <AppNav logoPath="/" />
 
-{}
+      {}
       <div
         style={{
           minHeight: "calc(100vh - 200px)",
@@ -112,7 +113,6 @@ return (
               }}
               styles={{ body: { padding: "3rem 2rem" } }}
             >
-              {}
               <div style={{ textAlign: "center", marginBottom: "2rem" }}>
                 <div
                   style={{
@@ -140,7 +140,6 @@ return (
                 </Text>
               </div>
 
-{}
               <Form
                 name="login"
                 layout="vertical"
@@ -155,17 +154,19 @@ return (
                     </Text>
                   }
                   name="email"
-                  rules={[
-                    { required: true, message: "Please enter your email!" },
-                    { type: "email", message: "Enter a valid email!" },
-                  ]}
+                  required={false}
+                  // rules={[
+                  //   { required: false, message: "Please enter your email!" },
+                  //   { type: "email", message: "Enter a valid email!" },
+                  // ]}
                 >
                   <Input
                     placeholder="Enter your email address"
                     disabled={loading}
-                    autoComplete="email"
-                    aria-label="Email address"
-                    aria-required="true"
+                    required={false}
+                    // autoComplete="email"
+                    // aria-label="Email address"
+                    // aria-required="true"
                     prefix={
                       <FaEnvelope
                         style={{
@@ -193,7 +194,7 @@ return (
                   />
                 </Form.Item>
 
-<Form.Item
+                <Form.Item
                   label={
                     <Text strong style={{ color: "#1a1a1a", fontSize: "14px" }}>
                       Password
@@ -244,7 +245,6 @@ return (
                   />
                 </Form.Item>
 
-{}
                 <div style={{ textAlign: "right", marginBottom: "1.5rem" }}>
                   <Link
                     href="/forgot-password"
@@ -258,8 +258,6 @@ return (
                     Forgot your password?
                   </Link>
                 </div>
-
-{}
                 <Form.Item style={{ marginBottom: "1.5rem" }}>
                   <Button
                     type="primary"
@@ -291,12 +289,10 @@ return (
                   </Button>
                 </Form.Item>
 
-{}
                 <Divider style={{ margin: "2rem 0" }}>
                   <Text style={{ color: "#999", fontSize: "14px" }}>OR</Text>
                 </Divider>
 
-{}
                 <div style={{ marginBottom: "2rem" }}>
                   <Text
                     strong
@@ -311,15 +307,14 @@ return (
                     Continue with Social Media
                   </Text>
 
-<Space
+                  <Space
                     direction="vertical"
                     size="middle"
                     style={{ width: "100%" }}
                   >
-                    {}
                     <Button
                       icon={<SiGoogle style={{ fontSize: "20px" }} />}
-                      onClick={() => signIn("google", { callbackUrl: "/" })}
+                      onClick={() => auth0SocialLogin.google()}
                       aria-label="Sign in with Google"
                       style={{
                         width: "100%",
@@ -347,11 +342,11 @@ return (
                       Continue with Google
                     </Button>
 
-{}
+                    {/* Facebook Sign In */}
                     <Button
                       icon={<SiFacebook style={{ fontSize: "20px" }} />}
-                      onClick={() => signIn("auth0", { callbackUrl: "/" })}
-                      aria-label="Sign in with Auth0 Universal Login"
+                      onClick={() => auth0SocialLogin.facebook()}
+                      aria-label="Sign in with Facebook"
                       style={{
                         width: "100%",
                         height: "50px",
@@ -375,12 +370,11 @@ return (
                         e.currentTarget.style.boxShadow = "none";
                       }}
                     >
-                      Continue with Auth0
+                      Continue with Facebook
                     </Button>
                   </Space>
                 </div>
 
-{}
                 <div style={{ marginBottom: "2rem" }}>
                   <Text
                     strong
@@ -396,7 +390,7 @@ return (
                   </Text>
                   <Button
                     icon={<SiAuth0 style={{ fontSize: "20px" }} />}
-                    onClick={() => signIn("auth0")}
+                    onClick={() => signIn("auth0", { callbackUrl: "/" })}
                     aria-label="Sign in with Auth0 Universal Login"
                     style={{
                       width: "100%",
@@ -426,7 +420,6 @@ return (
                 </div>
               </Form>
 
-{}
               <div style={{ textAlign: "center", marginTop: "2rem" }}>
                 <Text style={{ color: "#666", fontSize: "16px" }}>
                   Don&apos;t have an account?{" "}
@@ -448,7 +441,7 @@ return (
         </Row>
       </div>
 
-{}
+      {}
       <AppFooter logoPath="/" />
       <AppFootnote />
     </>

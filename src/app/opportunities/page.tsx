@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import OpportunitiesPageComponent from "@components/page-components/opportunities-page.component";
 import { generateDynamicPageMetadata, defaultImages } from "../../lib/seo";
+import SchemaRenderer from "@components/shared/schema-renderer.component";
 
 export async function generateMetadata(): Promise<Metadata> {
   return await generateDynamicPageMetadata("/opportunities", {
@@ -76,6 +77,24 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function OpportunitiesPage() {
-  return <OpportunitiesPageComponent />;
+  const opportunitiesSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "CUMI Career Opportunities",
+    "description": "Software development jobs, internships, and career opportunities",
+    "url": "https://cumi.dev/opportunities",
+    "mainEntity": {
+      "@type": "ItemList",
+      "name": "Job Opportunities",
+      "description": "Collection of software development positions and career opportunities"
+    }
+  };
+
+  return (
+    <>
+      <SchemaRenderer schemas={opportunitiesSchema} includeDefaults={false} />
+      <OpportunitiesPageComponent />
+    </>
+  );
 }
 

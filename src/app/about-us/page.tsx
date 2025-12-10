@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import AboutPageComponent from "@components/page-components/about-page.component";
 import { generateDynamicPageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
+import SchemaRenderer from "@components/shared/schema-renderer.component";
 
 export async function generateMetadata(): Promise<Metadata> {
   return await generateDynamicPageMetadata("/about-us", {
@@ -75,6 +76,20 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function AboutPage() {
-  return <AboutPageComponent />;
+  const aboutSchema = generateStructuredData('organization', {
+    name: "CUMI",
+    description: "Leading software development company specializing in web applications, mobile apps, and digital solutions",
+    url: "https://cumi.dev",
+    foundingDate: "2020",
+    numberOfEmployees: "50+",
+    industry: "Software Development"
+  });
+
+  return (
+    <>
+      <SchemaRenderer schemas={aboutSchema} includeDefaults={false} />
+      <AboutPageComponent />
+    </>
+  );
 }
 

@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import BlogPostsPageComponent from "@components/page-components/blog-posts-page.component";
 import { generateDynamicPageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
+import SchemaRenderer from "@components/shared/schema-renderer.component";
 
 export async function generateMetadata(): Promise<Metadata> {
   return await generateDynamicPageMetadata("/blog-posts", {
@@ -88,6 +89,33 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function BlogPostsPage() {
-  return <BlogPostsPageComponent />;
+  const blogSchema = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "CUMI Technology Blog",
+    "description": "Software development insights, web development tutorials, and technology articles",
+    "url": "https://cumi.dev/blog-posts",
+    "publisher": {
+      "@type": "Organization",
+      "name": "CUMI",
+      "url": "https://cumi.dev",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://cumi.dev/cumi-green.jpg"
+      }
+    },
+    "inLanguage": "en-US",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://cumi.dev/blog-posts"
+    }
+  };
+
+  return (
+    <>
+      <SchemaRenderer schemas={blogSchema} includeDefaults={false} />
+      <BlogPostsPageComponent />
+    </>
+  );
 }
 

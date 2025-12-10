@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import CoursesPageComponent from "@components/page-components/courses-page.component";
 import { generateDynamicPageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
+import SchemaRenderer from "@components/shared/schema-renderer.component";
 
 export async function generateMetadata(): Promise<Metadata> {
   return await generateDynamicPageMetadata("/courses", {
@@ -76,5 +77,23 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function CoursesPage() {
-  return <CoursesPageComponent />;
+  const coursesSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "CUMI Software Development Courses",
+    "description": "Comprehensive software development courses and technology training programs",
+    "url": "https://cumi.dev/courses",
+    "mainEntity": {
+      "@type": "ItemList",
+      "name": "Software Development Courses",
+      "description": "Collection of courses covering web development, mobile apps, and digital transformation"
+    }
+  };
+
+  return (
+    <>
+      <SchemaRenderer schemas={coursesSchema} includeDefaults={false} />
+      <CoursesPageComponent />
+    </>
+  );
 }

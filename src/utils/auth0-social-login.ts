@@ -12,8 +12,9 @@ export const auth0SocialLogin = {
     signIn("auth0", {
       callbackUrl: "/",
       redirect: true,
-    }, {
-      connection: "google-oauth2"
+      authorizationParams: {
+        connection: "google-oauth2"
+      }
     });
   },
 
@@ -24,8 +25,9 @@ export const auth0SocialLogin = {
     signIn("auth0", {
       callbackUrl: "/",
       redirect: true,
-    }, {
-      connection: "facebook"
+      authorizationParams: {
+        connection: "facebook"
+      }
     });
   },
 
@@ -36,8 +38,9 @@ export const auth0SocialLogin = {
     signIn("auth0", {
       callbackUrl: "/",
       redirect: true,
-    }, {
-      connection: "twitter"
+      authorizationParams: {
+        connection: "twitter"
+      }
     });
   },
 
@@ -48,8 +51,9 @@ export const auth0SocialLogin = {
     signIn("auth0", {
       callbackUrl: "/",
       redirect: true,
-    }, {
-      connection: "github"
+      authorizationParams: {
+        connection: "github"
+      }
     });
   },
 
@@ -60,8 +64,9 @@ export const auth0SocialLogin = {
     signIn("auth0", {
       callbackUrl: "/",
       redirect: true,
-    }, {
-      connection: "linkedin"
+      authorizationParams: {
+        connection: "linkedin"
+      }
     });
   },
 
@@ -72,8 +77,9 @@ export const auth0SocialLogin = {
     signIn("auth0", {
       callbackUrl: "/",
       redirect: true,
-    }, {
-      connection: "windowslive"
+      authorizationParams: {
+        connection: "windowslive"
+      }
     });
   },
 
@@ -84,8 +90,9 @@ export const auth0SocialLogin = {
     signIn("auth0", {
       callbackUrl: "/",
       redirect: true,
-    }, {
-      connection: "apple"
+      authorizationParams: {
+        connection: "apple"
+      }
     });
   },
 
@@ -96,8 +103,9 @@ export const auth0SocialLogin = {
     signIn("auth0", {
       callbackUrl: "/",
       redirect: true,
-    }, {
-      connection
+      authorizationParams: {
+        connection
+      }
     });
   }
 };

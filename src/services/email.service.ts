@@ -49,16 +49,15 @@ class EmailService {
       url: process.env.MAILGUN_BASE_URL || "https://api.eu.mailgun.net"
     });
     this.domain = process.env.MAILGUN_DOMAIN || "mail.cumi.dev";
-    // Get base URL with proper fallback (NEVER localhost in production)
     const getBaseUrl = () => {
-      if (process.env.NEXT_PUBLIC_APP_URL) {
-        return process.env.NEXT_PUBLIC_APP_URL;
-      }
-      if (process.env.NEXT_PUBLIC_BASE_URL) {
-        return process.env.NEXT_PUBLIC_BASE_URL;
-      }
       if (process.env.NODE_ENV === 'production') {
         return 'https://cumi.dev';
+      }
+      if (process.env.NEXT_PUBLIC_APP_URL) {
+        return process.env.NEXT_PUBLIC_APP_URL.replace('http://localhost:3000', 'https://cumi.dev');
+      }
+      if (process.env.NEXT_PUBLIC_BASE_URL) {
+        return process.env.NEXT_PUBLIC_BASE_URL.replace('http://localhost:3000', 'https://cumi.dev');
       }
       return 'http://localhost:3000';
     };
@@ -73,10 +72,6 @@ class EmailService {
     });
   }
 
-  /**
-   * Extract and convert base64 images to inline attachments (CID)
-   * This ensures images display in email clients that block base64
-   */
   private extractAndConvertImages(html: string): {
     processedHtml: string;
     attachments: Array<{
@@ -96,33 +91,23 @@ class EmailService {
     }> = [];
     let imageIndex = 0;
     
-    // Process images: convert base64 to inline attachments, convert relative URLs to absolute
     const processedHtml = html.replace(
       /<img\s+([^>]*src=["']([^"']*)["'][^>]*)>/gi,
       (match, attrs, src) => {
         let newSrc = src;
         let newAttrs = attrs;
         
-        // Handle base64 images - convert to inline attachment
         if (src && src.startsWith('data:')) {
           try {
-            // Parse data URI: data:image/png;base64,iVBORw0KGgo...
             const dataUriMatch = src.match(/^data:([^;]+);base64,(.+)$/);
             if (dataUriMatch) {
               const contentType = dataUriMatch[1] || 'image/png';
               const base64Data = dataUriMatch[2];
-              
-              // Convert base64 to Buffer
               const imageBuffer = Buffer.from(base64Data, 'base64');
-              
-              // Generate CID
               const cid = `image_${imageIndex++}_${Date.now()}`;
-              
-              // Determine file extension from content type
               const ext = contentType.split('/')[1] || 'png';
               const filename = `image_${imageIndex}.${ext}`;
               
-              // Add as inline attachment
               attachments.push({
                 filename,
                 data: imageBuffer,
@@ -130,19 +115,15 @@ class EmailService {
                 cid,
               });
               
-              // Replace src with cid: reference
               newSrc = `cid:${cid}`;
               newAttrs = attrs.replace(/src=["'][^"']*["']/i, `src="cid:${cid}"`);
             }
           } catch (error) {
             logger.error('Error processing base64 image:', error);
-            // Keep original src if conversion fails
             newAttrs = attrs;
           }
         } else {
-          // Convert relative URLs to absolute URLs
           if (src && !src.startsWith('http://') && !src.startsWith('https://') && !src.startsWith('cid:')) {
-            // Relative URL - convert to absolute
             if (src.startsWith('/')) {
               newSrc = `${this.baseUrl}${src}`;
             } else {
@@ -152,11 +133,9 @@ class EmailService {
           }
         }
         
-        // Ensure style attribute exists with proper email-compatible styles
         if (!newAttrs.includes('style=')) {
           newAttrs += ' style="max-width: 100%; height: auto; display: block; margin: 16px 0;">';
         } else {
-          // Update existing style to include email-compatible styles
           newAttrs = newAttrs.replace(
             /style=["']([^"']*)["']/i,
             (styleMatch: string, styleContent: string) => {
@@ -185,31 +164,27 @@ class EmailService {
     return { processedHtml, attachments };
   }
 
-  /**
-   * Process HTML content to ensure all elements are preserved for email
-   * This ensures images, links, tables, and all rich text editor content works in emails
-   */
   private processHtmlForEmail(html: string): string {
     if (!html) return '';
     
     let processedHtml = html;
     
-    // Process images: convert relative URLs to absolute, preserve base64, add proper styling
-    // Note: Base64 images are handled separately in extractAndConvertImages
+    if (process.env.NODE_ENV === 'production' || !this.baseUrl.includes('localhost')) {
+      processedHtml = processedHtml.replace(/http:\/\/localhost:3000/gi, 'https://cumi.dev');
+      processedHtml = processedHtml.replace(/https:\/\/localhost:3000/gi, 'https://cumi.dev');
+    }
+    
     processedHtml = processedHtml.replace(
       /<img\s+([^>]*src=["']([^"']*)["'][^>]*)>/gi,
       (match, attrs, src) => {
         let newSrc = src;
         let newAttrs = attrs;
         
-        // Skip base64 and cid: images (handled separately)
         if (src && (src.startsWith('data:') || src.startsWith('cid:'))) {
           return match;
         }
         
-        // Convert relative URLs to absolute URLs
         if (src && !src.startsWith('http://') && !src.startsWith('https://')) {
-          // Relative URL - convert to absolute
           if (src.startsWith('/')) {
             newSrc = `${this.baseUrl}${src}`;
           } else {
@@ -218,11 +193,9 @@ class EmailService {
           newAttrs = attrs.replace(/src=["'][^"']*["']/i, `src="${newSrc}"`);
         }
         
-        // Ensure style attribute exists with proper email-compatible styles
         if (!newAttrs.includes('style=')) {
           newAttrs += ' style="max-width: 100%; height: auto; display: block; margin: 16px 0;">';
         } else {
-          // Update existing style to include email-compatible styles
           newAttrs = newAttrs.replace(
             /style=["']([^"']*)["']/i,
             (styleMatch: string, styleContent: string) => {
@@ -248,7 +221,6 @@ class EmailService {
       }
     );
     
-    // Ensure all links have proper attributes
     processedHtml = processedHtml.replace(
       /<a\s+([^>]*href=["'][^"']*["'][^>]*)>/gi,
       (match, attrs) => {
@@ -280,7 +252,6 @@ class EmailService {
       }
     );
     
-    // Ensure tables have proper styling for email clients
     processedHtml = processedHtml.replace(
       /<table(\s+[^>]*)?>/gi,
       (match) => {
@@ -294,10 +265,6 @@ class EmailService {
     return processedHtml;
   }
 
-  /**
-   * Generate modern email template with CUMI branding
-   * Returns both HTML and inline attachments for images
-   */
   private getEmailTemplate(params: {
     title: string;
     subtitle: string;
@@ -312,13 +279,8 @@ class EmailService {
       cid?: string;
     }>;
   } {
-    // Process content to ensure all HTML elements are email-compatible
     const { title, subtitle, content, showLogo = true } = params;
-    
-    // First extract and convert base64 images to inline attachments
     const { processedHtml: contentWithImages, attachments } = this.extractAndConvertImages(content);
-    
-    // Then process the rest of the HTML (links, tables, etc.)
     const processedContent = this.processHtmlForEmail(contentWithImages);
     
     const emailHtml = `
@@ -722,8 +684,14 @@ class EmailService {
       </html>
     `;
     
+    let finalHtml = emailHtml;
+    if (process.env.NODE_ENV === 'production' || !this.baseUrl.includes('localhost')) {
+      finalHtml = finalHtml.replace(/http:\/\/localhost:3000/gi, 'https://cumi.dev');
+      finalHtml = finalHtml.replace(/https:\/\/localhost:3000/gi, 'https://cumi.dev');
+    }
+    
     return {
-      html: emailHtml,
+      html: finalHtml,
       attachments
     };
   }
@@ -753,23 +721,30 @@ class EmailService {
       });
 
       if (options.html) {
-        messageData.html = options.html;
+        let sanitizedHtml = options.html;
+        if (process.env.NODE_ENV === 'production' || !this.baseUrl.includes('localhost')) {
+          sanitizedHtml = sanitizedHtml.replace(/http:\/\/localhost:3000/gi, 'https://cumi.dev');
+          sanitizedHtml = sanitizedHtml.replace(/https:\/\/localhost:3000/gi, 'https://cumi.dev');
+        }
+        messageData.html = sanitizedHtml;
       }
 
       if (options.text) {
-        messageData.text = options.text;
+        let sanitizedText = options.text;
+        if (process.env.NODE_ENV === 'production' || !this.baseUrl.includes('localhost')) {
+          sanitizedText = sanitizedText.replace(/http:\/\/localhost:3000/gi, 'https://cumi.dev');
+          sanitizedText = sanitizedText.replace(/https:\/\/localhost:3000/gi, 'https://cumi.dev');
+        }
+        messageData.text = sanitizedText;
       }
 
       if (options.attachments && options.attachments.length > 0) {
-        // Format attachments for Mailgun
-        // Mailgun supports inline attachments with Content-ID
         const formattedAttachments = options.attachments.map((att) => {
           const attachment: any = {
             filename: att.filename,
             data: att.data,
           };
           
-          // Add inline attachment with Content-ID if cid is provided
           if (att.cid) {
             attachment.cid = att.cid;
           }

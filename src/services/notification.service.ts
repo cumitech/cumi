@@ -5,6 +5,19 @@ import { UserRepository } from "@data/repositories/impl/user.repository";
 const userRepository = new UserRepository();
 const userUseCase = new UserUseCase(userRepository);
 
+const getBaseUrl = (): string => {
+  if (process.env.NODE_ENV === 'production') {
+    return 'https://cumi.dev';
+  }
+  if (process.env.NEXT_PUBLIC_APP_URL) {
+    return process.env.NEXT_PUBLIC_APP_URL.replace(/http:\/\/localhost:3000/gi, 'https://cumi.dev');
+  }
+  if (process.env.NEXT_PUBLIC_BASE_URL) {
+    return process.env.NEXT_PUBLIC_BASE_URL.replace(/http:\/\/localhost:3000/gi, 'https://cumi.dev');
+  }
+  return 'https://cumi.dev';
+};
+
 export interface NotificationData {
   userId: string;
   title: string;
@@ -30,7 +43,6 @@ class NotificationService {
         return false;
       }
 
-      // Check if user has email notifications enabled
       if (!user.emailNotifications) {
         return false;
       }
@@ -94,7 +106,6 @@ class NotificationService {
     };
   }
 
-  // Course-related notifications
   async notifyCourseEnrollment(userId: string, courseTitle: string, courseUrl?: string): Promise<boolean> {
     return this.sendEmailNotification({
       userId,
@@ -125,7 +136,6 @@ class NotificationService {
     });
   }
 
-  // Event-related notifications
   async notifyEventRegistration(userId: string, eventTitle: string, eventUrl?: string): Promise<boolean> {
     return this.sendEmailNotification({
       userId,
@@ -146,7 +156,6 @@ class NotificationService {
     });
   }
 
-  // System notifications
   async notifySystemMaintenance(userId: string, maintenanceDate: string, duration: string): Promise<boolean> {
     return this.sendEmailNotification({
       userId,
@@ -165,7 +174,6 @@ class NotificationService {
     });
   }
 
-  // General notifications
   async notifyWelcome(userId: string): Promise<boolean> {
     return this.sendEmailNotification({
       userId,
@@ -176,39 +184,36 @@ class NotificationService {
     });
   }
 
-  // Subscription notifications
   async notifyNewsletterSubscription(email: string, name: string): Promise<boolean> {
     return this.sendEmailNotification({
-      userId: '', // Not needed for external emails
+      userId: '',
       title: "Welcome to CUMI Newsletter!",
       message: `Thank you for subscribing to our newsletter! You'll now receive updates about our latest courses, events, and educational content. We're excited to have you as part of our learning community.`,
-      actionUrl: `${process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || (process.env.NODE_ENV === 'production' ? 'https://cumi.dev' : 'http://localhost:3000')}/dashboard`,
+      actionUrl: `${getBaseUrl()}/dashboard`,
       type: 'general'
     });
   }
 
-  // Contact form notifications
   async notifyContactSubmission(email: string, name: string, subject: string, message: string): Promise<boolean> {
     return this.sendEmailNotification({
-      userId: '', // Not needed for external emails
+      userId: '',
       title: "Thank You for Contacting CUMI",
       message: `Thank you for reaching out to us! We have received your message regarding "${subject}" and our team will get back to you within 24 hours. We appreciate your interest in our services and look forward to assisting you.`,
-      actionUrl: `${process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || (process.env.NODE_ENV === 'production' ? 'https://cumi.dev' : 'http://localhost:3000')}/contact`,
+      actionUrl: `${getBaseUrl()}/contact`,
       type: 'general'
     });
   }
 
   async notifyAdminContactMessage(name: string, email: string, subject: string, message: string, phone?: string): Promise<boolean> {
     return this.sendEmailNotification({
-      userId: '', // Not needed for admin emails
+      userId: '',
       title: "New Contact Message Received",
       message: `A new contact message has been received from ${name} (${email}).\n\nSubject: ${subject || 'No subject'}\nMessage: ${message}\n\nPhone: ${phone || 'Not provided'}`,
-      actionUrl: `${process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || (process.env.NODE_ENV === 'production' ? 'https://cumi.dev' : 'http://localhost:3000')}/dashboard/contact-messages`,
+      actionUrl: `${getBaseUrl()}/dashboard/contact-messages`,
       type: 'system'
     });
   }
 
-  // Lesson completion notifications
   async notifyLessonCompletion(userId: string, lessonTitle: string, courseTitle: string, nextLessonUrl?: string): Promise<boolean> {
     return this.sendEmailNotification({
       userId,
@@ -219,46 +224,42 @@ class NotificationService {
     });
   }
 
-  // Assignment submission notifications
   async notifyAssignmentSubmission(userId: string, assignmentTitle: string, courseTitle: string): Promise<boolean> {
     return this.sendEmailNotification({
       userId,
       title: "Assignment Submitted",
       message: `Your assignment "${assignmentTitle}" for the course "${courseTitle}" has been submitted successfully. You'll receive feedback soon!`,
-      actionUrl: `${process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || (process.env.NODE_ENV === 'production' ? 'https://cumi.dev' : 'http://localhost:3000')}/dashboard`,
+      actionUrl: `${getBaseUrl()}/dashboard`,
       type: 'course'
     });
   }
 
-  // Quiz completion notifications
   async notifyQuizCompletion(userId: string, quizTitle: string, score: number, courseTitle: string): Promise<boolean> {
     return this.sendEmailNotification({
       userId,
       title: "Quiz Completed!",
       message: `You've completed the quiz "${quizTitle}" in "${courseTitle}" with a score of ${score}%. ${score >= 80 ? 'Excellent work!' : 'Keep studying to improve your score!'}`,
-      actionUrl: `${process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || (process.env.NODE_ENV === 'production' ? 'https://cumi.dev' : 'http://localhost:3000')}/dashboard`,
+      actionUrl: `${getBaseUrl()}/dashboard`,
       type: 'course'
     });
   }
 
-  // Payment notifications
   async notifyPaymentSuccess(userId: string, amount: number, itemName: string): Promise<boolean> {
     return this.sendEmailNotification({
       userId,
       title: "Payment Successful",
       message: `Your payment of $${amount} for "${itemName}" has been processed successfully. Thank you for your purchase!`,
-      actionUrl: `${process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || (process.env.NODE_ENV === 'production' ? 'https://cumi.dev' : 'http://localhost:3000')}/dashboard`,
+      actionUrl: `${getBaseUrl()}/dashboard`,
       type: 'system'
     });
   }
 
-  // Account status notifications
   async notifyAccountStatusChange(userId: string, status: string, reason?: string): Promise<boolean> {
     return this.sendEmailNotification({
       userId,
       title: "Account Status Update",
       message: `Your account status has been updated to "${status}". ${reason ? `Reason: ${reason}` : 'Please contact support if you have any questions.'}`,
-      actionUrl: `${process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || (process.env.NODE_ENV === 'production' ? 'https://cumi.dev' : 'http://localhost:3000')}/dashboard/settings`,
+      actionUrl: `${getBaseUrl()}/dashboard/settings`,
       type: 'security'
     });
   }

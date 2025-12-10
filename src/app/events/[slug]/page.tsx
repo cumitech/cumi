@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import EventDetailPageComponent from "@components/page-components/event-detail-page.component";
 import { generatePageMetadata, generateStructuredData, fetchApiData, defaultImages } from "../../../lib/seo";
+import SchemaRenderer from "@components/shared/schema-renderer.component";
 
 interface EventDetailPageProps {
   params: { slug: string };
@@ -136,6 +137,51 @@ export async function generateMetadata({ params }: EventDetailPageProps): Promis
   });
 }
 
-export default function EventDetailPage({ params }: EventDetailPageProps) {
-  return <EventDetailPageComponent eventSlug={params.slug} />;
+export default async function EventDetailPage({ params }: EventDetailPageProps) {
+  const event = await fetchEventDetails(params.slug);
+  
+  const eventSchema = event ? {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": event.title,
+    "description": event.description,
+    "startDate": event.startDate ? new Date(event.startDate).toISOString() : undefined,
+    "endDate": event.endDate ? new Date(event.endDate).toISOString() : undefined,
+    "eventStatus": "https://schema.org/EventScheduled",
+    "eventAttendanceMode": event.isOnline ? "https://schema.org/OnlineEventAttendanceMode" : "https://schema.org/OfflineEventAttendanceMode",
+    "location": event.isOnline ? {
+      "@type": "VirtualLocation",
+      "url": event.location
+    } : {
+      "@type": "Place",
+      "name": event.location,
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": event.location
+      }
+    },
+    "organizer": {
+      "@type": "Organization",
+      "name": "CUMI",
+      "url": "https://cumi.dev",
+      "logo": "https://cumi.dev/cumi-green.jpg"
+    },
+    "offers": event.price ? {
+      "@type": "Offer",
+      "price": event.price,
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    } : undefined,
+    "image": event.imageUrl || defaultImages[0],
+    "category": event.category
+  } : null;
+
+  return (
+    <>
+      {eventSchema && (
+        <SchemaRenderer schemas={eventSchema} includeDefaults={false} />
+      )}
+      <EventDetailPageComponent eventSlug={params.slug} />
+    </>
+  );
 }

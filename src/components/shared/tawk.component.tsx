@@ -2,7 +2,6 @@
 
 import { useEffect } from 'react';
 
-// Extend Window interface to include Tawk properties
 declare global {
   interface Window {
     Tawk_API?: any;
@@ -12,26 +11,50 @@ declare global {
 
 export default function TawkChat() {
   useEffect(() => {
-    // Initialize Tawk API object
+    if (!process.env.NEXT_PUBLIC_TAWK_PROPERTY_ID || !process.env.NEXT_PUBLIC_TAWK_WIDGET_ID) {
+      console.warn('Tawk.to widget is not configured.');
+      return;
+    }
+
+    if (document.querySelector(`script[src*="embed.tawk.to/${process.env.NEXT_PUBLIC_TAWK_PROPERTY_ID}"]`)) {
+      return;
+    }
+
     window.Tawk_API = window.Tawk_API || {};
     window.Tawk_LoadStart = new Date();
 
-    // Create and append Tawk script
+    window.Tawk_API.onLoad = function() {
+      console.log('Tawk.to widget loaded');
+    };
+
+    window.Tawk_API.onError = function(error: any) {
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('Tawk.to widget error:', error);
+      }
+    };
+
     const script = document.createElement('script');
     script.async = true;
     script.src = `https://embed.tawk.to/${process.env.NEXT_PUBLIC_TAWK_PROPERTY_ID}/${process.env.NEXT_PUBLIC_TAWK_WIDGET_ID}`;
     script.charset = 'UTF-8';
-    script.setAttribute('crossorigin', '*');
+    script.crossOrigin = 'anonymous';
+    
+    script.onerror = () => {
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('Failed to load Tawk.to script');
+      }
+    };
 
-    document.body.appendChild(script);
+    if (!document.querySelector(`script[src="${script.src}"]`)) {
+      document.body.appendChild(script);
+    }
 
     return () => {
-      // Cleanup script on component unmount
-      if (script.parentNode) {
-        script.parentNode.removeChild(script);
+      if (script.parentNode && script.onerror) {
+        script.onerror = null;
       }
     };
   }, []);
 
-  return null; // Tawk widget renders directly to DOM
+  return null;
 }

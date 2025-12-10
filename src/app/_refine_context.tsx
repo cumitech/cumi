@@ -18,6 +18,7 @@ import { Spin, App as AntdApp } from "antd";
 import { accessControlProvider } from "../providers/access-control-provider";
 import { useLocale, useTranslations } from "next-intl";
 import { setUserLocale } from "../i18n/index";
+import { getBaseUrl } from "../utils/get-base-url";
 
 export const App = (props: any) => {
   const { data, status } = useSession();
@@ -53,9 +54,10 @@ export const App = (props: any) => {
       };
     },
     logout: async () => {
+      const baseUrl = getBaseUrl();
       signOut({
         redirect: true,
-        callbackUrl: "/login",
+        callbackUrl: `${baseUrl}/login`,
       });
 
       return {

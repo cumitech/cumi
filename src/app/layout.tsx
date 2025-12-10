@@ -2,12 +2,9 @@ import { Metadata } from "next";
 import { cookies } from "next/headers";
 import React, { Suspense } from "react";
 import { NextIntlClientProvider } from "next-intl";
-import { Poppins, Roboto } from "next/font/google";
 import "../styles/app.scss";
 import "../styles/home.scss";
 import "../styles/nav-responsive.css";
-import { Spin } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
 import { RefineContext } from "@contexts/refine-context";
 import { getLocale, getMessages } from "next-intl/server";
 import {
@@ -18,20 +15,7 @@ import {
 import Script from "next/script";
 import ServiceWorkerProvider from "@components/service-worker-provider";
 import TawkChat from "@components/shared/tawk.component";
-
-const poppins = Poppins({
-  weight: ['300', '400', '500', '600', '700'],
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-poppins',
-});
-
-const roboto = Roboto({
-  weight: ['400', '500', '700'],
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-roboto',
-});
+import SchemaRenderer from "@components/shared/schema-renderer.component";
 
 export const metadata: Metadata = generatePageMetadata({
   title: "CUMI - Leading Software Development & Digital Solutions Company",
@@ -101,7 +85,7 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang="en" suppressHydrationWarning className={`${poppins.variable} ${roboto.variable}`}>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -110,31 +94,28 @@ export default async function RootLayout({
           content="width=device-width, initial-scale=1.0, maximum-scale=5.0"
         />
 
-        {/* Preconnect to external domains */}
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://embed.tawk.to" />
+        <link rel="dns-prefetch" href="https://va.tawk.to" />
 
-        {/* Preload critical images */}
         <link
           rel="preload"
-          href="/cumi-green.jpg"
+          href="https://cumi.dev/cumi-green.jpg"
           as="image"
           type="image/jpeg"
+          fetchPriority="high"
         />
         <link
           rel="preload"
-          href="/img/IMG_4491-min.jpeg"
+          href="https://cumi.dev/img/IMG_4491-min.jpeg"
           as="image"
           type="image/jpeg"
+          fetchPriority="high"
         />
-
-        {/* DNS prefetch for external resources */}
         <link rel="dns-prefetch" href="https://wa.me" />
-
-        {/* Resource hints for better performance */}
         <link rel="preconnect" href="https://wa.me" />
         <link rel="preconnect" href="https://api.whatsapp.com" />
 
-        {/* SEO metadata */}
         <meta name="robots" content="index, follow" />
         <meta name="theme-color" content="#15b9a1" />
         <meta name="msapplication-TileColor" content="#15b9a1" />
@@ -260,7 +241,15 @@ export default async function RootLayout({
         </Script>
       </head>
 
-      <body cz-shortcut-listen="false" className={`${poppins.className} ${roboto.className}`}>
+      <body cz-shortcut-listen="false">
+        <SchemaRenderer 
+          schemas={[
+            generateStructuredData("organization", {}),
+            generateStructuredData("website", {}),
+          ]}
+          includeDefaults={false}
+        />
+        
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe
@@ -352,6 +341,7 @@ export default async function RootLayout({
           src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
           integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
           crossOrigin="anonymous"
+          defer
         ></script>
         <TawkChat />
       </body>

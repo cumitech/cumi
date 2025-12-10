@@ -1,5 +1,4 @@
 import Auth0Provider from "next-auth/providers/auth0";
-import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { emptyUser } from "../domain/models/user";
 import { nanoid } from "nanoid";
@@ -17,11 +16,8 @@ const authOptions: AuthOptions = {
         params: {
           scope: "openid email profile",
         },
-      },
-    }),
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID ?? "",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
+      }, 
+      wellKnown: `${process.env.AUTH0_ISSUER_BASE_URL}/.well-known/openid-configuration`,
     }),
     CredentialsProvider({
       name: "credentials",
@@ -98,6 +94,8 @@ const authOptions: AuthOptions = {
           const currentUser = await User.findOne({
             where: { email: credentials.email },
           });
+
+          console.log("credentials: ", credentials)
 
           if (!currentUser) {
             throw new Error("Invalid email or password");
@@ -204,6 +202,98 @@ const authOptions: AuthOptions = {
   session: {
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
+  cookies: {
+    sessionToken: {
+      name: `${process.env.NODE_ENV === "production" ? "__Secure-" : ""}next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+        // Don't set domain in development, let browser handle it
+        // Only set domain in production if NEXTAUTH_URL is a valid URL
+        ...(process.env.NODE_ENV === "production" && process.env.NEXTAUTH_URL && !process.env.NEXTAUTH_URL.includes("localhost")
+          ? (() => {
+              try {
+                const url = new URL(process.env.NEXTAUTH_URL);
+                return { domain: url.hostname.replace(/^www\./, "") };
+              } catch {
+                return {};
+              }
+            })()
+          : {}),
+      },
+    },
+    callbackUrl: {
+      name: `${process.env.NODE_ENV === "production" ? "__Secure-" : ""}next-auth.callback-url`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+        ...(process.env.NODE_ENV === "production" && process.env.NEXTAUTH_URL && !process.env.NEXTAUTH_URL.includes("localhost")
+          ? (() => {
+              try {
+                const url = new URL(process.env.NEXTAUTH_URL);
+                return { domain: url.hostname.replace(/^www\./, "") };
+              } catch {
+                return {};
+              }
+            })()
+          : {}),
+      },
+    },
+    csrfToken: {
+      name: `${process.env.NODE_ENV === "production" ? "__Host-" : ""}next-auth.csrf-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+        // __Host- prefix requires no domain to be set
+      },
+    },
+    pkceCodeVerifier: {
+      name: `${process.env.NODE_ENV === "production" ? "__Secure-" : ""}next-auth.pkce.code_verifier`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 60 * 15, // 15 minutes
+        ...(process.env.NODE_ENV === "production" && process.env.NEXTAUTH_URL && !process.env.NEXTAUTH_URL.includes("localhost")
+          ? (() => {
+              try {
+                const url = new URL(process.env.NEXTAUTH_URL);
+                return { domain: url.hostname.replace(/^www\./, "") };
+              } catch {
+                return {};
+              }
+            })()
+          : {}),
+      },
+    },
+    state: {
+      name: `${process.env.NODE_ENV === "production" ? "__Secure-" : ""}next-auth.state`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 60 * 15, // 15 minutes - OAuth state should expire quickly
+        ...(process.env.NODE_ENV === "production" && process.env.NEXTAUTH_URL && !process.env.NEXTAUTH_URL.includes("localhost")
+          ? (() => {
+              try {
+                const url = new URL(process.env.NEXTAUTH_URL);
+                return { domain: url.hostname.replace(/^www\./, "") };
+              } catch {
+                return {};
+              }
+            })()
+          : {}),
+      },
+    },
   },
   pages: {
     signIn: "/login",
