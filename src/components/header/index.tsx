@@ -45,8 +45,8 @@ return (
         <Switch
           checkedChildren="🌛"
           unCheckedChildren="🔆"
-          onChange={() => setMode(mode === "light" ? "dark" : "light")}
-          defaultChecked={mode === "dark"}
+          checked={mode === "dark"}
+          onChange={() => setMode()}
         />
         <UserProfileDropdown />
       </Space>

@@ -104,7 +104,7 @@ export const AppFooter: React.FC<Props> = ({ logoPath }) => {
               className={`${styles.content_group_logo}  d-none d-lg-block`}
             >
               <Image
-                src={`${logoPath || "/"}cumi-green.jpg`}
+                src={`${logoPath || "/"}cumi-green.png`}
                 className={styles.logo}
                 height={90}
                 width={160}
@@ -195,12 +195,10 @@ export const AppFooter: React.FC<Props> = ({ logoPath }) => {
                 <RocketOutlined className={styles.titleIcon} />
                 {t("footer.discover")}
               </Title>
-              <Link href="/our-services">{t("nav.services")}</Link>
-              <Link href="/about-us">{t("nav.about-us")}</Link>
-              <Link href="/projects">Projects</Link>
-              <Link href="/partners">Partners</Link>
-              <Link href="/authors">Authors</Link>
-              <Link href="/recommendations">Tools</Link>
+              <Link href="/partners">{t("footer.partners")}</Link>
+              <Link href="/authors">{t("footer.authors")}</Link>
+              <Link href="/sitemap-page">{t("footer.sitemap")}</Link>
+              <Link href="/mobile-app">{t("nav.mobile_app")}</Link>
             </Col>
 
             {}
@@ -209,32 +207,27 @@ export const AppFooter: React.FC<Props> = ({ logoPath }) => {
                 <BookOutlined className={styles.titleIcon} />
                 {t("footer.info")}
               </Title>
-              <Link href="/blog-posts">{t("nav.blog-posts")}</Link>
-              <Link href="/courses">Courses</Link>
-              <Link href="/events">Events</Link>
-              <Link href="/opportunities">Jobs</Link>
-              <Link href="/contact-us">{t("nav.contact-us")}</Link>
-              <Link href="/faqs">FAQs</Link>
+              <Link href="/courses">{t("nav.courses")}</Link>
+              <Link href="/events">{t("nav.events")}</Link>
+              <Link href="/faqs">{t("footer.faqs")}</Link>
+              <Link href="/terms-of-use">{t("footer.terms_of_use")}</Link>
+              <Link href="/privacy-policy">{t("footer.privacy_policy")}</Link>
             </Col>
 
             {}
             <Col
-              xs={0}
+              xs={12}
               sm={12}
               md={8}
               lg={4}
-              className={`${styles.content_group} d-none d-lg-block`}
+              className={styles.content_group}
             >
               <Title level={5} className={styles.footerTitle}>
                 <UserOutlined className={styles.titleIcon} />
-                Account
+                {t("footer.account")}
               </Title>
-              <Link href="/login">Login</Link>
-              <Link href="/register">Register</Link>
-              <Link href="/terms-of-use">Terms of Use</Link>
-              <Link href="/privacy-policy">Privacy Policy</Link>
-              <Link href="/sitemap-page">Sitemap</Link>
-              <Link href="/mobile-app">Mobile App</Link>
+              <Link href="/login">{t("nav.login")}</Link>
+              <Link href="/register">{t("footer.register")}</Link>
             </Col>
 
             <Col

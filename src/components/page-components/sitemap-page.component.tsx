@@ -235,69 +235,6 @@ const SitemapPageComponent: React.FC = () => {
         },
       ],
     },
-    {
-      title: "Authentication Pages",
-      icon: <LockOutlined />,
-      description: "User authentication and account management",
-      pages: [
-        {
-          path: "/login",
-          title: "Login",
-          description: "User login page",
-          access: "public",
-          type: "auth",
-        },
-        {
-          path: "/register",
-          title: "Register",
-          description: "User registration page",
-          access: "public",
-          type: "auth",
-        },
-        {
-          path: "/forgot-password",
-          title: "Forgot Password",
-          description: "Password reset request",
-          access: "public",
-          type: "auth",
-        },
-        {
-          path: "/login",
-          title: "Sign In",
-          description: "Sign in to your account",
-          access: "public",
-          type: "auth",
-        },
-        {
-          path: "/auth/forgot-password",
-          title: "Auth Forgot Password",
-          description: "Authentication forgot password",
-          access: "public",
-          type: "auth",
-        },
-        {
-          path: "/auth/reset-password",
-          title: "Reset Password",
-          description: "Password reset form",
-          access: "public",
-          type: "auth",
-        },
-        {
-          path: "/auth/activate",
-          title: "Account Activation",
-          description: "Account activation page",
-          access: "public",
-          type: "auth",
-        },
-        {
-          path: "/auth/resend-activation",
-          title: "Resend Activation",
-          description: "Resend activation email",
-          access: "public",
-          type: "auth",
-        },
-      ],
-    },
   ];
 
   const getAccessColor = (access: string) => {

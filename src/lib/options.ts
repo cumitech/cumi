@@ -137,7 +137,7 @@ const authOptions: AuthOptions = {
         token.email = data?.email;
         token.provider = account?.provider;
         token.role = data?.role || "user";
-        token.accountStatus = data?.accountStatus || "pending"; // ✅ Add accountStatus to token
+        token.accountStatus = data?.accountStatus || "pending"; // Add accountStatus to token
       }
       return token;
     },
@@ -151,7 +151,7 @@ const authOptions: AuthOptions = {
         session.user.image = token.picture ?? "";
         // session.user.provider = token.provider ?? "";
         session.user.role = (token.role as string) ?? "";
-        session.user.accountStatus = (token.accountStatus as string) ?? "pending"; // ✅ Add accountStatus to session
+        session.user.accountStatus = (token.accountStatus as string) ?? "pending"; // Add accountStatus to session
       }
       return session;
     },

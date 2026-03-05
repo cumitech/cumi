@@ -30,17 +30,18 @@ export default function RoleBasedLayout({
 // Show loading state (only when using client session and still loading)
   if (sessionStatus === "loading" && !serverSession) {
     return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-          flexDirection: "column",
-        }}
-      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+            flexDirection: "column",
+            background: "var(--cumi-bg-primary)",
+          }}
+        >
         <Spin size="large" />
-        <p style={{ marginTop: 16, color: "#666" }}>Loading session...</p>
+        <p style={{ marginTop: 16, color: "var(--cumi-text-secondary)" }}>Loading session...</p>
       </div>
     );
   }
@@ -77,7 +78,7 @@ export default function RoleBasedLayout({
         <div
           className="creator-layout"
           style={{
-            backgroundColor: "#fafbfc",
+            backgroundColor: "var(--cumi-bg-secondary)",
             minHeight: "100vh",
           }}
         >
@@ -111,7 +112,7 @@ export default function RoleBasedLayout({
         <div
           className="student-layout"
           style={{
-            backgroundColor: "#fafbfc",
+            backgroundColor: "var(--cumi-bg-secondary)",
             minHeight: "100vh",
           }}
         >
@@ -144,7 +145,7 @@ export default function RoleBasedLayout({
       <div
         className="student-layout"
         style={{
-          backgroundColor: "#fafbfc",
+          backgroundColor: "var(--cumi-bg-secondary)",
           minHeight: "100vh",
         }}
       >

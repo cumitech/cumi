@@ -1,6 +1,7 @@
 import FormData from "form-data";
 import Mailgun from "mailgun.js";
 import logger from "@utils/logger";
+import { SITE_URL } from "@constants/api-url";
 
 export interface EmailTemplate {
   subject: string;
@@ -40,7 +41,7 @@ class EmailService {
     const apiKey = process.env.MAILGUN_API_KEY || process.env.MAIGUN_API_KEY || "API_KEY";
     
     if (!apiKey || apiKey === "API_KEY") {
-      logger.error("⚠️ WARNING: MAILGUN_API_KEY is not configured!");
+      logger.error("WARNING: MAILGUN_API_KEY is not configured!");
     }
     
     this.mailgun = mailgun.client({
@@ -49,23 +50,10 @@ class EmailService {
       url: process.env.MAILGUN_BASE_URL || "https://api.eu.mailgun.net"
     });
     this.domain = process.env.MAILGUN_DOMAIN || "mail.cumi.dev";
-    const getBaseUrl = () => {
-      if (process.env.NODE_ENV === 'production') {
-        return 'https://cumi.dev';
-      }
-      if (process.env.NEXT_PUBLIC_APP_URL) {
-        return process.env.NEXT_PUBLIC_APP_URL.replace('http://localhost:3000', 'https://cumi.dev');
-      }
-      if (process.env.NEXT_PUBLIC_BASE_URL) {
-        return process.env.NEXT_PUBLIC_BASE_URL.replace('http://localhost:3000', 'https://cumi.dev');
-      }
-      return 'http://localhost:3000';
-    };
+    this.baseUrl = SITE_URL;
+    this.logoUrl = `${this.baseUrl}/cumi-green.png`;
     
-    this.baseUrl = getBaseUrl();
-    this.logoUrl = `${this.baseUrl}/cumi-green.jpg`;
-    
-    logger.info("📧 Email Service Initialized:", {
+    logger.info("Email Service Initialized:", {
       domain: this.domain,
       apiUrl: process.env.MAILGUN_BASE_URL || "https://api.eu.mailgun.net",
       hasApiKey: !!apiKey && apiKey !== "API_KEY"
@@ -170,8 +158,8 @@ class EmailService {
     let processedHtml = html;
     
     if (process.env.NODE_ENV === 'production' || !this.baseUrl.includes('localhost')) {
-      processedHtml = processedHtml.replace(/http:\/\/localhost:3000/gi, 'https://cumi.dev');
-      processedHtml = processedHtml.replace(/https:\/\/localhost:3000/gi, 'https://cumi.dev');
+      processedHtml = processedHtml.replace(/http:\/\/localhost:3000/gi, this.baseUrl);
+      processedHtml = processedHtml.replace(/https:\/\/localhost:3000/gi, this.baseUrl);
     }
     
     processedHtml = processedHtml.replace(
@@ -517,7 +505,7 @@ class EmailService {
           }
           
           .features-list li::before {
-            content: '✓';
+            content: '•';
             position: absolute;
             left: 0;
             color: #22C55E;
@@ -686,8 +674,8 @@ class EmailService {
     
     let finalHtml = emailHtml;
     if (process.env.NODE_ENV === 'production' || !this.baseUrl.includes('localhost')) {
-      finalHtml = finalHtml.replace(/http:\/\/localhost:3000/gi, 'https://cumi.dev');
-      finalHtml = finalHtml.replace(/https:\/\/localhost:3000/gi, 'https://cumi.dev');
+      finalHtml = finalHtml.replace(/http:\/\/localhost:3000/gi, this.baseUrl);
+      finalHtml = finalHtml.replace(/https:\/\/localhost:3000/gi, this.baseUrl);
     }
     
     return {
@@ -713,7 +701,7 @@ class EmailService {
         subject: options.subject,
       };
       
-      logger.info("📧 Sending email:", {
+      logger.info("Sending email:", {
         from,
         to: to.join(', '),
         subject: options.subject,
@@ -723,8 +711,8 @@ class EmailService {
       if (options.html) {
         let sanitizedHtml = options.html;
         if (process.env.NODE_ENV === 'production' || !this.baseUrl.includes('localhost')) {
-          sanitizedHtml = sanitizedHtml.replace(/http:\/\/localhost:3000/gi, 'https://cumi.dev');
-          sanitizedHtml = sanitizedHtml.replace(/https:\/\/localhost:3000/gi, 'https://cumi.dev');
+          sanitizedHtml = sanitizedHtml.replace(/http:\/\/localhost:3000/gi, this.baseUrl);
+          sanitizedHtml = sanitizedHtml.replace(/https:\/\/localhost:3000/gi, this.baseUrl);
         }
         messageData.html = sanitizedHtml;
       }
@@ -732,8 +720,8 @@ class EmailService {
       if (options.text) {
         let sanitizedText = options.text;
         if (process.env.NODE_ENV === 'production' || !this.baseUrl.includes('localhost')) {
-          sanitizedText = sanitizedText.replace(/http:\/\/localhost:3000/gi, 'https://cumi.dev');
-          sanitizedText = sanitizedText.replace(/https:\/\/localhost:3000/gi, 'https://cumi.dev');
+          sanitizedText = sanitizedText.replace(/http:\/\/localhost:3000/gi, this.baseUrl);
+          sanitizedText = sanitizedText.replace(/https:\/\/localhost:3000/gi, this.baseUrl);
         }
         messageData.text = sanitizedText;
       }
@@ -761,13 +749,13 @@ class EmailService {
       }
 
       const data = await this.mailgun.messages.create(this.domain, messageData);
-      logger.info("✅ Email sent successfully:", {
+      logger.info("Email sent successfully:", {
         id: data.id,
         message: data.message
       });
       return data;
     } catch (error: any) {
-      logger.error("❌ Error sending email:", {
+      logger.error("Error sending email:", {
         error: error.message,
         status: error.status,
         details: error.details || error
@@ -779,7 +767,7 @@ class EmailService {
   async sendPasswordResetEmail(email: string, name: string, resetToken: string): Promise<any> {
     const resetUrl = `${this.baseUrl}/auth/reset-password?token=${resetToken}`;
     
-    logger.info("🔐 Sending password reset email:", {
+    logger.info("Sending password reset email:", {
       to: email,
       name,
       resetUrl: process.env.NODE_ENV === 'development' ? resetUrl : '[hidden]'
@@ -790,11 +778,11 @@ class EmailService {
       <p>We received a request to reset the password for your CUMI account. Don't worry, we've got you covered!</p>
       
       <div class="button-container">
-        <a href="${resetUrl}" class="button">🔑 Reset My Password</a>
+        <a href="${resetUrl}" class="button">Reset My Password</a>
       </div>
       
       <div class="warning-box">
-        <p><strong>⚠️ Security Notice:</strong> This password reset link will expire in <strong>1 hour</strong> for your security. If you didn't request this password reset, please ignore this email and consider changing your password immediately.</p>
+        <p><strong>Security Notice:</strong> This password reset link will expire in <strong>1 hour</strong> for your security. If you didn't request this password reset, please ignore this email and consider changing your password immediately.</p>
       </div>
       
       <div class="divider"></div>
@@ -807,7 +795,7 @@ class EmailService {
       <p>If you have any questions or need assistance, our support team is here to help you 24/7.</p>
       
       <div class="info-box">
-        <p><strong>💡 Security Tip:</strong> Never share your password with anyone. CUMI will never ask for your password via email.</p>
+        <p><strong>Security Tip:</strong> Never share your password with anyone. CUMI will never ask for your password via email.</p>
       </div>
     `;
     
@@ -850,15 +838,15 @@ class EmailService {
     const coursesUrl = `${this.baseUrl}/courses`;
     
     const content = `
-      <h2>🎉 Welcome ${name}!</h2>
+      <h2>Welcome ${name}</h2>
       <p>We're absolutely thrilled to have you join the <strong>CUMI</strong> community! Your account has been successfully created, and you're all set to begin your exciting learning journey.</p>
       
       <div class="success-box">
-        <p><strong>✅ Your account is now active!</strong> You can start exploring courses, attending events, and connecting with fellow learners right away.</p>
+        <p><strong>Your account is now active.</strong> You can start exploring courses, attending events, and connecting with fellow learners right away.</p>
       </div>
       
       <div class="features-list">
-        <h3>🚀 What you can do now:</h3>
+        <h3>What you can do now:</h3>
         <ul>
           <li>Access your personalized dashboard and track your progress</li>
           <li>Browse and enroll in 100+ professional courses</li>
@@ -870,13 +858,13 @@ class EmailService {
       </div>
       
       <div class="button-container">
-        <a href="${dashboardUrl}" class="button">🎯 Go to My Dashboard</a>
+        <a href="${dashboardUrl}" class="button">Go to My Dashboard</a>
       </div>
       
       <div class="divider"></div>
       
       <div class="info-box">
-        <p><strong>💡 Pro Tip:</strong> Complete your profile to get personalized course recommendations tailored to your interests and goals!</p>
+        <p>Complete your profile to get personalized course recommendations based on your interests and goals.</p>
       </div>
       
       <p><strong>Explore our courses:</strong> <a href="${coursesUrl}" style="color: #22C55E; text-decoration: none;">Browse Course Catalog →</a></p>
@@ -886,7 +874,7 @@ class EmailService {
     
     const { html } = this.getEmailTemplate({
       title: 'Welcome to CUMI!',
-      subtitle: 'Your learning journey starts here 🎓',
+      subtitle: 'Your learning journey starts here',
       content
     });
 
@@ -898,12 +886,12 @@ class EmailService {
       We're thrilled to have you join our community! Your account has been successfully created and you're ready to start your learning journey.
       
       What you can do now:
-      ✓ Access your personalized dashboard
-      ✓ Browse and enroll in courses
-      ✓ Register for upcoming events
-      ✓ Connect with other learners
-      ✓ Track your learning progress
-      ✓ Earn certificates and badges
+      • Access your personalized dashboard
+      • Browse and enroll in courses
+      • Register for upcoming events
+      • Connect with other learners
+      • Track your learning progress
+      • Earn certificates and badges
       
       Visit your dashboard: ${this.baseUrl}/dashboard
       
@@ -915,7 +903,7 @@ class EmailService {
 
     return this.sendEmail({
       to: { email, name },
-      subject: "Welcome to CUMI! Your Account is Ready 🎉",
+      subject: "Welcome to CUMI - Your Account is Ready",
       html,
       text
     });
@@ -975,7 +963,7 @@ class EmailService {
   }): Promise<any> {
     const { to, userName, activationLink } = params;
     
-    logger.info("🔐 Sending account activation email:", {
+    logger.info("Sending account activation email:", {
       to,
       userName,
       activationLink: process.env.NODE_ENV === 'development' ? activationLink : '[hidden]'
@@ -986,15 +974,15 @@ class EmailService {
       <p>Welcome to <strong>CUMI</strong>! We're excited to have you join our learning community. To complete your account setup and access all features, please activate your account.</p>
       
       <div class="success-box">
-        <p><strong>🎯 Ready to get started?</strong> Click the button below to activate your account and begin your learning journey!</p>
+        <p><strong>Ready to get started?</strong> Click the button below to activate your account.</p>
       </div>
       
       <div class="button-container">
-        <a href="${activationLink}" class="button">🚀 Activate My Account</a>
+        <a href="${activationLink}" class="button">Activate My Account</a>
       </div>
       
       <div class="warning-box">
-        <p><strong>⏰ Important:</strong> This activation link will expire in <strong>24 hours</strong> for security reasons. If you don't activate your account within this time, you'll need to request a new activation email.</p>
+        <p><strong>Important:</strong> This activation link will expire in <strong>24 hours</strong> for security reasons. If you don't activate your account within this time, you'll need to request a new activation email.</p>
       </div>
       
       <div class="divider"></div>
@@ -1005,7 +993,7 @@ class EmailService {
       </div>
       
       <div class="features-list">
-        <h3>🎓 What you'll get with an activated account:</h3>
+        <h3>What you'll get with an activated account:</h3>
         <ul>
           <li>Full access to all courses and learning materials</li>
           <li>Ability to enroll in courses and track progress</li>
@@ -1017,7 +1005,7 @@ class EmailService {
       </div>
       
       <div class="info-box">
-        <p><strong>💡 Need help?</strong> If you have any questions or need assistance with account activation, our support team is available 24/7 to help you get started!</p>
+        <p>If you have any questions or need assistance with account activation, our support team is available to help.</p>
       </div>
       
       <p>We're looking forward to supporting your learning journey!</p>
@@ -1043,12 +1031,12 @@ class EmailService {
       This activation link will expire in 24 hours for security reasons.
       
       What you'll get with an activated account:
-      ✓ Full access to all courses and learning materials
-      ✓ Ability to enroll in courses and track progress
-      ✓ Registration for webinars and workshops
-      ✓ Community features and peer interaction
-      ✓ Certificate generation upon course completion
-      ✓ Personalized learning recommendations
+      • Full access to all courses and learning materials
+      • Ability to enroll in courses and track progress
+      • Registration for webinars and workshops
+      • Community features and peer interaction
+      • Certificate generation upon course completion
+      • Personalized learning recommendations
       
       If you have any questions or need assistance, our support team is here to help!
       
@@ -1076,7 +1064,7 @@ class EmailService {
       cid?: string;
     }>
   ): Promise<any> {
-    logger.info(`📧 Sending bulk email to ${recipients.length} recipients`);
+    logger.info(`Sending bulk email to ${recipients.length} recipients`);
     const sendPromises = recipients.map(recipient =>
       this.sendEmail({ to: recipient, subject, html, text, attachments })
     );

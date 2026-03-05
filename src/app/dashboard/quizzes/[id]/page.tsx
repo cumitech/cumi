@@ -190,7 +190,7 @@ const QuizDetailsPage: React.FC = () => {
                     color={index === quiz.correctAnswerIndex ? "green" : "default"}
                     style={{ margin: "2px 0" }}
                   >
-                    {index === quiz.correctAnswerIndex ? "✓ " : `${index + 1}. `}
+                    {index === quiz.correctAnswerIndex ? "" : `${index + 1}. `}
                     {answer}
                   </Tag>
                 ))}

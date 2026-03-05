@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { SITE_URL } from "@constants/api-url";
 import MobileAppPageComponent from "../../components/page-components/mobile-app-page.component";
 import { generateDynamicPageMetadata, defaultImages } from "../../lib/seo";
 
@@ -23,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "online learning mobile",
     "mobile course platform"
   ],
-  url: "https://cumi.dev/mobile-app",
+  url: "`${SITE_URL}/mobile-app`",
   image: defaultImages[0],
   images: [
     {
@@ -40,7 +41,7 @@ export async function generateMetadata(): Promise<Metadata> {
     images: [defaultImages[0]],
     siteName: "CUMI",
     locale: "en_US",
-    url: "https://cumi.dev/mobile-app"
+    url: "`${SITE_URL}/mobile-app`"
   },
   twitter: {
     card: "summary_large_image",

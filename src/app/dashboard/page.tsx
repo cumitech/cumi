@@ -385,7 +385,7 @@ export default function AdminDashboard() {
           <Row align="middle" justify="space-between">
             <Col>
               <Title level={1} style={{ margin: 0, fontSize: '2rem', fontWeight: '600' }}>
-                {t("dashboard.welcome")}, {session?.user?.name || "Administrator"}! 👋
+                {t("dashboard.welcome")}, {session?.user?.name || "Administrator"}
               </Title>
               <Text type="secondary">{t("dashboard.admin_subtitle")}</Text>
             </Col>
@@ -419,7 +419,7 @@ export default function AdminDashboard() {
             <Row align="middle" justify="space-between">
               <Col>
                 <Text style={{ color: "#ff4d4f", fontSize: "16px", fontWeight: "500" }}>
-                  ⚠️ Unable to load dashboard statistics
+                  Unable to load dashboard statistics
                 </Text>
                 <br />
                 <Text type="secondary" style={{ fontSize: "14px" }}>

@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { SITE_URL } from "@constants/api-url";
 import CategoriesPageComponent from "@components/page-components/categories-page.component";
 import { generateDynamicPageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
 
@@ -28,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "development best practices",
     "coding tutorials"
   ],
-  url: "https://cumi.dev/categories",
+  url: "`${SITE_URL}/categories`",
   image: defaultImages[0],
   images: [
     {
@@ -51,7 +52,7 @@ export async function generateMetadata(): Promise<Metadata> {
     images: [defaultImages[0], defaultImages[1]],
     siteName: "CUMI",
     locale: "en_US",
-    url: "https://cumi.dev/categories"
+    url: "`${SITE_URL}/categories`"
   },
   twitter: {
     card: "summary_large_image",
@@ -65,7 +66,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "@type": "CollectionPage",
     "name": "CUMI Technology Blog Categories",
     "description": "Technology blog posts organized by categories and topics",
-    "url": "https://cumi.dev/categories",
+    "url": "`${SITE_URL}/categories`",
     "mainEntity": {
       "@type": "ItemList",
       "name": "Blog Categories",

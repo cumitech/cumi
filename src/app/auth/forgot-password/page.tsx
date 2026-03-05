@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { SITE_URL } from "@constants/api-url";
 import { generateDynamicPageMetadata, generateStructuredData, defaultImages } from "../../../lib/seo";
 import ForgotPasswordPageComponent from "../../../components/page-components/forgot-password-component";
 
@@ -28,9 +29,9 @@ export async function generateMetadata(): Promise<Metadata> {
       "secure account recovery",
       "password reset process"
     ],
-    url: "https://cumi.dev/auth/forgot-password",
+    url: `${SITE_URL}/auth/forgot-password`,
     alternates: {
-      canonical: "https://cumi.dev/auth/forgot-password"
+      canonical: `${SITE_URL}/auth/forgot-password`
     },
     image: defaultImages[0],
     images: [
@@ -48,7 +49,7 @@ export async function generateMetadata(): Promise<Metadata> {
       images: [defaultImages[0]],
       siteName: "CUMI",
       locale: "en_US",
-      url: "https://cumi.dev/auth/forgot-password"
+      url: `${SITE_URL}/auth/forgot-password`
     },
     twitter: {
       card: "summary_large_image",
@@ -60,11 +61,11 @@ export async function generateMetadata(): Promise<Metadata> {
     schema: generateStructuredData('webpage', {
       name: "Forgot Password - CUMI Account Recovery",
       description: "Secure password reset page for CUMI users to recover their account access",
-      url: "https://cumi.dev/auth/forgot-password",
+      url: `${SITE_URL}/auth/forgot-password`,
       isPartOf: {
         "@type": "WebSite",
         "name": "CUMI",
-        "url": "https://cumi.dev"
+        "url": SITE_URL
       }
     })
   });

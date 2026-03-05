@@ -3,6 +3,7 @@ import { UserUseCase } from "@domain/usecases/user.usecase";
 import { UserRepository } from "@data/repositories/impl/user.repository";
 import { emailService } from "@services/email.service";
 import { nanoid } from "nanoid";
+import { SITE_URL } from "@constants/api-url";
 
 const userRepository = new UserRepository();
 const userUseCase = new UserUseCase(userRepository);
@@ -31,21 +32,7 @@ export async function POST(request: NextRequest) {
     const resetToken = nanoid(32);
     const resetTokenExpiry = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
     
-    // Get base URL with proper fallback (NEVER localhost in production)
-    const getBaseUrl = () => {
-      if (process.env.NEXT_PUBLIC_APP_URL) {
-        return process.env.NEXT_PUBLIC_APP_URL;
-      }
-      if (process.env.NEXT_PUBLIC_BASE_URL) {
-        return process.env.NEXT_PUBLIC_BASE_URL;
-      }
-      if (process.env.NODE_ENV === 'production') {
-        return 'https://cumi.dev';
-      }
-      return 'http://localhost:3000';
-    };
-    
-    const resetUrl = `${getBaseUrl()}/auth/reset-password?token=${resetToken}`;
+    const resetUrl = `${SITE_URL}/auth/reset-password?token=${resetToken}`;
 
     // Get user data
     const userData = user.toJSON ? user.toJSON() : user;

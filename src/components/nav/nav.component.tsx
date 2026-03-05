@@ -1,21 +1,24 @@
 "use client";
 
-import { Affix, Button, Dropdown, Avatar, Space } from "antd";
+import { Affix, Button, Dropdown, Avatar, Space, Tooltip } from "antd";
 import {
   UserOutlined,
   SettingOutlined,
   LogoutOutlined,
   DashboardOutlined,
+  BulbOutlined,
+  SunOutlined,
 } from "@ant-design/icons";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useContext } from "react";
 import {
   LanguageSelector,
   useTranslation,
 } from "@contexts/translation.context";
+import { ColorModeContext } from "@contexts/color-mode";
 import { getBaseUrl } from "@utils/get-base-url";
 
 type Props = {
@@ -27,6 +30,8 @@ export const AppNav: React.FC<Props> = ({ logoPath }) => {
   const [isNavigating, setIsNavigating] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const { t } = useTranslation();
+  const { mode, setMode } = useContext(ColorModeContext);
+  const toggleTheme = () => setMode(mode === "light" ? "dark" : "light");
 
   useEffect(() => {
     setIsMounted(true);
@@ -184,11 +189,10 @@ export const AppNav: React.FC<Props> = ({ logoPath }) => {
   ];
    const navContent = (
     <nav
-      className="navbar navbar-expand-lg navbar-full-width"
+      className="navbar navbar-expand-lg navbar-full-width app-nav"
       style={{
         background: "linear-gradient(180deg, #ffffff 0%, #f9fafb 100%)",
         boxShadow: "0 4px 20px rgba(0,0,0,0.06)",
-        // borderBottom: "3px solid transparent",
         borderImage:
           "linear-gradient(90deg, #22C55E 0%, #14B8A6 50%, #0EA5E9 100%) 1",
         borderImageSlice: "0 0 1 0",
@@ -214,7 +218,7 @@ export const AppNav: React.FC<Props> = ({ logoPath }) => {
         >
           <Link href={"/"} style={{ flexShrink: 0, order: 1 }}>
             <Image
-              src={`${logoPath || "/"}cumi-green.jpg`}
+              src={`${logoPath || "/"}cumi-green.png`}
               height={60}
               width={120}
               quality={100}
@@ -249,10 +253,26 @@ export const AppNav: React.FC<Props> = ({ logoPath }) => {
         <div
           className="collapse navbar-collapse"
           id="navbarSupportedContent"
-          style={{ overflow: "hidden" }}
+          style={{
+            overflow: "hidden",
+            flex: 1,
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
         >
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              justifyContent: "center",
+              minWidth: 0,
+              marginLeft: 24,
+              marginRight: 24,
+            }}
+          >
           <ul
-            className="navbar-nav me-auto mb-2 mb-lg-0"
+            className="navbar-nav mb-2 mb-lg-0"
             style={{
               gap: "4px",
               flexWrap: "nowrap",
@@ -312,14 +332,9 @@ export const AppNav: React.FC<Props> = ({ logoPath }) => {
             {[
               { path: "/our-services", label: t("nav.services") },
               { path: "/projects", label: t("nav.projects") },
-              { path: "/blog-posts", label: t("nav.blog-posts") },
-              { path: "/tutorials", label: "Tutorials" },
+              { path: "/tutorials", label: t("nav.tutorials") },
               { path: "/opportunities", label: t("nav.opportunities") },
-              { path: "/events", label: t("nav.events") },
-              { path: "/courses", label: t("nav.courses") },
-              { path: "/recommendations", label: "Tools" },
-              // { path: "/sitemap-page", label: "Sitemap" },
-              // { path: "/mobile-app", label: t("nav.mobile_app") },
+              { path: "/recommendations", label: t("nav.tools") },
               { path: "/about-us", label: t("nav.about-us") },
               { path: "/contact-us", label: t("nav.contact-us") },
             ].map(({ path, label }) => (
@@ -362,26 +377,43 @@ export const AppNav: React.FC<Props> = ({ logoPath }) => {
               </li>
             ))}
           </ul>
+          </div>
           <div
             className="d-flex flex-sm-column flex-md-row align-items-center"
             style={{ flexShrink: 0 }}
           >
-            <Space size="small">
+            <Space size="small" align="center">
               <LanguageSelector />
-              {status === "loading" ? (
-                <Button
-                  loading
-                  size="large"
-                  shape="round"
+              <Tooltip title={mode === "dark" ? t("nav.theme_light") : t("nav.theme_dark")}>
+                <span
+                  role="button"
+                  tabIndex={0}
+                  onClick={toggleTheme}
+                  onKeyDown={(e) => e.key === "Enter" && toggleTheme()}
                   style={{
-                    fontWeight: "500",
-                    letterSpacing: "0.3px",
-                    height: "42px",
-                    padding: "0 24px",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: 36,
+                    height: 36,
+                    borderRadius: "8px",
+                    cursor: "pointer",
+                    color: "currentColor",
+                    transition: "opacity 0.2s",
                   }}
+                  aria-label={mode === "dark" ? t("nav.theme_light") : t("nav.theme_dark")}
                 >
+                  {mode === "dark" ? (
+                    <SunOutlined style={{ fontSize: 18 }} />
+                  ) : (
+                    <BulbOutlined style={{ fontSize: 18 }} />
+                  )}
+                </span>
+              </Tooltip>
+              {status === "loading" ? (
+                <span style={{ fontSize: "14px", color: "var(--cumi-text-muted, #6b7280)" }}>
                   {t("common.loading")}
-                </Button>
+                </span>
               ) : session ? (
                 <Dropdown
                   menu={{
@@ -438,40 +470,27 @@ export const AppNav: React.FC<Props> = ({ logoPath }) => {
                   </Space>
                 </Dropdown>
               ) : (
-                <Button
-                  className="primary-btn"
-                  shape="round"
+                <Link
                   href="/login"
-                  size="large"
                   style={{
-                    background:
-                      "linear-gradient(135deg, #22C55E 0%, #14B8A6 100%)",
-                    border: "none",
-                    color: "white",
-                    fontWeight: "600",
+                    color: "inherit",
+                    fontWeight: 500,
+                    fontSize: "15px",
                     letterSpacing: "0.3px",
-                    height: "44px",
-                    padding: "0 32px",
-                    boxShadow: "0 4px 12px rgba(34, 197, 94, 0.3)",
-                    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                    padding: "8px 16px",
+                    borderRadius: "8px",
+                    textDecoration: "none",
+                    transition: "opacity 0.2s",
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = "translateY(-2px)";
-                    e.currentTarget.style.boxShadow =
-                      "0 6px 20px rgba(34, 197, 94, 0.4)";
-                    e.currentTarget.style.background =
-                      "linear-gradient(135deg, #16a34a 0%, #0d9488 100%)";
+                    e.currentTarget.style.opacity = "0.8";
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "translateY(0)";
-                    e.currentTarget.style.boxShadow =
-                      "0 4px 12px rgba(34, 197, 94, 0.3)";
-                    e.currentTarget.style.background =
-                      "linear-gradient(135deg, #22C55E 0%, #14B8A6 100%)";
+                    e.currentTarget.style.opacity = "1";
                   }}
                 >
                   {t("nav.login")}
-                </Button>
+                </Link>
               )}
             </Space>
           </div>

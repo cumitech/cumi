@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { SITE_URL } from "@constants/api-url";
 import PartnersPageComponent from "@/components/page-components/partners-page.component";
 import { generateDynamicPageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
 import SchemaRenderer from "@components/shared/schema-renderer.component";
@@ -18,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "strategic alliances",
     "partner network"
   ],
-  url: "https://cumi.dev/partners",
+  url: "`${SITE_URL}/partners`",
   image: defaultImages[0],
   images: [
     {
@@ -35,7 +36,7 @@ export async function generateMetadata(): Promise<Metadata> {
     images: [defaultImages[0]],
     siteName: "CUMI",
     locale: "en_US",
-    url: "https://cumi.dev/partners"
+    url: "`${SITE_URL}/partners`"
   },
   twitter: {
     card: "summary_large_image",
@@ -47,7 +48,7 @@ export async function generateMetadata(): Promise<Metadata> {
   schema: generateStructuredData("organization", {
     name: "CUMI Partners",
     description: "CUMI's network of trusted partners and collaborators across the technology industry",
-    url: "https://cumi.dev/partners"
+    url: "`${SITE_URL}/partners`"
   }),
   });
 }
@@ -56,7 +57,7 @@ export default function PartnersPage() {
   const partnersSchema = generateStructuredData("organization", {
     name: "CUMI Partners",
     description: "CUMI's network of trusted partners and collaborators across the technology industry",
-    url: "https://cumi.dev/partners"
+    url: "`${SITE_URL}/partners`"
   });
 
   return (

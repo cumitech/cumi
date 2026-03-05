@@ -12,7 +12,11 @@ import React, {
 
 type ColorModeContextType = {
   mode: string;
-  setMode: (mode: string) => void;
+  /**
+   * Toggle theme when called with no args, or force a specific mode
+   * when called with \"light\" or \"dark\".
+   */
+  setMode: (mode?: string) => void;
 };
 
 export const ColorModeContext = createContext<ColorModeContextType>(
@@ -27,7 +31,7 @@ export const ColorModeContextProvider: React.FC<
   PropsWithChildren<ColorModeContextProviderProps>
 > = ({ children, defaultMode }) => {
   const [isMounted, setIsMounted] = useState(false);
-  const [mode, setMode] = useState(defaultMode || "light");
+  const [mode, setModeState] = useState(defaultMode || "light");
 
   useEffect(() => {
     setIsMounted(true);
@@ -36,18 +40,23 @@ export const ColorModeContextProvider: React.FC<
   useEffect(() => {
     if (isMounted) {
       const theme = Cookies.get("theme") || "light";
-      setMode(theme);
+      setModeState(theme);
     }
   }, [isMounted]);
 
-  const setColorMode = () => {
-    if (mode === "light") {
-      setMode("dark");
-      Cookies.set("theme", "dark");
-    } else {
-      setMode("light");
-      Cookies.set("theme", "light");
+  // Sync data-theme attribute on document so CSS [data-theme="dark"] applies
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      document.documentElement.setAttribute("data-theme", mode);
     }
+  }, [mode]);
+
+  const setColorMode = (nextMode?: string) => {
+    const targetMode =
+      nextMode ?? (mode === "light" ? "dark" : "light");
+
+    setModeState(targetMode);
+    Cookies.set("theme", targetMode);
   };
 
   const { darkAlgorithm, defaultAlgorithm } = theme;

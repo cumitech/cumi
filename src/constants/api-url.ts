@@ -6,10 +6,14 @@ const getAppUrl = (): string => {
     return process.env.NEXT_PUBLIC_APP_URL;
   }
   
-  // Priority 2: Check if we're in production mode
-  if (process.env.NODE_ENV === 'production') {
-    // In production, use the production domain
-    return 'https://cumi.dev';
+  // Priority 2: NEXT_PUBLIC_SITE_URL (canonical site URL from env)
+  if (process.env.NEXT_PUBLIC_SITE_URL) {
+    return process.env.NEXT_PUBLIC_SITE_URL;
+  }
+  
+  // Priority 3: NEXTAUTH_URL
+  if (process.env.NEXTAUTH_URL) {
+    return process.env.NEXTAUTH_URL;
   }
   
   // Development fallback
@@ -17,6 +21,14 @@ const getAppUrl = (): string => {
 };
 
 export const APP_URL = getAppUrl();
+
+// Canonical site URL for metadata, schema, canonical links, etc.
+// Set NEXT_PUBLIC_SITE_URL in .env (e.g. https://cumi.dev)
+export const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  process.env.NEXT_PUBLIC_APP_URL ||
+  process.env.NEXTAUTH_URL ||
+  'https://cumi.dev';
 
 export const TINYMCE_KEY = `jmee0ymvhn8xuoj51dz5vzj032x5887fw5aa4yojvi9pu68z`;
 

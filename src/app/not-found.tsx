@@ -1,10 +1,16 @@
-"use client";
-
-import { ErrorComponent } from "@refinedev/antd";
-import { Authenticated } from "@refinedev/core";
 import { Suspense } from "react";
-
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "404 - Page Not Found | CUMI",
+  description: "The page you are looking for could not be found. It may have been moved, renamed, or is temporarily unavailable.",
+  robots: { index: false, follow: true },
+  openGraph: {
+    title: "404 - Page Not Found | CUMI",
+    description: "The page you are looking for could not be found.",
+  },
+};
 
 const NotFound = () => {
   return (

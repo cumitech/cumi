@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { SITE_URL } from "@constants/api-url";
 
 export const generatePageMetadata = ({
   title,
@@ -16,7 +17,7 @@ export const generatePageMetadata = ({
   openGraph: {
     title,
     description,
-    url: `https://cumi.dev/${slug}`,
+    url: `${SITE_URL}/${slug}`,
     images: [
       {
         url: image,
@@ -31,7 +32,7 @@ export const generatePageMetadata = ({
     images: [image],
   },
   alternates: {
-    canonical: `https://cumi.dev/${slug}`,
+    canonical: `${SITE_URL}/${slug}`,
   },
 });
 

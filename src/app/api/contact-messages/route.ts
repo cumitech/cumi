@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
         body.name || 'Valued Customer',
         'Thank You for Contacting CUMI',
         `Thank you for reaching out to us! We have received your message regarding "${body.subject || 'your inquiry'}" and our team will get back to you within 24 hours. We appreciate your interest in our services and look forward to assisting you.`,
-        `${process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || (process.env.NODE_ENV === 'production' ? 'https://cumi.dev' : 'http://localhost:3000')}/contact`
+        `${process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || process.env.NEXTAUTH_URL || 'http://localhost:3000'}/contact`
       );
     } catch (emailError) {
       console.error("Failed to send contact confirmation email:", emailError);
@@ -69,7 +69,7 @@ export async function POST(request: NextRequest) {
         'CUMI Admin',
         'New Contact Message Received',
         `A new contact message has been received from ${body.name} (${body.email}).\n\nSubject: ${body.subject || 'No subject'}\nMessage: ${body.message}\n\nPhone: ${body.phone || 'Not provided'}`,
-        `${process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || (process.env.NODE_ENV === 'production' ? 'https://cumi.dev' : 'http://localhost:3000')}/dashboard/contact-messages`
+        `${process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || process.env.NEXTAUTH_URL || 'http://localhost:3000'}/dashboard/contact-messages`
       );
     } catch (adminEmailError) {
       console.error("Failed to send admin notification email:", adminEmailError);

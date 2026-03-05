@@ -95,11 +95,11 @@ export async function POST(request: NextRequest) {
           <p>This is a confirmation that the password for your CUMI account <strong>${userData.email}</strong> has just been changed successfully.</p>
           
           <div class="success-box">
-            <p><strong>✅ Your password was updated on:</strong><br>${new Date().toLocaleString()}</p>
+            <p><strong>Your password was updated on:</strong><br>${new Date().toLocaleString()}</p>
           </div>
           
           <div class="warning-box">
-            <p><strong>⚠️ Didn't make this change?</strong><br>If you did not request this password change, please contact our support team immediately at <a href="mailto:support@cumi.dev" style="color: #F59E0B;">support@cumi.dev</a></p>
+            <p><strong>Didn't make this change?</strong> If you did not request this password change, please contact our support team immediately at <a href="mailto:support@cumi.dev" style="color: #F59E0B;">support@cumi.dev</a></p>
           </div>
           
           <p>For your security, we recommend:</p>

@@ -572,7 +572,7 @@ const LearningPage: React.FC<LearningPageProps> = () => {
             style={{ color: "white", fontSize: "18px", textAlign: "center" }}
           >
             <div style={{ marginBottom: "8px" }}>
-              🔐 Verifying Authentication
+              Verifying Authentication
             </div>
             <div style={{ fontSize: "14px", opacity: 0.8 }}>
               Please wait while we verify your access...
@@ -1054,7 +1054,7 @@ const LearningPage: React.FC<LearningPageProps> = () => {
 
       setCompletedLessons((prev) => new Set([...prev, lessonId]));
       api.success({
-        message: "Lesson Completed! 🎉",
+        message: "Lesson Completed",
         description: "Great job! You've completed this lesson.",
         style: {
           backgroundColor: "#f6ffed",
@@ -1092,7 +1092,7 @@ const LearningPage: React.FC<LearningPageProps> = () => {
       if (percentage >= 90 && !completedLessons.has(currentLesson.id)) {
         setCompletedLessons((prev) => new Set([...prev, currentLesson.id]));
         api.success({
-          message: "Lesson Completed! 🎉",
+          message: "Lesson Completed",
           description: "You've watched the entire video lesson.",
           placement: "topRight",
           style: {
@@ -1197,9 +1197,7 @@ const LearningPage: React.FC<LearningPageProps> = () => {
       const isRetry = attemptNumber > 1;
       if (isCorrect) {
         api.success({
-          message: `🎉 ${
-            isRetry ? "Retry" : "Quiz"
-          } Completed! Score: ${score}/${maxScore} (${percentage.toFixed(1)}%)`,
+          message: `${isRetry ? "Retry" : "Quiz"} Completed. Score: ${score}/${maxScore} (${percentage.toFixed(1)}%)`,
           description: isRetry
             ? `Great improvement! Attempt ${attemptNumber}. ${
                 currentQuiz.explanation || "You got the right answer!"
@@ -1214,9 +1212,7 @@ const LearningPage: React.FC<LearningPageProps> = () => {
         });
       } else {
         api.error({
-          message: `❌ ${
-            isRetry ? "Retry" : "Quiz"
-          } Incorrect. Score: ${score}/${maxScore} (${percentage.toFixed(1)}%)`,
+          message: `${isRetry ? "Retry" : "Quiz"} Incorrect. Score: ${score}/${maxScore} (${percentage.toFixed(1)}%)`,
           description: currentQuiz.explanation
             ? `Attempt ${attemptNumber}. The correct answer was "${correctAnswer}". ${currentQuiz.explanation}`
             : `Attempt ${attemptNumber}. The correct answer was "${correctAnswer}". You can retake the quiz to improve your score.`,
@@ -1283,7 +1279,7 @@ const LearningPage: React.FC<LearningPageProps> = () => {
           id: courseReviews.userReview.id,
         }).unwrap();
         api.success({
-          message: "Review Updated! ⭐",
+          message: "Review Updated",
           description:
             "Your review has been updated and will be reviewed by our team.",
           placement: "topRight",
@@ -1296,7 +1292,7 @@ const LearningPage: React.FC<LearningPageProps> = () => {
         // Create new review
         await createReview(reviewData).unwrap();
         api.success({
-          message: "Review Submitted! ⭐",
+          message: "Review Submitted",
           description:
             "Thank you for your feedback! Your review will be published after moderation.",
           placement: "topRight",
@@ -2053,7 +2049,7 @@ const LearningPage: React.FC<LearningPageProps> = () => {
 
     return (
       <Tag color={isPassed ? "green" : "red"} style={{ marginLeft: "8px" }}>
-        {isPassed ? "✅ Passed" : "❌ Failed"} ({percentage.toFixed(0)}%)
+        {isPassed ? "Passed" : "Failed"} ({percentage.toFixed(0)}%)
       </Tag>
     );
   };
@@ -2195,7 +2191,7 @@ const LearningPage: React.FC<LearningPageProps> = () => {
                   fontSize: "16px",
                 }}
               >
-                📝 Assignments
+                Assignments
               </Title>
               <List
                 size="small"
@@ -2274,7 +2270,7 @@ const LearningPage: React.FC<LearningPageProps> = () => {
                             }}
                           >
                             <Text style={{ color: "#52c41a" }}>
-                              📝 Submitted:{" "}
+                              Submitted:{" "}
                               {new Date(
                                 submission.submittedAt
                               ).toLocaleDateString()}
@@ -2286,7 +2282,7 @@ const LearningPage: React.FC<LearningPageProps> = () => {
                                   fontStyle: "italic",
                                 }}
                               >
-                                💬 Feedback: {submission.instructorFeedback}
+                                Feedback: {submission.instructorFeedback}
                               </div>
                             )}
                           </div>
@@ -2352,7 +2348,7 @@ const LearningPage: React.FC<LearningPageProps> = () => {
                   fontSize: "16px",
                 }}
               >
-                🧠 Quizzes
+                Quizzes
               </Title>
               <List
                 size="small"
@@ -2410,14 +2406,14 @@ const LearningPage: React.FC<LearningPageProps> = () => {
                             }}
                           >
                             <Text style={{ color: "#52c41a" }}>
-                              🎯 Completed:{" "}
+                              Completed:{" "}
                               {new Date(
                                 submission.submittedAt
                               ).toLocaleDateString()}
                             </Text>
                             <div style={{ marginTop: "4px" }}>
                               <Text style={{ color: "#1890ff" }}>
-                                📊 Attempts: {submission.attemptNumber || 1}
+                                Attempts: {submission.attemptNumber || 1}
                               </Text>
                             </div>
                           </div>
@@ -2858,7 +2854,7 @@ const LearningPage: React.FC<LearningPageProps> = () => {
                   filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.2))",
                 }}
               >
-                📚
+                
               </div>
               <Title
                 level={2}
@@ -2945,7 +2941,7 @@ const LearningPage: React.FC<LearningPageProps> = () => {
                             fontSize: "16px",
                           }}
                         >
-                          🔒
+                          
                         </div>
                         <Text style={{ fontSize: "16px", color: "#5a6c7d" }}>
                           You may not have access to this course content
@@ -3013,7 +3009,7 @@ const LearningPage: React.FC<LearningPageProps> = () => {
                           "0 8px 20px rgba(102, 126, 234, 0.4)";
                       }}
                     >
-                      🔄 Try Again
+                      Try Again
                     </Button>
 
                     <Button
@@ -3068,7 +3064,7 @@ const LearningPage: React.FC<LearningPageProps> = () => {
                       lineHeight: "1.6",
                     }}
                   >
-                    💡 <strong>Need help?</strong> Contact your instructor or
+                    <strong>Need help?</strong> Contact your instructor or
                     check back later. Course content is regularly updated and
                     new modules may be added soon.
                   </Text>
@@ -3161,7 +3157,7 @@ const LearningPage: React.FC<LearningPageProps> = () => {
                         strong
                         style={{ fontSize: "16px", color: "#1890ff" }}
                       >
-                        📊 Previous Attempt
+                        Previous Attempt
                       </Text>
                       {getSubmissionStatusTag(submission, "quiz")}
                     </div>
@@ -3174,14 +3170,14 @@ const LearningPage: React.FC<LearningPageProps> = () => {
                     >
                       <div>
                         <Text style={{ fontSize: "14px", color: "#666" }}>
-                          📅 Submitted:{" "}
+                          Submitted:{" "}
                           {new Date(
                             submission.submittedAt
                           ).toLocaleDateString()}
                         </Text>
                         <br />
                         <Text style={{ fontSize: "14px", color: "#666" }}>
-                          🎯 Score: {(submission.score * 100).toFixed(0)}%
+                          Score: {(submission.score * 100).toFixed(0)}%
                         </Text>
                       </div>
                       <div style={{ textAlign: "center" }}>
@@ -3201,7 +3197,7 @@ const LearningPage: React.FC<LearningPageProps> = () => {
                             fontWeight: "bold",
                           }}
                         >
-                          🔄 Retaking Quiz
+                          Retaking Quiz
                         </Text>
                       </div>
                     </div>
@@ -3437,7 +3433,7 @@ const LearningPage: React.FC<LearningPageProps> = () => {
                         : "#ff4d4f",
                     }}
                   >
-                    {currentQuizResults.isPassed ? "✅" : "❌"}
+                    {currentQuizResults.isPassed ? "Passed" : "Failed"}
                   </div>
                   <Text style={{ fontSize: "12px", color: "#666" }}>
                     Status
@@ -3568,7 +3564,7 @@ const LearningPage: React.FC<LearningPageProps> = () => {
                                     fontWeight: "bold",
                                   }}
                                 >
-                                  ✓ Correct
+                                  Correct
                                 </span>
                               )}
                               {isUserAnswer && !isCorrect && (
@@ -3588,7 +3584,7 @@ const LearningPage: React.FC<LearningPageProps> = () => {
                                     fontWeight: "bold",
                                   }}
                                 >
-                                  ✓ Your Answer
+                                  Your Answer
                                 </span>
                               )}
                             </div>
@@ -3930,7 +3926,7 @@ const LearningPage: React.FC<LearningPageProps> = () => {
                 }}
               >
                 {completedLessons.has(currentLesson?.id || "")
-                  ? "✓ Completed"
+                  ? "Completed"
                   : "Mark Complete"}
               </Button>
             </Col>
@@ -3987,7 +3983,7 @@ const LearningPage: React.FC<LearningPageProps> = () => {
                   }}
                 >
                   {completedLessons.has(currentLesson?.id || "")
-                    ? "✓ Completed"
+                    ? "Completed"
                     : "Mark Complete"}
                 </Button>
                 <Button

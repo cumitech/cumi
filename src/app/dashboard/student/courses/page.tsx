@@ -186,7 +186,7 @@ export default function StudentCourseBrowser() {
               </Space>
               <div style={{ marginTop: 8 }}>
                 <Text type="secondary">
-                  Discover and enroll in courses to enhance your skills and knowledge.
+                  Browse and enroll in courses to build your skills.
                 </Text>
               </div>
             </Col>

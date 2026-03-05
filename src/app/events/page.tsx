@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { SITE_URL } from "@constants/api-url";
 import EventsPageComponent from "@components/page-components/events-page.component";
 import { generateDynamicPageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
 
@@ -28,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "tech networking events",
     "industry conferences"
   ],
-  url: "https://cumi.dev/events",
+  url: "`${SITE_URL}/events`",
   image: defaultImages[2],
   images: [
     {
@@ -51,7 +52,7 @@ export async function generateMetadata(): Promise<Metadata> {
     images: [defaultImages[2], defaultImages[0]],
     siteName: "CUMI",
     locale: "en_US",
-    url: "https://cumi.dev/events"
+    url: "`${SITE_URL}/events`"
   },
   twitter: {
     card: "summary_large_image",
@@ -65,7 +66,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "@type": "CollectionPage",
     "name": "CUMI Technology Events",
     "description": "Technology workshops, conferences, and events for software development professionals",
-    "url": "https://cumi.dev/events",
+    "url": "`${SITE_URL}/events`",
     "mainEntity": {
       "@type": "ItemList",
       "name": "Technology Events",

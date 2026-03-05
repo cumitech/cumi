@@ -322,7 +322,7 @@ export const useLearningPage = () => {
       setCompletedLessons(prev => new Set([...prev, lessonId]));
       
       api.success({
-        message: "Lesson Completed! 🎉",
+        message: "Lesson Completed",
         description: "Great job! You've completed this lesson.",
         style: {
           backgroundColor: '#f6ffed',
@@ -400,7 +400,7 @@ export const useLearningPage = () => {
       setQuizAnswers({});
       
       api.success({
-        message: "Quiz Submitted! 🎉",
+        message: "Quiz Submitted",
         description: "Your quiz has been submitted successfully.",
         style: {
           backgroundColor: '#f6ffed',
@@ -439,7 +439,7 @@ export const useLearningPage = () => {
       }).unwrap();
 
       api.success({
-        message: "Assignment Submitted! 🎉",
+        message: "Assignment Submitted",
         description: "Your assignment has been submitted successfully.",
         style: {
           backgroundColor: '#f6ffed',
@@ -479,7 +479,7 @@ export const useLearningPage = () => {
       refetchReviews();
       
       api.success({
-        message: "Review Submitted! 🎉",
+        message: "Review Submitted",
         description: "Thank you for your review.",
         style: {
           backgroundColor: '#f6ffed',

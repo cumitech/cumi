@@ -1,12 +1,13 @@
 import { Metadata } from "next";
+import { SITE_URL } from "@constants/api-url";
 import OurServicesPageComponent from "@components/page-components/our-services-page.component";
 import { generateDynamicPageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
 import SchemaRenderer from "@components/shared/schema-renderer.component";
 
 export async function generateMetadata(): Promise<Metadata> {
   return await generateDynamicPageMetadata("/our-services", {
-  title: "Our Services - CUMI Software Development Solutions",
-  description: "Explore CUMI's comprehensive software development services including web applications, mobile apps, cloud solutions, API development, database design, and digital transformation services for businesses of all sizes.",
+  title: "Our Services - CUMI Digital Agency",
+  description: "Digital solutions that scale. Web apps, mobile apps, and custom software for small businesses and enterprises. Explore our services.",
   keywords: [
     "software development services",
     "web application development",
@@ -29,9 +30,9 @@ export async function generateMetadata(): Promise<Metadata> {
     "backend development",
     "DevOps services"
   ],
-  url: "https://cumi.dev/our-services",
+  url: `${SITE_URL}/our-services`,
   alternates: {
-    canonical: "https://cumi.dev/our-services"
+    canonical: `${SITE_URL}/our-services`
   },
   image: defaultImages[0],
   images: [
@@ -50,17 +51,17 @@ export async function generateMetadata(): Promise<Metadata> {
   ],
   openGraph: {
     type: "website",
-    title: "CUMI Software Development Services",
-    description: "Comprehensive software development services including web apps, mobile apps, cloud solutions, and digital transformation for businesses worldwide.",
+    title: "CUMI - Digital Solutions That Scale",
+    description: "Web apps, mobile apps, and custom software for small businesses and enterprises. Digital solutions that help you scale.",
     images: [defaultImages[0], defaultImages[1]],
     siteName: "CUMI",
     locale: "en_US",
-    url: "https://cumi.dev/our-services"
+    url: `${SITE_URL}/our-services`
   },
   twitter: {
     card: "summary_large_image",
-    title: "CUMI Software Development Services",
-    description: "Comprehensive software development services including web apps, mobile apps, cloud solutions, and digital transformation.",
+    title: "CUMI - Digital Solutions That Scale",
+    description: "Web apps, mobile apps, and custom software for small businesses and enterprises.",
     images: [defaultImages[0]],
     creator: "@cumi_dev"
   },
@@ -68,11 +69,11 @@ export async function generateMetadata(): Promise<Metadata> {
     "@context": "https://schema.org",
     "@type": "Service",
     "name": "Software Development Services",
-    "description": "Comprehensive software development services including web applications, mobile apps, cloud solutions, and digital transformation",
+    "description": "Digital agency helping businesses scale. Web apps, mobile apps, cloud solutions, and custom software for small businesses and enterprises",
     "provider": {
       "@type": "Organization",
       "name": "CUMI",
-      "url": "https://cumi.dev"
+      "url": SITE_URL
     },
     "serviceType": "Software Development",
     "areaServed": "Worldwide",
@@ -119,11 +120,11 @@ export default function OurServicesPage() {
     "@context": "https://schema.org",
     "@type": "Service",
     "name": "Software Development Services",
-    "description": "Comprehensive software development services including web applications, mobile apps, cloud solutions, and digital transformation",
+    "description": "Digital agency helping businesses scale. Web apps, mobile apps, cloud solutions, and custom software for small businesses and enterprises",
     "provider": {
       "@type": "Organization",
       "name": "CUMI",
-      "url": "https://cumi.dev"
+      "url": SITE_URL
     },
     "serviceType": "Software Development",
     "areaServed": "Worldwide",

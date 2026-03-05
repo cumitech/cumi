@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { SITE_URL } from "@constants/api-url";
 import BlogPostDetailPageComponent from "@components/page-components/blog-post-detail-page.component";
 import { generatePageMetadata, generateStructuredData, fetchApiData, defaultImages } from "../../../lib/seo";
 import SchemaRenderer from "@components/shared/schema-renderer.component";
@@ -30,7 +31,7 @@ export async function generateMetadata({ params }: BlogPostDetailPageProps): Pro
     return generatePageMetadata({
       title: "Blog Post - CUMI Technology Blog",
       description: "Read our latest technology insights and software development articles.",
-      url: "https://cumi.dev/blog-posts"
+      url: `${SITE_URL}/blog-posts`
     });
   }
 
@@ -40,7 +41,7 @@ export async function generateMetadata({ params }: BlogPostDetailPageProps): Pro
     return generatePageMetadata({
       title: "Blog Post - CUMI Technology Blog",
       description: "Read our latest technology insights and software development articles.",
-      url: `https://cumi.dev/blog-posts/${params.slug}`
+      url: `${SITE_URL}/blog-posts/${params.slug}`
     });
   }
 
@@ -63,7 +64,7 @@ export async function generateMetadata({ params }: BlogPostDetailPageProps): Pro
     title: `${post.title} - CUMI Technology Blog`,
     description: post.description || `Read our detailed article about ${post.title}. Learn about software development, web applications, and technology insights from CUMI's expert team.`,
     keywords,
-    url: `https://cumi.dev/blog-posts/${params.slug}`,
+    url: `${SITE_URL}/blog-posts/${params.slug}`,
     image: postImage,
     images: [
       {
@@ -76,7 +77,7 @@ export async function generateMetadata({ params }: BlogPostDetailPageProps): Pro
     publishedTime: new Date(post.createdAt).toISOString(),
     modifiedTime: new Date(post.updatedAt).toISOString(),
     alternates: {
-      canonical: `https://cumi.dev/blog-posts/${params.slug}`
+      canonical: `${SITE_URL}/blog-posts/${params.slug}`
     },
     openGraph: {
       type: "article",
@@ -85,7 +86,7 @@ export async function generateMetadata({ params }: BlogPostDetailPageProps): Pro
       images: [postImage],
       siteName: "CUMI",
       locale: "en_US",
-      url: `https://cumi.dev/blog-posts/${params.slug}`
+      url: `${SITE_URL}/blog-posts/${params.slug}`
     },
     twitter: {
       card: "summary_large_image",

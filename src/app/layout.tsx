@@ -12,15 +12,19 @@ import {
   generateStructuredData,
   defaultImages,
 } from "../lib/seo";
+import { SITE_URL } from "@constants/api-url";
 import Script from "next/script";
 import ServiceWorkerProvider from "@components/service-worker-provider";
 import TawkChat from "@components/shared/tawk.component";
 import SchemaRenderer from "@components/shared/schema-renderer.component";
 
 export const metadata: Metadata = generatePageMetadata({
-  title: "CUMI - Leading Software Development & Digital Solutions Company",
+  title: "CUMI - Digital Agency | Software Solutions for Scaling Businesses",
   description:
-    "Transform your business with CUMI's cutting-edge software development, web applications, mobile apps, and digital solutions. Expert team delivering innovative technology solutions for startups to enterprises.",
+    "CUMI is a digital agency that helps businesses scale. We build web apps, mobile apps, and custom software for small businesses and enterprises.",
+  url: SITE_URL,
+  alternates: { canonical: "/" },
+  robots: { index: true, follow: true },
   keywords: [
     "software development company",
     "web development services",
@@ -40,29 +44,28 @@ export const metadata: Metadata = generatePageMetadata({
     "business automation",
     "IT consulting services",
   ],
-  url: "https://cumi.dev",
   image: defaultImages[0],
   images: defaultImages.map((img) => ({
     url: img,
     width: 1200,
     height: 630,
-    alt: "CUMI - Software Development & Digital Solutions",
+    alt: "CUMI - Digital Agency for Business Growth",
   })),
   openGraph: {
     type: "website",
-    title: "CUMI - Leading Software Development & Digital Solutions",
+    title: "CUMI - Digital Agency | Software Solutions for Scaling Businesses",
     description:
-      "Transform your business with CUMI's cutting-edge software development, web applications, mobile apps, and digital solutions.",
+      "Digital agency helping businesses scale. Web apps, mobile apps, and custom software for small businesses and enterprises.",
     images: defaultImages,
     siteName: "CUMI",
     locale: "en_US",
-    url: "https://cumi.dev",
+    url: SITE_URL,
   },
   twitter: {
     card: "summary_large_image",
-    title: "CUMI - Software Development & Digital Solutions",
+    title: "CUMI - Digital Agency | Software Solutions for Scaling Businesses",
     description:
-      "Transform your business with CUMI's cutting-edge software development and digital solutions.",
+      "Digital agency helping businesses scale. Custom software for small businesses and enterprises.",
     images: defaultImages,
     creator: "@cumi_dev",
   },
@@ -85,7 +88,7 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-theme={defaultMode} suppressHydrationWarning>
       <head>
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -100,14 +103,14 @@ export default async function RootLayout({
 
         <link
           rel="preload"
-          href="https://cumi.dev/cumi-green.jpg"
+          href={`${SITE_URL}/cumi-green.png`}
           as="image"
           type="image/jpeg"
           fetchPriority="high"
         />
         <link
           rel="preload"
-          href="https://cumi.dev/img/IMG_4491-min.jpeg"
+          href={`${SITE_URL}/img/IMG_4491-min.jpeg`}
           as="image"
           type="image/jpeg"
           fetchPriority="high"
@@ -260,75 +263,7 @@ export default async function RootLayout({
           ></iframe>
         </noscript>
         <ServiceWorkerProvider>
-          <Suspense
-            fallback={
-              <div
-                style={{
-                  minHeight: "100vh",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  background: "#f8fafc",
-                  position: "relative",
-                }}
-              >
-                <div
-                  style={{
-                    textAlign: "center",
-                    padding: "20px",
-                    borderRadius: "12px",
-                    background: "rgba(255, 255, 255, 0.9)",
-                    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-                    border: "1px solid rgba(255, 255, 255, 0.2)",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "40px",
-                      height: "40px",
-                      margin: "0 auto 12px",
-                      border: "3px solid #e5e7eb",
-                      borderTop: "3px solid #22C55E",
-                      borderRadius: "50%",
-                      animation: "spin 1s linear infinite",
-                    }}
-                  />
-                  <p
-                    style={{
-                      fontSize: "0.9rem",
-                      color: "#6B7280",
-                      margin: 0,
-                      fontWeight: 500,
-                    }}
-                  >
-                    Loading...
-                  </p>
-                </div>
-
-                <style>{`
-                  @keyframes spin {
-                    0% {
-                      transform: rotate(0deg);
-                    }
-                    100% {
-                      transform: rotate(360deg);
-                    }
-                  }
-                  @keyframes pulse {
-                    0%,
-                    100% {
-                      transform: scale(1);
-                      opacity: 0.5;
-                    }
-                    50% {
-                      transform: scale(1.1);
-                      opacity: 0.8;
-                    }
-                  }
-                `}</style>
-              </div>
-            }
-          >
+          <Suspense fallback={null}>
             <NextIntlClientProvider locale={locale} messages={messages}>
               <RefineContext defaultMode={defaultMode}>
                 {children}

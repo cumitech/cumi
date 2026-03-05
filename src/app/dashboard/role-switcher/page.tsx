@@ -116,7 +116,7 @@ export default function RoleSwitcherPage() {
                         }}
                       >
                         <Text style={{ color: currentRoleInfo.color }}>
-                          ✓ {feature}
+                          {feature}
                         </Text>
                       </Card>
                     </Col>

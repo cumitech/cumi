@@ -1,12 +1,13 @@
 import { Metadata } from "next";
+import { SITE_URL } from "@constants/api-url";
 import ProjectsPageComponent from "@components/page-components/projects-page.component";
 import { generateDynamicPageMetadata, defaultImages } from "../../lib/seo";
 import SchemaRenderer from "@components/shared/schema-renderer.component";
 
 export async function generateMetadata(): Promise<Metadata> {
   return await generateDynamicPageMetadata("/projects", {
-  title: "Our Projects - CUMI Software Development Portfolio",
-  description: "Explore CUMI's portfolio of innovative software development projects including web applications, mobile apps, cloud solutions, and digital transformation projects built with cutting-edge technologies.",
+  title: "Our Projects - CUMI Digital Agency",
+  description: "Projects that help businesses scale. Web apps, mobile apps, and custom software built for small businesses and enterprises.",
   keywords: [
     "software development portfolio",
     "web application projects",
@@ -29,48 +30,48 @@ export async function generateMetadata(): Promise<Metadata> {
     "business automation projects",
     "DevOps projects"
   ],
-  url: "https://cumi.dev/projects",
+  url: `${SITE_URL}/projects`,
   image: defaultImages[1],
   images: [
     {
       url: defaultImages[1],
       width: 1200,
       height: 630,
-      alt: "CUMI Software Development Portfolio"
+      alt: "CUMI Projects - Digital Agency Portfolio"
     },
     {
       url: defaultImages[0],
       width: 1200,
       height: 630,
-      alt: "CUMI Technology Projects"
+      alt: "CUMI Digital Agency Projects"
     }
   ],
   openGraph: {
     type: "website",
-    title: "CUMI Software Development Portfolio",
-    description: "Explore our innovative software development projects including web applications, mobile apps, and digital transformation solutions.",
+    title: "CUMI - Projects That Help Businesses Scale",
+    description: "Web apps, mobile apps, and custom software built for small businesses and enterprises.",
     images: [defaultImages[1], defaultImages[0]],
     siteName: "CUMI",
     locale: "en_US",
-    url: "https://cumi.dev/projects"
+    url: `${SITE_URL}/projects`
   },
   twitter: {
     card: "summary_large_image",
-    title: "CUMI Software Development Portfolio",
-    description: "Explore our innovative software development projects including web applications, mobile apps, and digital solutions.",
+    title: "CUMI - Projects That Help Businesses Scale",
+    description: "Web apps, mobile apps, and custom software built for small businesses and enterprises.",
     images: [defaultImages[1]],
     creator: "@cumi_dev"
   },
   schema: {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    "name": "CUMI Software Development Portfolio",
-    "description": "Portfolio of innovative software development projects and digital solutions",
-    "url": "https://cumi.dev/projects",
+    "name": "CUMI Projects",
+    "description": "Projects that help businesses scale. Web apps, mobile apps, and custom software for small businesses and enterprises",
+    "url": `${SITE_URL}/projects`,
     "mainEntity": {
       "@type": "ItemList",
-      "name": "Software Development Projects",
-      "description": "Collection of web applications, mobile apps, and digital transformation projects"
+      "name": "CUMI Projects",
+      "description": "Web apps, mobile apps, and custom software for small businesses and enterprises"
     }
   }
   });
@@ -80,13 +81,13 @@ export default function ProjectsPage() {
   const projectsSchema = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    "name": "CUMI Software Development Portfolio",
-    "description": "Portfolio of innovative software development projects and digital solutions",
-    "url": "https://cumi.dev/projects",
+    "name": "CUMI Projects",
+    "description": "Projects that help businesses scale. Web apps, mobile apps, and custom software for small businesses and enterprises",
+    "url": `${SITE_URL}/projects`,
     "mainEntity": {
       "@type": "ItemList",
-      "name": "Software Development Projects",
-      "description": "Collection of web applications, mobile apps, and digital transformation projects"
+      "name": "CUMI Projects",
+      "description": "Web apps, mobile apps, and custom software for small businesses and enterprises"
     }
   };
 

@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { SITE_URL } from "@constants/api-url";
 import BlogPostsPageComponent from "@components/page-components/blog-posts-page.component";
 import { generateDynamicPageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
 import SchemaRenderer from "@components/shared/schema-renderer.component";
@@ -29,9 +30,9 @@ export async function generateMetadata(): Promise<Metadata> {
     "technology trends",
     "software architecture blog"
   ],
-  url: "https://cumi.dev/blog-posts",
+  url: `${SITE_URL}/blog-posts`,
   alternates: {
-    canonical: "https://cumi.dev/blog-posts"
+    canonical: `${SITE_URL}/blog-posts`,
   },
   image: defaultImages[0],
   images: [
@@ -55,7 +56,7 @@ export async function generateMetadata(): Promise<Metadata> {
     images: [defaultImages[0], defaultImages[1]],
     siteName: "CUMI",
     locale: "en_US",
-    url: "https://cumi.dev/blog-posts"
+    url: `${SITE_URL}/blog-posts`
   },
   twitter: {
     card: "summary_large_image",
@@ -69,20 +70,20 @@ export async function generateMetadata(): Promise<Metadata> {
     "@type": "Blog",
     "name": "CUMI Technology Blog",
     "description": "Software development insights, web development tutorials, and technology articles",
-    "url": "https://cumi.dev/blog-posts",
+    "url": `${SITE_URL}/blog-posts`,
     "publisher": {
       "@type": "Organization",
       "name": "CUMI",
-      "url": "https://cumi.dev",
+      "url": SITE_URL,
       "logo": {
         "@type": "ImageObject",
-        "url": "https://cumi.dev/logo.png"
+        "url": `${SITE_URL}/logo.png`
       }
     },
     "inLanguage": "en-US",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": "https://cumi.dev/blog-posts"
+      "@id": `${SITE_URL}/blog-posts`
     }
   }
   });
@@ -94,20 +95,20 @@ export default function BlogPostsPage() {
     "@type": "Blog",
     "name": "CUMI Technology Blog",
     "description": "Software development insights, web development tutorials, and technology articles",
-    "url": "https://cumi.dev/blog-posts",
+    "url": `${SITE_URL}/blog-posts`,
     "publisher": {
       "@type": "Organization",
       "name": "CUMI",
-      "url": "https://cumi.dev",
+      "url": SITE_URL,
       "logo": {
         "@type": "ImageObject",
-        "url": "https://cumi.dev/cumi-green.jpg"
+        "url": `${SITE_URL}/cumi-green.png`
       }
     },
     "inLanguage": "en-US",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": "https://cumi.dev/blog-posts"
+      "@id": `${SITE_URL}/blog-posts`
     }
   };
 

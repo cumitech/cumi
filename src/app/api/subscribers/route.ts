@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
         subscriber.name || 'Subscriber',
         'Welcome to CUMI Newsletter!',
         `Thank you for subscribing to our newsletter! You'll now receive updates about our latest courses, events, and educational content. We're excited to have you as part of our learning community.`,
-        `${process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || (process.env.NODE_ENV === 'production' ? 'https://cumi.dev' : 'http://localhost:3000')}/dashboard`
+        `${process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || process.env.NEXTAUTH_URL || 'http://localhost:3000'}/dashboard`
       );
     } catch (emailError) {
       console.error("Failed to send subscription confirmation email:", emailError);

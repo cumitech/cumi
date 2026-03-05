@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { SITE_URL } from "@constants/api-url";
 import TutorialsPageComponent from "@components/page-components/tutorials-page.component";
 import { generateDynamicPageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
 import SchemaRenderer from "@components/shared/schema-renderer.component";
@@ -29,9 +30,9 @@ export async function generateMetadata(): Promise<Metadata> {
     "software engineering tutorials",
     "technology education"
   ],
-  url: "https://cumi.dev/tutorials",
+  url: `${SITE_URL}/tutorials`,
   alternates: {
-    canonical: "https://cumi.dev/tutorials"
+    canonical: `${SITE_URL}/tutorials`,
   },
   image: defaultImages[0],
   images: [
@@ -55,7 +56,7 @@ export async function generateMetadata(): Promise<Metadata> {
     images: [defaultImages[0], defaultImages[1]],
     siteName: "CUMI",
     locale: "en_US",
-    url: "https://cumi.dev/tutorials"
+    url: `${SITE_URL}/tutorials`
   },
   twitter: {
     card: "summary_large_image",
@@ -67,7 +68,7 @@ export async function generateMetadata(): Promise<Metadata> {
   schema: generateStructuredData('webpage', {
     name: "CUMI Tutorials",
     description: "Comprehensive tutorials and learning guides for software development",
-    url: "https://cumi.dev/tutorials",
+    url: "`${SITE_URL}/tutorials`",
     mainEntity: {
       "@type": "CollectionPage",
       "name": "Tutorials",
@@ -83,7 +84,7 @@ export default function TutorialsPage() {
     "@type": "CollectionPage",
     "name": "CUMI Tutorials",
     "description": "Comprehensive tutorials and learning guides for software development",
-    "url": "https://cumi.dev/tutorials",
+    "url": `${SITE_URL}/tutorials`,
     "mainEntity": {
       "@type": "ItemList",
       "name": "Tutorials",

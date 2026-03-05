@@ -17,7 +17,7 @@ export const JsonLdScript: React.FC<JsonLdScriptProps> = ({ schema, id }) => {
               key={id ? `${id}-${index}` : `json-ld-${index}`}
               type="application/ld+json"
               dangerouslySetInnerHTML={{
-                __html: JSON.stringify(item, null, 0)
+                __html: JSON.stringify(item, null, 0).replace(/</g, "\\u003c"),
               }}
             />
           );
@@ -30,10 +30,10 @@ export const JsonLdScript: React.FC<JsonLdScriptProps> = ({ schema, id }) => {
 
   return (
     <script
-      id={id || 'json-ld-schema'}
+      id={id || "json-ld-schema"}
       type="application/ld+json"
       dangerouslySetInnerHTML={{
-        __html: JSON.stringify(schema, null, 0)
+        __html: JSON.stringify(schema, null, 0).replace(/</g, "\\u003c"),
       }}
     />
   );

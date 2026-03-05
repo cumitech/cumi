@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { SITE_URL } from "@constants/api-url";
 import { Form, Input, Button, Card, Row, Col, Select, message, Space, Divider } from 'antd';
 import { SaveOutlined, ReloadOutlined, EyeOutlined } from '@ant-design/icons';
 
@@ -190,7 +191,7 @@ export default function MetaManagement({
           label="Canonical URL"
           rules={[{ required: true, message: 'Please enter canonical URL' }]}
         >
-          <Input placeholder="https://cumi.dev/about-us" />
+          <Input placeholder={`${SITE_URL}/about-us`} />
         </Form.Item>
         
         <Form.Item
@@ -223,7 +224,7 @@ export default function MetaManagement({
               name="ogImage"
               label="OG Image URL"
             >
-              <Input placeholder="https://cumi.dev/image.jpg" />
+              <Input placeholder={`${SITE_URL}/image.jpg`} />
             </Form.Item>
           </Col>
         </Row>
@@ -252,7 +253,7 @@ export default function MetaManagement({
               name="twitterImage"
               label="Twitter Image URL"
             >
-              <Input placeholder="https://cumi.dev/image.jpg" />
+              <Input placeholder={`${SITE_URL}/image.jpg`} />
             </Form.Item>
           </Col>
         </Row>
@@ -327,7 +328,7 @@ export default function MetaManagement({
               <h4>Search Engine Preview:</h4>
               <div className="search-preview">
                 <div className="title">{form.getFieldValue('title') || 'Page Title'}</div>
-                <div className="url">{form.getFieldValue('canonical') || 'https://cumi.dev/page'}</div>
+                <div className="url">{form.getFieldValue('canonical') || `${SITE_URL}/page`}</div>
                 <div className="description">{form.getFieldValue('description') || 'Meta description'}</div>
               </div>
             </div>

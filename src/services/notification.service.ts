@@ -1,3 +1,4 @@
+import { SITE_URL } from "@constants/api-url";
 import { emailService } from "@services/email.service";
 import { UserUseCase } from "@domain/usecases/user.usecase";
 import { UserRepository } from "@data/repositories/impl/user.repository";
@@ -5,18 +6,7 @@ import { UserRepository } from "@data/repositories/impl/user.repository";
 const userRepository = new UserRepository();
 const userUseCase = new UserUseCase(userRepository);
 
-const getBaseUrl = (): string => {
-  if (process.env.NODE_ENV === 'production') {
-    return 'https://cumi.dev';
-  }
-  if (process.env.NEXT_PUBLIC_APP_URL) {
-    return process.env.NEXT_PUBLIC_APP_URL.replace(/http:\/\/localhost:3000/gi, 'https://cumi.dev');
-  }
-  if (process.env.NEXT_PUBLIC_BASE_URL) {
-    return process.env.NEXT_PUBLIC_BASE_URL.replace(/http:\/\/localhost:3000/gi, 'https://cumi.dev');
-  }
-  return 'https://cumi.dev';
-};
+const getBaseUrl = (): string => SITE_URL;
 
 export interface NotificationData {
   userId: string;

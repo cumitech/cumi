@@ -1324,7 +1324,7 @@ return (
                       </Button>
                       <div className="mt-3">
                         <Text type="success" strong>
-                          ✓ You are enrolled in this course
+                          You are enrolled in this course
                         </Text>
                       </div>
                     </div>
@@ -1581,7 +1581,7 @@ return videoId ? (
                   level={5}
                   style={{ margin: "0 0 8px 0", color: "#1a1a1a" }}
                 >
-                  📁 Download Materials
+                  Download Materials
                 </Title>
                 <Text style={{ color: "#1e40af", fontSize: "14px" }}>
                   {selectedLesson.downloadMaterials}

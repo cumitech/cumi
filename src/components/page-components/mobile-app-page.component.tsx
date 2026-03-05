@@ -74,7 +74,6 @@ export default function MobileAppPageComponent() {
               border: "1px solid rgba(255, 255, 255, 0.2)",
               backdropFilter: "blur(10px)"
             }}>
-              <span style={{ fontSize: "18px" }}>🚀</span>
               <span>COMING SOON</span>
             </div>
             
@@ -102,7 +101,7 @@ export default function MobileAppPageComponent() {
               lineHeight: "1.7",
               fontWeight: "400"
             }}>
-              Transform your learning and teaching experience with our powerful mobile app. 
+              Access courses and manage content from your phone with our mobile app. 
               Access the complete LMS and Creator Dashboard seamlessly on iOS and Android.
             </p>
 
@@ -191,7 +190,6 @@ export default function MobileAppPageComponent() {
               fontSize: "14px",
               fontWeight: "600"
             }}>
-              <span>✨</span>
               <span>FEATURES</span>
             </div>
             <h2 style={{
@@ -268,7 +266,7 @@ export default function MobileAppPageComponent() {
                 position: "relative",
                 zIndex: 1
               }}>
-                📱
+                
               </div>
               <h3 style={{ 
                 fontSize: "1.5rem",
@@ -336,7 +334,7 @@ export default function MobileAppPageComponent() {
                 position: "relative",
                 zIndex: 1
               }}>
-                🎯
+                
               </div>
               <h3 style={{ 
                 fontSize: "1.5rem",
@@ -404,7 +402,7 @@ export default function MobileAppPageComponent() {
                 position: "relative",
                 zIndex: 1
               }}>
-                ⚡
+                
               </div>
               <h3 style={{ 
                 fontSize: "1.5rem",
@@ -507,7 +505,6 @@ export default function MobileAppPageComponent() {
                 fontWeight: "700",
                 boxShadow: "0 8px 24px rgba(34, 197, 94, 0.3)"
               }}>
-                <span style={{ fontSize: "18px" }}>🚀</span>
                 <span>LAUNCH TIMELINE</span>
               </div>
               
@@ -566,7 +563,6 @@ export default function MobileAppPageComponent() {
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
               >
-                <span style={{ fontSize: "20px", marginRight: "8px" }}>🔔</span>
                 Notify Me When Ready
               </button>
             </div>
@@ -612,7 +608,6 @@ export default function MobileAppPageComponent() {
                 fontSize: "14px",
                 fontWeight: "600"
               }}>
-                <span>💡</span>
                 <span>WHILE YOU WAIT</span>
               </div>
               

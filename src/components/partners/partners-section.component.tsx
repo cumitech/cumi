@@ -23,32 +23,16 @@ export const PartnersSection = () => {
       setIsMobile(window.innerWidth < 992); // <992px = mobile/tablet (show 1 card)
     };
 
-handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-if (isLoading) {
-    return (
-      <div
-        style={{
-          minHeight: "400px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Spin size="large" />
-        <div style={{ marginTop: '16px', fontSize: '16px', color: '#666' }}>{t('common.loading')}</div>
-      </div>
-    );
-  }
-
-if (!partners || partners.length === 0) {
+  if (!isLoading && (!partners || partners.length === 0)) {
     return null;
   }
 
-// Group partners based on screen size: 1 for mobile/tablet (<992px), 4 for desktop (≥992px)
+  // Group partners based on screen size: 1 for mobile/tablet (<992px), 4 for desktop (≥992px)
   const partnersPerSlide = isMobile ? 1 : 4;
   const partnerSlides = [];
   for (let i = 0; i < partners.length; i += partnersPerSlide) {
@@ -283,18 +267,19 @@ return (
                         }}
                       >
                         {partner.logo ? (
-                          <div style={{ width: "100%", height: "100%", position: "relative" }}>
-                            <Image
-                              src={partner.logo}
-                              alt={partner.name}
-                              fill
-                              sizes="140px"
-                              style={{
-                                objectFit: "contain",
-                                padding: "8px",
-                              }}
-                            />
-                          </div>
+                          <img
+                            src={partner.logo}
+                            alt={partner.name}
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              objectFit: "contain",
+                              padding: "8px",
+                            }}
+                            onError={(e) => {
+                              (e.currentTarget as HTMLImageElement).src = "/favicon.svg";
+                            }}
+                          />
                         ) : (
                           <div
                             style={{

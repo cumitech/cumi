@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { SITE_URL } from "@constants/api-url";
 import CourseDetailPageComponent from "@components/page-components/course-detail-page.component";
 import { generatePageMetadata, generateStructuredData, fetchApiData, defaultImages } from "../../../lib/seo";
 import SchemaRenderer from "@components/shared/schema-renderer.component";
@@ -23,19 +24,24 @@ export async function generateMetadata({ params }: CourseDetailPageProps): Promi
     return generatePageMetadata({
       title: "Course - CUMI Technology Courses",
       description: "Learn with CUMI's technology courses and training programs.",
-      url: "https://cumi.dev/courses"
+      url: `${SITE_URL}/courses`
     });
   }
 
   const course = await fetchCourseDetails(params.slug);
+  const baseUrl = SITE_URL;
   
   if (!course) {
     return generatePageMetadata({
       title: "Course - CUMI Technology Courses",
       description: "Learn with CUMI's technology courses and training programs.",
-      url: "https://cumi.dev/courses"
+      url: `${SITE_URL}/courses`
     });
   }
+
+  const courseImageUrl = course.imageUrl
+    ? (course.imageUrl.startsWith("http") ? course.imageUrl : `${baseUrl}/uploads/courses/${course.imageUrl}`)
+    : defaultImages[2];
 
   return generatePageMetadata({
     title: `${course.title} - CUMI Technology Course`,
@@ -64,39 +70,32 @@ export async function generateMetadata({ params }: CourseDetailPageProps): Promi
       course.category,
       course.difficulty
     ].filter(Boolean),
-    url: `https://cumi.dev/courses/${params.slug}`,
+    url: `${SITE_URL}/courses/${params.slug}`,
     alternates: {
-      canonical: `https://cumi.dev/courses/${params.slug}`,
+      canonical: `${SITE_URL}/courses/${params.slug}`,
     },
-    images: course.imageUrl ? [{
-      url: course.imageUrl,
+    images: [{
+      url: courseImageUrl,
       width: 1200,
       height: 630,
       alt: course.title,
-    }] : [{
-      url: defaultImages[2],
-      width: 1200,
-      height: 630,
-      alt: "CUMI Technology Course",
     }],
     publishedTime: new Date(course.createdAt).toISOString(),
     modifiedTime: new Date(course.updatedAt).toISOString(),
-    // OpenGraph
     openGraph: {
       type: "website",
       title: `${course.title} - CUMI Technology Course`,
       description: course.description || `Learn ${course.title} with CUMI's comprehensive course.`,
-      images: course.imageUrl ? [course.imageUrl] : [defaultImages[2]],
+      images: [courseImageUrl],
       siteName: "CUMI",
       locale: "en_US",
-      url: `https://cumi.dev/courses/${params.slug}`,
+      url: `${SITE_URL}/courses/${params.slug}`,
     },
-    // Twitter
     twitter: {
       card: "summary_large_image",
       title: `${course.title} - CUMI Technology Course`,
       description: course.description || `Learn ${course.title} with CUMI's comprehensive course.`,
-      images: course.imageUrl ? [course.imageUrl] : [defaultImages[2]],
+      images: [courseImageUrl],
       creator: "@cumi_dev",
     },
     // Structured data
@@ -108,8 +107,8 @@ export async function generateMetadata({ params }: CourseDetailPageProps): Promi
       "provider": {
         "@type": "Organization",
         "name": "CUMI",
-        "url": "https://cumi.dev",
-        "logo": "https://cumi.dev/img/cumi-green.jpg"
+        "url": SITE_URL,
+        "logo": `${SITE_URL}/img/cumi-green.png`
       },
       "courseMode": course.isOnline ? "online" : "blended",
       "educationalLevel": course.difficulty || "beginner",
@@ -130,7 +129,7 @@ export async function generateMetadata({ params }: CourseDetailPageProps): Promi
         "priceCurrency": "USD",
         "availability": "https://schema.org/InStock"
       },
-      "image": course.imageUrl || defaultImages[2],
+      "image": courseImageUrl,
       "inLanguage": "en",
       "teaches": course.objectives,
       "timeRequired": course.duration
@@ -140,7 +139,11 @@ export async function generateMetadata({ params }: CourseDetailPageProps): Promi
 
 export default async function CourseDetailPage({ params }: CourseDetailPageProps) {
   const course = await fetchCourseDetails(params.slug);
-  
+  const baseUrlForSchema = SITE_URL;
+  const courseImageUrlForSchema = course?.imageUrl
+    ? (course.imageUrl.startsWith("http") ? course.imageUrl : `${baseUrlForSchema}/uploads/courses/${course.imageUrl}`)
+    : defaultImages[2];
+
   const courseSchema = course ? {
     "@context": "https://schema.org",
     "@type": "Course",
@@ -149,8 +152,8 @@ export default async function CourseDetailPage({ params }: CourseDetailPageProps
     "provider": {
       "@type": "Organization",
       "name": "CUMI",
-      "url": "https://cumi.dev",
-      "logo": "https://cumi.dev/img/cumi-green.jpg"
+      "url": SITE_URL,
+      "logo": `${SITE_URL}/img/cumi-green.png`
     },
     "courseMode": course.isOnline ? "online" : "blended",
     "educationalLevel": course.difficulty || "beginner",
@@ -171,7 +174,7 @@ export default async function CourseDetailPage({ params }: CourseDetailPageProps
       "priceCurrency": "USD",
       "availability": "https://schema.org/InStock"
     },
-    "image": course.imageUrl || defaultImages[2],
+    "image": courseImageUrlForSchema,
     "inLanguage": "en",
     "teaches": course.objectives,
     "timeRequired": course.duration

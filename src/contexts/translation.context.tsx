@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Button, Dropdown, Space } from 'antd';
 import { GlobalOutlined } from '@ant-design/icons';
+import { SITE_URL } from '@constants/api-url';
 
 interface TranslationContextType {
   locale: string;
@@ -29,6 +30,8 @@ const translations = {
     'nav.about-us': 'About',
     'nav.contact-us': 'Contact',
     'nav.login': 'Log in',
+    'nav.theme_dark': 'Switch to dark mode',
+    'nav.theme_light': 'Switch to light mode',
     'nav.dashboard': 'Dashboard',
     'nav.settings': 'Settings',
     'nav.logout': 'Logout',
@@ -100,9 +103,17 @@ const translations = {
     'support.offline': 'Offline',
     
     // Footer
-    'footer.tagline': 'Empowering Your Digital Journey',
+    'footer.tagline': 'Scale Your Business with CUMI',
     'footer.discover': 'Discover',
     'footer.info': 'Info',
+    'footer.account': 'Account',
+    'footer.partners': 'Partners',
+    'footer.authors': 'Authors',
+    'footer.faqs': 'FAQs',
+    'footer.register': 'Register',
+    'footer.terms_of_use': 'Terms of Use',
+    'footer.privacy_policy': 'Privacy Policy',
+    'footer.sitemap': 'Sitemap',
     'footer.join_mailing': 'Join Our Mailing List',
     'footer.mailing_description': 'Get notified and updated with our marketing emails.',
     'footer.email_placeholder': 'Your Email',
@@ -173,7 +184,7 @@ const translations = {
     'meta_management.preview': 'Preview',
     'meta_management.search_engine_preview': 'Search Engine Preview',
     'meta_management.enter_keywords_separated_by_commas': 'Enter keywords separated by commas',
-    'meta_management.enter_canonical_url': 'https://cumi.dev/about-us',
+    'meta_management.enter_canonical_url': `${SITE_URL}/about-us`,
     'meta_management.select_robots_directive': 'Select robots directive',
     'meta_management.index_follow': 'Index, Follow',
     'meta_management.index_nofollow': 'Index, No Follow',
@@ -181,8 +192,8 @@ const translations = {
     'meta_management.noindex_nofollow': 'No Index, No Follow',
     'meta_management.open_graph_title': 'Open Graph title',
     'meta_management.open_graph_description': 'Open Graph description',
-    'meta_management.enter_og_image_url': 'https://cumi.dev/image.jpg',
-    'meta_management.enter_og_url': 'https://cumi.dev/page-url',
+    'meta_management.enter_og_image_url': `${SITE_URL}/image.jpg`,
+    'meta_management.enter_og_url': `${SITE_URL}/page-url`,
     'meta_management.select_og_type': 'Select OG type',
     'meta_management.website': 'Website',
     'meta_management.article': 'Article',
@@ -192,7 +203,7 @@ const translations = {
     'meta_management.profile': 'Profile',
     'meta_management.twitter_title_placeholder': 'Twitter title',
     'meta_management.twitter_description_placeholder': 'Twitter description',
-    'meta_management.enter_twitter_image_url': 'https://cumi.dev/image.jpg',
+    'meta_management.enter_twitter_image_url': `${SITE_URL}/image.jpg`,
     'meta_management.select_twitter_card_type': 'Select Twitter card type',
     'meta_management.summary': 'Summary',
     'meta_management.summary_large_image': 'Summary Large Image',
@@ -677,8 +688,8 @@ const translations = {
     'partners.total_partners': 'Trusted Partners',
     
     // Services Section
-    'services_section.title': 'Our Services',
-    'services_section.subtitle': 'Comprehensive technology solutions tailored to transform your business and drive growth.',
+    'services_section.title': 'Digital Solutions That Scale',
+    'services_section.subtitle': 'Web apps, mobile apps, and custom software for small businesses and enterprises.',
     'services_section.learn_more': 'Learn More',
     'services_section.view_all': 'View All Services',
     
@@ -769,42 +780,42 @@ const translations = {
     'forms.business': 'Business',
     
     // Hero Section
-    'hero.title': 'Empowering Your Digital Journey',
-    'hero.description': 'We\'re committed to revolutionizing the digital landscape, offering cutting-edge solutions tailored to individuals, startups, enterprises, and organizations.',
+    'hero.title': 'Scale Your Business with Digital Solutions',
+    'hero.description': 'We design, build, and ship web and mobile products that help businesses grow—from early-stage startups to large enterprises.',
     'hero.hire_services': 'Our services',
     'hero.our_mission': 'Our Mission',
     
     // Features Section
-    'features.title': 'What we offer',
-    'features.subtitle': 'Whether you\'re an individual entrepreneur or a multinational corporation, Cumi has got you covered.',
+    'features.title': 'Solutions for Every Stage',
+    'features.subtitle': 'From idea to launch to scale—we build for small businesses and enterprises.',
     'features.custom_solutions.title': 'Custom Digital Solutions',
-    'features.custom_solutions.description': 'Cumi offers custom digital solutions for individuals and corporations, tailored to your unique needs. We collaborate closely with clients from concept to execution, delivering innovative solutions that yield tangible results.',
+    'features.custom_solutions.description': 'CUMI builds custom software for businesses of all sizes. From concept to execution, we deliver web apps, mobile apps, and solutions that scale.',
     'features.training.title': 'Software Development Training',
     'features.training.description': 'Cumi equips tech enthusiasts with expertise in JavaScript, Python, PHP, React, Laravel, Django, and React-Native. Our hands-on training empowers aspiring developers for success in the competitive tech industry.',
     'features.hire_expertise': 'Hire our expertise',
     
     // Service Section
-    'service.ready_to_work': 'Ready to work with Cumi?',
-    'service.description': 'Reach out to us today to learn more about our services and training programs.',
+    'service.ready_to_work': 'Ready to scale your business?',
+    'service.description': 'Get in touch to discuss your project. We build solutions for small businesses and enterprises.',
     'service.get_in_touch': 'Get In Touch',
     
     // About Note Section
-    'about_note.title': 'Why Choose Cumi?',
-    'about_note.subtitle': 'Together let\'s collaborate to turn your vision into reality and shape the future of technology together.',
+    'about_note.title': 'Why Choose CUMI?',
+    'about_note.subtitle': 'A digital agency helping businesses scale through custom software, web apps, and cloud solutions.',
     'about_note.expertise.title': 'Expertise',
-    'about_note.expertise.description': 'Our team comprises professionals with extensive experience in software development and technology consulting. We leverage our expertise to deliver.',
+    'about_note.expertise.description': 'Our team delivers software that scales. We bring deep experience in web apps, mobile apps, and enterprise solutions.',
     'about_note.innovation.title': 'Innovation',
-    'about_note.innovation.description': 'We\'re constantly exploring new technologies and methodologies to stay ahead of the curve and deliver cutting-edge solutions that drive business growth.',
+    'about_note.innovation.description': 'We use modern technologies and proven methodologies to build solutions that drive real business growth.',
     'about_note.collaboration.title': 'Collaboration',
-    'about_note.collaboration.description': 'We work closely with our clients, fostering open communication and collaboration every step of the way to ensure that we\'re aligned with their goals and objectives.',
+    'about_note.collaboration.description': 'We work closely with clients from concept to launch, ensuring we stay aligned with your goals and timelines.',
     'about_note.excellence.title': 'Commitment to Excellence',
-    'about_note.excellence.description': 'From the quality of our work to the level of service we provide, we strive for nothing less than perfection to ensure the success of our clients.',
+    'about_note.excellence.description': 'We deliver quality work and reliable support to ensure your business scales successfully.',
     
     // FAQ Page
     'faq.title': 'Frequently Asked Questions',
-    'faq.subtitle': 'Find answers to common questions about our services, processes, and how we can help your business grow.',
-    'faq.services.question': 'What services does Cumi Digital Solutions offer?',
-    'faq.services.answer': 'We offer comprehensive digital solutions including web development, mobile app development, UI/UX design, digital marketing, cloud solutions, and technical consulting. Our team specializes in modern technologies like React, Next.js, Node.js, and various cloud platforms.',
+    'faq.subtitle': 'Find answers to common questions about our services and how we help businesses scale.',
+    'faq.services.question': 'What services does CUMI offer?',
+    'faq.services.answer': 'We build web apps, mobile apps, and custom software for small businesses and enterprises. Our services include web development, mobile app development, cloud solutions, and technical consulting. We use React, Next.js, Node.js, and modern cloud platforms.',
     'faq.timeline.question': 'How long does a typical project take?',
     'faq.timeline.answer': 'Project timelines vary depending on complexity and scope. Simple websites typically take 2-4 weeks, while complex web applications can take 2-6 months. We provide detailed timelines during our initial consultation and keep you updated throughout the development process.',
     'faq.support.question': 'Do you provide ongoing support after project completion?',
@@ -821,21 +832,21 @@ const translations = {
     'faq.quality.answer': 'We follow industry best practices including code reviews, automated testing, continuous integration, and regular client feedback sessions. Our development process includes multiple quality checkpoints and we use modern development methodologies.',
     'faq.marketing.question': 'Can you help with SEO and digital marketing?',
     'faq.marketing.answer': 'Yes, we offer comprehensive digital marketing services including SEO optimization, social media marketing, content marketing, PPC advertising, and analytics setup. We can help improve your online visibility and drive more traffic to your website.',
-    'faq.difference.question': 'What makes Cumi Digital Solutions different?',
-    'faq.difference.answer': 'We combine technical expertise with business understanding. Our team doesn\'t just code - we think strategically about your business goals and create solutions that drive real results. We\'re committed to long-term partnerships and your success.',
+    'faq.difference.question': 'What makes CUMI different?',
+    'faq.difference.answer': 'We help businesses scale. We combine technical expertise with a focus on solutions that grow with you—from startups to enterprises. We build for the long term.',
     'faq.cta.title': 'Still Have Questions?',
     'faq.cta.description': 'Can\'t find the answer you\'re looking for? Our team is here to help. Contact us directly and we\'ll get back to you within 24 hours.',
     'faq.cta.email': 'Email Us',
     'faq.cta.whatsapp': 'WhatsApp',
     
     // Banner Component
-    'banner.subtitle': 'Professional solutions tailored to your business needs',
+    'banner.subtitle': 'Digital solutions for scaling businesses',
     'banner.home': 'Home',
     'banner.get_started': 'Get Started',
     'banner.contact-us': 'Contact Us',
     
     // Events Page
-    'events.title': 'Events & Workshops 📅',
+    'events.title': 'Events & Workshops',
     'events.subtitle': 'Discover upcoming events, workshops, and conferences',
     'events.search_placeholder': 'Search events...',
     'events.category_placeholder': 'Category',
@@ -847,7 +858,7 @@ const translations = {
     'events.clear_filters': 'Clear Filters',
     
     // Courses Page
-    'courses.title': 'Online Courses 📚',
+    'courses.title': 'Online Courses',
     'courses.subtitle': 'Learn new skills with our comprehensive course library',
     'courses.search_placeholder': 'Search courses...',
     'courses.level_placeholder': 'Level',
@@ -1081,6 +1092,7 @@ const translations = {
     
     // Tutorials Page
     'tutorials.title': 'Tutorials',
+    'tutorials.subtitle': 'Step-by-step guides to help you build real products with modern web and mobile technologies.',
     'tutorials.breadcrumb': 'Tutorials',
     'tutorials.loading_content': 'Loading tutorials...',
     'tutorials.loading_tutorials': 'Loading tutorials...',
@@ -1158,9 +1170,9 @@ const translations = {
     'about.years_experience': 'Years Experience',
     'about.team_members': 'Team Members',
     'about.our_story': 'Our Story',
-    'about.story_description': 'Founded in June 2024, CumiTech began with a vision to empower startup businesses through innovative web solutions. Based in Bamenda, Northwest, Cameroon, we operate in a hybrid model, combining software engineering expertise with creative design.',
+    'about.story_description': 'CUMI is a digital agency helping businesses scale. We build web apps, mobile apps, and custom software for small businesses and enterprises. Based in Bamenda, Northwest, Cameroon, we combine software engineering expertise with a focus on solutions that grow with your business.',
     'about.our_mission': 'Our Mission',
-    'about.mission_description': 'We are committed to empowering startup businesses through innovative web solutions. Our mission is to combine software engineering expertise with creative design to deliver scalable websites and applications that drive business success.',
+    'about.mission_description': 'We help businesses scale through custom software, web apps, and mobile apps. From startups to enterprises, we build solutions that grow with you.',
     'about.innovation_driven': 'Innovation-driven approach',
     'about.react_laravel': 'React & Laravel expertise',
     'about.seo_marketing': 'SEO & Digital Marketing',
@@ -1178,7 +1190,7 @@ const translations = {
     'about.our_journey': 'Our Journey',
     'about.journey_description': 'A timeline of our growth and achievements over the years.',
     'about.meet_team': 'Meet Our Team',
-    'about.team_description': 'The talented individuals who make Cumi Digital a success.',
+    'about.team_description': 'The team behind CUMI—helping businesses scale.',
     'about.skills': 'Skills:',
     'about.experience': 'Experience:',
     'about.location': 'Location:',
@@ -1188,11 +1200,11 @@ const translations = {
     'about.contact-us': 'Contact Us',
     
     // Services Page
-    'services.transform_vision': 'Transform Your Digital Vision Into Reality',
+    'services.transform_vision': 'Build Your Digital Products',
     'services.transform_description': 'We provide comprehensive digital solutions that drive growth, enhance user experience, and deliver measurable results for businesses of all sizes.',
     'services.get_started': 'Get Started',
     'services.learn_more': 'Learn More',
-    'services.why_choose': 'Why Choose Cumi Digital?',
+    'services.why_choose': 'Why Choose CUMI?',
     'services.why_description': 'We combine technical expertise with creative innovation to deliver solutions that exceed expectations.',
     'services.fast_delivery': 'Fast Delivery',
     'services.fast_description': 'We deliver projects on time with exceptional quality',
@@ -1214,8 +1226,8 @@ const translations = {
     'services.build_description': 'Let\'s discuss your project requirements and create something amazing together.',
     
     // Projects Page
-    'projects.innovative_projects': 'Innovative Projects That Drive Success',
-    'projects.innovative_description': 'Explore our portfolio of cutting-edge digital solutions that have transformed businesses and delivered exceptional results across various industries.',
+    'projects.innovative_projects': 'Projects That Help Businesses Scale',
+    'projects.innovative_description': 'Explore our portfolio of web apps, mobile apps, and custom software built for small businesses and enterprises.',
     'projects.start_project': 'Start Your Project',
     'projects.view_services': 'View Services',
     'projects.technologies_master': 'Technologies We Master',
@@ -1223,8 +1235,8 @@ const translations = {
     'projects.featured_projects': 'Featured Projects',
     'projects.featured_description': 'Each project represents our commitment to excellence, innovation, and delivering solutions that exceed expectations.',
     'projects.no_projects': 'No projects available at the moment',
-    'projects.ready_to_start': 'Ready to Get Started?',
-    'projects.start_description': 'Let\'s discuss your project and bring your vision to life with our professional services.',
+    'projects.ready_to_start': 'Ready to Scale Your Business?',
+    'projects.start_description': 'Let\'s discuss your project. We build solutions for small businesses and enterprises.',
     'projects.get_quote': 'Get Quote',
     'projects.lets_work_together': 'Let\'s Work Together',
     
@@ -1288,12 +1300,12 @@ const translations = {
     'student_dashboard.enroll': 'Enroll',
     'student_dashboard.enrolled': 'Enrolled',
     'student_dashboard.already_enrolled': 'Already Enrolled',
-    'student_dashboard.enrollment_successful': 'Enrollment Successful! 🎓',
+    'student_dashboard.enrollment_successful': 'Enrollment Successful',
     'student_dashboard.enrollment_failed': 'Enrollment Failed',
     'student_dashboard.register': 'Register',
     'student_dashboard.registered': 'Registered',
     'student_dashboard.already_registered': 'Already Registered',
-    'student_dashboard.registration_successful': 'Registration Successful! 🎉',
+    'student_dashboard.registration_successful': 'Registration Successful',
     'student_dashboard.registration_failed': 'Registration Failed',
     'student_dashboard.like': 'Like',
     'student_dashboard.liked': 'Liked',
@@ -1318,6 +1330,8 @@ const translations = {
     'nav.about-us': 'À propos',
     'nav.contact-us': 'Contact',
     'nav.login': 'Connexion',
+    'nav.theme_dark': 'Passer en mode sombre',
+    'nav.theme_light': 'Passer en mode clair',
     'nav.dashboard': 'Tableau de bord',
     'nav.settings': 'Paramètres',
     'nav.logout': 'Déconnexion',
@@ -1389,9 +1403,17 @@ const translations = {
     'support.offline': 'Hors ligne',
     
     // Footer
-    'footer.tagline': 'Autonomiser votre parcours numérique',
+    'footer.tagline': 'Faites Croître Votre Entreprise avec CUMI',
     'footer.discover': 'Découvrir',
     'footer.info': 'Info',
+    'footer.account': 'Compte',
+    'footer.partners': 'Partenaires',
+    'footer.authors': 'Auteurs',
+    'footer.faqs': 'FAQ',
+    'footer.register': 'S\'inscrire',
+    'footer.terms_of_use': 'Conditions d\'utilisation',
+    'footer.privacy_policy': 'Politique de confidentialité',
+    'footer.sitemap': 'Plan du site',
     'footer.join_mailing': 'Rejoignez notre liste de diffusion',
     'footer.mailing_description': 'Soyez notifié et mis à jour avec nos emails marketing.',
     'footer.email_placeholder': 'Votre Email',
@@ -1481,7 +1503,7 @@ const translations = {
     'meta_management.profile': 'Profil',
     'meta_management.twitter_title_placeholder': 'Titre Twitter',
     'meta_management.twitter_description_placeholder': 'Description Twitter',
-    'meta_management.enter_twitter_image_url': 'https://cumi.dev/image.jpg',
+    'meta_management.enter_twitter_image_url': `${SITE_URL}/image.jpg`,
     'meta_management.select_twitter_card_type': 'Sélectionner le type de carte Twitter',
     'meta_management.summary': 'Résumé',
     'meta_management.summary_large_image': 'Résumé Grande Image',
@@ -1966,8 +1988,8 @@ const translations = {
     'partners.total_partners': 'Partenaires de Confiance',
     
     // Services Section
-    'services_section.title': 'Nos Services',
-    'services_section.subtitle': 'Solutions technologiques complètes pour transformer votre entreprise et stimuler la croissance.',
+    'services_section.title': 'Solutions Numériques Qui Évoluent',
+    'services_section.subtitle': 'Applications web, applications mobiles et logiciels sur mesure pour les PME et les grandes entreprises.',
     'services_section.learn_more': 'En Savoir Plus',
     'services_section.view_all': 'Voir Tous',
     
@@ -2058,42 +2080,42 @@ const translations = {
     'forms.business': 'Affaires',
     
     // Hero Section
-    'hero.title': 'Autonomiser Votre Parcours Numérique',
-    'hero.description': 'Nous nous engageons à révolutionner le paysage numérique, en offrant des solutions de pointe adaptées aux particuliers, startups, entreprises et organisations.',
+    'hero.title': 'Développez votre entreprise grâce aux solutions numériques',
+    'hero.description': 'Nous concevons, développons et lançons des produits web et mobiles qui accompagnent la croissance des entreprises—des startups aux grandes organisations.',
     'hero.hire_services': 'Nos prestations',
     'hero.our_mission': 'Notre Mission',
     
     // Features Section
-    'features.title': 'Ce que nous offrons',
-    'features.subtitle': 'Que vous soyez un entrepreneur individuel ou une multinationale, Cumi vous couvre.',
+    'features.title': 'Solutions pour Chaque Étape',
+    'features.subtitle': 'De l\'idée au lancement à l\'échelle—nous construisons pour les PME et les grandes entreprises.',
     'features.custom_solutions.title': 'Solutions Numériques Personnalisées',
-    'features.custom_solutions.description': 'Cumi offre des solutions numériques personnalisées pour les particuliers et les entreprises, adaptées à vos besoins uniques. Nous collaborons étroitement avec les clients de la conception à l\'exécution, en livrant des solutions innovantes qui donnent des résultats tangibles.',
+    'features.custom_solutions.description': 'CUMI construit des logiciels sur mesure pour les entreprises de toutes tailles. De la conception à l\'exécution, nous livrons des applications web, mobiles et des solutions qui évoluent.',
     'features.training.title': 'Formation en Développement Logiciel',
     'features.training.description': 'Cumi équipe les passionnés de technologie avec une expertise en JavaScript, Python, PHP, React, Laravel, Django et React-Native. Notre formation pratique autonomise les développeurs aspirants pour le succès dans l\'industrie technologique compétitive.',
     'features.hire_expertise': 'Engagez notre expertise',
     
     // Service Section
-    'service.ready_to_work': 'Prêt à travailler avec Cumi?',
-    'service.description': 'Contactez-nous dès aujourd\'hui pour en savoir plus sur nos services et programmes de formation.',
+    'service.ready_to_work': 'Prêt à faire croître votre entreprise?',
+    'service.description': 'Contactez-nous pour discuter de votre projet. Nous construisons des solutions pour les PME et les grandes entreprises.',
     'service.get_in_touch': 'Entrer en Contact',
     
     // About Note Section
-    'about_note.title': 'Pourquoi Choisir Cumi?',
-    'about_note.subtitle': 'Ensemble, collaborons pour transformer votre vision en réalité et façonner l\'avenir de la technologie.',
+    'about_note.title': 'Pourquoi Choisir CUMI?',
+    'about_note.subtitle': 'Une agence numérique qui aide les entreprises à évoluer grâce aux logiciels sur mesure, applications web et solutions cloud.',
     'about_note.expertise.title': 'Expertise',
-    'about_note.expertise.description': 'Notre équipe comprend des professionnels avec une vaste expérience en développement logiciel et conseil technologique. Nous exploitons notre expertise pour livrer.',
+    'about_note.expertise.description': 'Notre équipe livre des logiciels qui évoluent. Nous apportons une expérience approfondie en applications web, mobiles et solutions d\'entreprise.',
     'about_note.innovation.title': 'Innovation',
-    'about_note.innovation.description': 'Nous explorons constamment de nouvelles technologies et méthodologies pour rester en avance sur la courbe et livrer des solutions de pointe qui stimulent la croissance des entreprises.',
+    'about_note.innovation.description': 'Nous utilisons des technologies modernes et des méthodologies éprouvées pour construire des solutions qui stimulent la croissance.',
     'about_note.collaboration.title': 'Collaboration',
-    'about_note.collaboration.description': 'Nous travaillons étroitement avec nos clients, favorisant une communication ouverte et une collaboration à chaque étape pour nous assurer que nous sommes alignés avec leurs objectifs.',
+    'about_note.collaboration.description': 'Nous travaillons étroitement avec les clients de la conception au lancement, en restant alignés sur vos objectifs et délais.',
     'about_note.excellence.title': 'Engagement envers l\'Excellence',
-    'about_note.excellence.description': 'De la qualité de notre travail au niveau de service que nous fournissons, nous visons rien de moins que la perfection pour assurer le succès de nos clients.',
+    'about_note.excellence.description': 'Nous livrons un travail de qualité et un support fiable pour assurer la croissance de votre entreprise.',
     
     // FAQ Page
     'faq.title': 'Questions Fréquemment Posées',
     'faq.subtitle': 'Trouvez des réponses aux questions courantes sur nos services, processus et comment nous pouvons aider votre entreprise à croître.',
-    'faq.services.question': 'Quels services Cumi Digital Solutions offre-t-il?',
-    'faq.services.answer': 'Nous offrons des solutions numériques complètes incluant le développement web, le développement d\'applications mobiles, la conception UI/UX, le marketing numérique, les solutions cloud et le conseil technique. Notre équipe se spécialise dans les technologies modernes comme React, Next.js, Node.js et diverses plateformes cloud.',
+    'faq.services.question': 'Quels services CUMI offre-t-il?',
+    'faq.services.answer': 'Nous construisons des applications web, mobiles et des logiciels sur mesure pour les PME et les grandes entreprises. Nos services incluent le développement web, les applications mobiles, les solutions cloud et le conseil technique. Nous utilisons React, Next.js, Node.js et des plateformes cloud modernes.',
     'faq.timeline.question': 'Combien de temps prend un projet typique?',
     'faq.timeline.answer': 'Les délais de projet varient selon la complexité et la portée. Les sites web simples prennent généralement 2-4 semaines, tandis que les applications web complexes peuvent prendre 2-6 mois. Nous fournissons des délais détaillés lors de notre consultation initiale et vous tenons informés tout au long du processus de développement.',
     'faq.support.question': 'Offrez-vous un support continu après l\'achèvement du projet?',
@@ -2110,21 +2132,21 @@ const translations = {
     'faq.quality.answer': 'Nous suivons les meilleures pratiques de l\'industrie incluant les revues de code, les tests automatisés, l\'intégration continue et les sessions régulières de feedback client. Notre processus de développement inclut plusieurs points de contrôle qualité et nous utilisons des méthodologies de développement modernes.',
     'faq.marketing.question': 'Pouvez-vous aider avec le SEO et le marketing numérique?',
     'faq.marketing.answer': 'Oui, nous offrons des services de marketing numérique complets incluant l\'optimisation SEO, le marketing des médias sociaux, le marketing de contenu, la publicité PPC et la configuration d\'analytics. Nous pouvons aider à améliorer votre visibilité en ligne et à attirer plus de trafic vers votre site web.',
-    'faq.difference.question': 'Qu\'est-ce qui rend Cumi Digital Solutions différent?',
-    'faq.difference.answer': 'Nous combinons l\'expertise technique avec la compréhension des affaires. Notre équipe ne fait pas que coder - nous pensons stratégiquement à vos objectifs commerciaux et créons des solutions qui donnent de vrais résultats. Nous nous engageons dans des partenariats à long terme et votre succès.',
+    'faq.difference.question': 'Qu\'est-ce qui rend CUMI différent?',
+    'faq.difference.answer': 'Nous aidons les entreprises à évoluer. Nous combinons l\'expertise technique avec des solutions qui grandissent avec vous—des startups aux grandes entreprises. Nous construisons pour le long terme.',
     'faq.cta.title': 'Vous avez encore des questions?',
     'faq.cta.description': 'Vous ne trouvez pas la réponse que vous cherchez? Notre équipe est là pour vous aider. Contactez-nous directement et nous vous répondrons dans les 24 heures.',
     'faq.cta.email': 'Nous Écrire',
     'faq.cta.whatsapp': 'WhatsApp',
     
     // Banner Component
-    'banner.subtitle': 'Solutions professionnelles adaptées à vos besoins commerciaux',
+    'banner.subtitle': 'Solutions numériques pour faire croître les entreprises',
     'banner.home': 'Accueil',
     'banner.get_started': 'Commencer',
     'banner.contact-us': 'Nous Contacter',
     
     // Events Page
-    'events.title': 'Événements et Ateliers 📅',
+    'events.title': 'Événements et Ateliers',
     'events.subtitle': 'Découvrez les événements, ateliers et conférences à venir',
     'events.search_placeholder': 'Rechercher des événements...',
     'events.category_placeholder': 'Catégorie',
@@ -2136,7 +2158,7 @@ const translations = {
     'events.clear_filters': 'Effacer les Filtres',
     
     // Courses Page
-    'courses.title': 'Cours en Ligne 📚',
+    'courses.title': 'Cours en Ligne',
     'courses.subtitle': 'Apprenez de nouvelles compétences avec notre bibliothèque de cours complète',
     'courses.search_placeholder': 'Rechercher des cours...',
     'courses.level_placeholder': 'Niveau',
@@ -2274,6 +2296,7 @@ const translations = {
     
     // Tutorials Page
     'tutorials.title': 'Tutoriels',
+    'tutorials.subtitle': 'Des guides pas à pas pour vous aider à créer de vrais produits avec les technologies web et mobiles modernes.',
     'tutorials.breadcrumb': 'Tutoriels',
     'tutorials.loading_content': 'Chargement des tutoriels...',
     'tutorials.loading_tutorials': 'Chargement des tutoriels...',
@@ -2447,9 +2470,9 @@ const translations = {
     'about.years_experience': 'Années d\'Expérience',
     'about.team_members': 'Membres de l\'Équipe',
     'about.our_story': 'Notre Histoire',
-    'about.story_description': 'Fondée en juin 2024, CumiTech a commencé avec une vision d\'autonomiser les entreprises en démarrage grâce à des solutions web innovantes. Basée à Bamenda, Nord-Ouest, Cameroun, nous opérons dans un modèle hybride, combinant l\'expertise en ingénierie logicielle avec le design créatif.',
+    'about.story_description': 'CUMI est une agence numérique qui aide les entreprises à évoluer. Nous construisons des applications web, mobiles et des logiciels sur mesure pour les PME et les grandes entreprises. Basée à Bamenda, Nord-Ouest, Cameroun, nous combinons l\'expertise en ingénierie logicielle avec des solutions qui grandissent avec votre entreprise.',
     'about.our_mission': 'Notre Mission',
-    'about.mission_description': 'Nous nous engageons à autonomiser les entreprises en démarrage grâce à des solutions web innovantes. Notre mission est de combiner l\'expertise en ingénierie logicielle avec le design créatif pour livrer des sites web et applications évolutifs qui conduisent au succès commercial.',
+    'about.mission_description': 'Nous aidons les entreprises à évoluer grâce aux logiciels sur mesure, applications web et mobiles. Des startups aux grandes entreprises, nous construisons des solutions qui grandissent avec vous.',
     'about.innovation_driven': 'Approche axée sur l\'innovation',
     'about.react_laravel': 'Expertise React & Laravel',
     'about.seo_marketing': 'SEO & Marketing Digital',
@@ -2467,7 +2490,7 @@ const translations = {
     'about.our_journey': 'Notre Parcours',
     'about.journey_description': 'Une chronologie de notre croissance et de nos réalisations au fil des années.',
     'about.meet_team': 'Rencontrez Notre Équipe',
-    'about.team_description': 'Les individus talentueux qui font le succès de Cumi Digital.',
+    'about.team_description': 'L\'équipe derrière CUMI—aidant les entreprises à évoluer.',
     'about.skills': 'Compétences:',
     'about.experience': 'Expérience:',
     'about.location': 'Localisation:',
@@ -2481,7 +2504,7 @@ const translations = {
     'services.transform_description': 'Nous fournissons des solutions numériques complètes qui stimulent la croissance, améliorent l\'expérience utilisateur et livrent des résultats mesurables pour les entreprises de toutes tailles.',
     'services.get_started': 'Commencer',
     'services.learn_more': 'En Savoir Plus',
-    'services.why_choose': 'Pourquoi Choisir Cumi Digital?',
+    'services.why_choose': 'Pourquoi Choisir CUMI?',
     'services.why_description': 'Nous combinons l\'expertise technique avec l\'innovation créative pour livrer des solutions qui dépassent les attentes.',
     'services.fast_delivery': 'Livraison Rapide',
     'services.fast_description': 'Nous livrons les projets à temps avec une qualité exceptionnelle',
@@ -2503,7 +2526,7 @@ const translations = {
     'services.build_description': 'Discutons de vos exigences de projet et créons quelque chose d\'incroyable ensemble.',
     
     // Projects Page
-    'projects.innovative_projects': 'Projets Innovants Qui Conduisent au Succès',
+    'projects.innovative_projects': 'Projets Qui Aident les Entreprises à Évoluer',
     'projects.innovative_description': 'Explorez notre portefeuille de solutions numériques de pointe qui ont transformé les entreprises et livré des résultats exceptionnels dans diverses industries.',
     'projects.start_project': 'Commencer Votre Projet',
     'projects.view_services': 'Voir les Services',
@@ -2512,8 +2535,8 @@ const translations = {
     'projects.featured_projects': 'Projets en Vedette',
     'projects.featured_description': 'Chaque projet représente notre engagement envers l\'excellence, l\'innovation et la livraison de solutions qui dépassent les attentes.',
     'projects.no_projects': 'Aucun projet disponible pour le moment',
-    'projects.ready_to_start': 'Prêt à Commencer?',
-    'projects.start_description': 'Discutons de votre projet et donnons vie à votre vision avec nos services professionnels.',
+    'projects.ready_to_start': 'Prêt à Faire Croître Votre Entreprise?',
+    'projects.start_description': 'Discutons de votre projet. Nous construisons des solutions pour les PME et les grandes entreprises.',
     'projects.get_quote': 'Obtenir un Devis',
     'projects.lets_work_together': 'Travaillons Ensemble',
     
@@ -2577,12 +2600,12 @@ const translations = {
     'student_dashboard.enroll': 'S\'inscrire',
     'student_dashboard.enrolled': 'Inscrit',
     'student_dashboard.already_enrolled': 'Déjà inscrit',
-    'student_dashboard.enrollment_successful': 'Inscription réussie! 🎓',
+    'student_dashboard.enrollment_successful': 'Inscription réussie',
     'student_dashboard.enrollment_failed': 'Échec de l\'inscription',
     'student_dashboard.register': 'S\'inscrire',
     'student_dashboard.registered': 'Enregistré',
     'student_dashboard.already_registered': 'Déjà enregistré',
-    'student_dashboard.registration_successful': 'Inscription réussie! 🎉',
+    'student_dashboard.registration_successful': 'Inscription réussie',
     'student_dashboard.registration_failed': 'Échec de l\'inscription',
     'student_dashboard.like': 'J\'aime',
     'student_dashboard.liked': 'Aimé',
@@ -2653,7 +2676,7 @@ export const LanguageSelector: React.FC = () => {
         <Space>
           <span>🇺🇸</span>
           <span>English</span>
-          {locale === 'en' && <span style={{ color: '#1890ff' }}>✓</span>}
+          {locale === 'en' && <span style={{ color: '#1890ff' }}>•</span>}
         </Space>
       ),
       onClick: () => setLocale('en'),
@@ -2664,7 +2687,7 @@ export const LanguageSelector: React.FC = () => {
         <Space>
           <span>🇫🇷</span>
           <span>Français</span>
-          {locale === 'fr' && <span style={{ color: '#1890ff' }}>✓</span>}
+          {locale === 'fr' && <span style={{ color: '#1890ff' }}>•</span>}
         </Space>
       ),
       onClick: () => setLocale('fr'),

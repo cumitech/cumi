@@ -100,7 +100,7 @@ const team = [
       role: "Founder & Software Engineer",
       position: "Creative Designer",
       avatar: "/img/avatar.png",
-      description: "At CumiTech, I combine my skills as a software engineer and creative designer to empower startup businesses through innovative web solutions. I develop scalable websites and applications using technologies like React and Laravel, while also managing client relationships and project timelines.",
+      description: "At CUMI, I combine software engineering and design to help businesses scale. I build web apps and mobile apps using React, Laravel, and Node.js, working with clients from startups to enterprises.",
       skills: ["React", "Laravel", "Node.js", "TypeScript", "PHP", "JavaScript", "UI/UX Design"],
       experience: "5+ years",
       location: "Bamenda, Northwest, Cameroon",

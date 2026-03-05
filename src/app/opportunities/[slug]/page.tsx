@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { SITE_URL } from "@constants/api-url";
 import OpportunityDetailPageComponent from "@components/page-components/opportunity-detail-page.component";
 import { generatePageMetadata, generateStructuredData, fetchApiData, defaultImages } from "../../../lib/seo";
 import SchemaRenderer from "@components/shared/schema-renderer.component";
@@ -23,7 +24,7 @@ export async function generateMetadata({ params }: OpportunityDetailPageProps): 
     return generatePageMetadata({
       title: "Opportunity - CUMI Career Opportunities",
       description: "Explore career opportunities at CUMI.",
-      url: "https://cumi.dev/opportunities"
+      url: `${SITE_URL}/opportunities`
     });
   }
 
@@ -33,7 +34,7 @@ export async function generateMetadata({ params }: OpportunityDetailPageProps): 
     return generatePageMetadata({
       title: "Opportunity - CUMI Career Opportunities",
       description: "Explore career opportunities at CUMI.",
-      url: "https://cumi.dev/opportunities"
+      url: `${SITE_URL}/opportunities`
     });
   }
 
@@ -65,9 +66,9 @@ export async function generateMetadata({ params }: OpportunityDetailPageProps): 
       opportunity.type,
       opportunity.location
     ].filter(Boolean),
-    url: `https://cumi.dev/opportunities/${params.slug}`,
+    url: `${SITE_URL}/opportunities/${params.slug}`,
     alternates: {
-      canonical: `https://cumi.dev/opportunities/${params.slug}`,
+      canonical: `${SITE_URL}/opportunities/${params.slug}`,
     },
     images: opportunity.imageUrl ? [{
       url: opportunity.imageUrl,
@@ -90,7 +91,7 @@ export async function generateMetadata({ params }: OpportunityDetailPageProps): 
       images: opportunity.imageUrl ? [opportunity.imageUrl] : [defaultImages[1]],
       siteName: "CUMI",
       locale: "en_US",
-      url: `https://cumi.dev/opportunities/${params.slug}`,
+      url: `${SITE_URL}/opportunities/${params.slug}`,
     },
     // Twitter
     twitter: {
@@ -112,8 +113,8 @@ export async function generateMetadata({ params }: OpportunityDetailPageProps): 
       "hiringOrganization": {
         "@type": "Organization",
         "name": "CUMI",
-        "url": "https://cumi.dev",
-        "logo": "https://cumi.dev/cumi-green.jpg"
+        "url": SITE_URL,
+        "logo": `${SITE_URL}/cumi-green.png`
       },
       "jobLocation": opportunity.location ? {
         "@type": "Place",
@@ -152,8 +153,8 @@ export default async function OpportunityDetailPage({ params }: OpportunityDetai
     "hiringOrganization": {
       "@type": "Organization",
       "name": "CUMI",
-      "url": "https://cumi.dev",
-      "logo": "https://cumi.dev/cumi-green.jpg"
+      "url": SITE_URL,
+      "logo": `${SITE_URL}/cumi-green.png`
     },
     "jobLocation": opportunity.location ? {
       "@type": "Place",

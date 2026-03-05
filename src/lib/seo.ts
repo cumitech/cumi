@@ -1,7 +1,8 @@
 import { Metadata } from 'next';
 import { getPageMetadata } from '@utils/meta-data-utils';
+import { SITE_URL } from '@constants/api-url';
 
-const url = process.env.NEXTAUTH_URL || "https://cumi.dev";
+const url = SITE_URL;
 
 // Base keywords for the website
 export const baseKeywords = [
@@ -69,6 +70,7 @@ interface PageMetadataOptions {
   };
   schema?: any;
   locale?: string;
+  robots?: { index?: boolean; follow?: boolean };
 }
 
 export function generatePageMetadata(options: PageMetadataOptions): Metadata {
@@ -85,13 +87,15 @@ export function generatePageMetadata(options: PageMetadataOptions): Metadata {
     openGraph,
     twitter,
     schema,
-    locale = 'en'
+    locale = 'en',
+    robots
   } = options;
 
   const allKeywords = [...baseKeywords, ...keywords].join(", ");
 
   return {
     metadataBase: new URL(pageUrl),
+    ...(robots && { robots }),
     title: {
       default: title,
       template: `%s | CUMI`,
@@ -138,7 +142,9 @@ export function generatePageMetadata(options: PageMetadataOptions): Metadata {
     other: {
       ...(publishedTime && { 'article:published_time': publishedTime }),
       ...(modifiedTime && { 'article:modified_time': modifiedTime }),
-      ...(schema && { 'application/ld+json': JSON.stringify(schema) })
+      ...(schema && {
+      "application/ld+json": JSON.stringify(schema).replace(/</g, "\\u003c"),
+    })
     }
   };
 }
@@ -254,15 +260,15 @@ export function generateStructuredData(type: string, data: any) {
         "@type": "Organization",
         "name": "CUMI",
         "alternateName": "CUMI Technologies",
-        "description": "Leading software development and digital solutions company specializing in web development, mobile apps, and custom software solutions",
+        "description": "Digital agency helping businesses scale. We build web apps, mobile apps, and custom software for small businesses and enterprises.",
         "url": baseUrl,
         "logo": {
           "@type": "ImageObject",
-          "url": `${baseUrl}/cumi-green.jpg`,
+          "url": `${baseUrl}/cumi-green.png`,
           "width": 160,
           "height": 90
         },
-        "image": `${baseUrl}/cumi-green.jpg`,
+        "image": `${baseUrl}/cumi-green.png`,
         "foundingDate": "2020",
         "address": {
           "@type": "PostalAddress",
@@ -304,13 +310,13 @@ export function generateStructuredData(type: string, data: any) {
         "@type": "WebSite",
         "name": "CUMI - Software Development & Digital Solutions",
         "url": baseUrl,
-        "description": "Transform your business with CUMI's cutting-edge software development, web applications, mobile apps, and digital solutions",
+        "description": "Digital agency helping businesses scale. Web apps, mobile apps, and custom software for small businesses and enterprises.",
         "publisher": {
           "@type": "Organization",
           "name": "CUMI",
           "logo": {
             "@type": "ImageObject",
-            "url": `${baseUrl}/cumi-green.jpg`
+            "url": `${baseUrl}/cumi-green.png`
           }
         },
         "potentialAction": {
@@ -339,6 +345,37 @@ export function generateStructuredData(type: string, data: any) {
           "@type": "Country",
           "name": "Cameroon"
         }
+      };
+
+    case 'FAQPage':
+      return {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "name": data.name,
+        "description": data.description,
+        "url": data.url || baseUrl,
+        ...(data.mainEntity?.length && {
+          mainEntity: data.mainEntity.map((q: { question: string; answer: string }) => ({
+            "@type": "Question",
+            "name": q.question,
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": q.answer
+            }
+          }))
+        })
+      };
+
+    case 'webpage':
+    case 'WebPage':
+      return {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": data.name,
+        "description": data.description,
+        "url": data.url || baseUrl,
+        ...(data.mainEntity && { mainEntity: data.mainEntity }),
+        ...(data.isPartOf && { isPartOf: data.isPartOf })
       };
       
     default:

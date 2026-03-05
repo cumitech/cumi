@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { SITE_URL } from "@constants/api-url";
 import AuthorsPageComponent from "@components/page-components/authors-page.component";
 import { generateDynamicPageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
 
@@ -28,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "tech industry insights",
     "development best practices writers"
   ],
-  url: "https://cumi.dev/authors",
+  url: "`${SITE_URL}/authors`",
   image: defaultImages[1],
   images: [
     {
@@ -51,7 +52,7 @@ export async function generateMetadata(): Promise<Metadata> {
     images: [defaultImages[1], defaultImages[2]],
     siteName: "CUMI",
     locale: "en_US",
-    url: "https://cumi.dev/authors"
+    url: "`${SITE_URL}/authors`"
   },
   twitter: {
     card: "summary_large_image",
@@ -65,7 +66,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "@type": "CollectionPage",
     "name": "CUMI Technology Blog Authors",
     "description": "Collection of expert authors and contributors writing about technology, software development, and digital transformation",
-    "url": "https://cumi.dev/authors",
+    "url": "`${SITE_URL}/authors`",
     "mainEntity": {
       "@type": "ItemList",
       "name": "Technology Blog Authors",

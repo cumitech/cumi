@@ -70,7 +70,7 @@ export default function CourseProgressTracker() {
         id: "1",
         title: "First Course Complete",
         description: "Completed your first course",
-        icon: "🎓",
+        icon: "",
         earnedAt: "2024-01-20",
         type: "course"
       },
@@ -78,7 +78,7 @@ export default function CourseProgressTracker() {
         id: "2",
         title: "Week Warrior",
         description: "7-day study streak",
-        icon: "🔥",
+        icon: "",
         earnedAt: "2024-01-25",
         type: "streak"
       },
@@ -86,7 +86,7 @@ export default function CourseProgressTracker() {
         id: "3",
         title: "Quick Learner",
         description: "Completed 5 lessons in one day",
-        icon: "⚡",
+        icon: "",
         earnedAt: "2024-01-22",
         type: "lesson"
       }

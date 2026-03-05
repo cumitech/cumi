@@ -9,10 +9,11 @@ export default function TutorialsHeader() {
   const { t } = useTranslation();
   return (
     <Card
+      className="tutorials-header-card"
       style={{
         borderRadius: 16,
         background: "linear-gradient(135deg, #eef2ff 0%, #f5f3ff 100%)",
-        border: "1px solid rgba(99, 102, 241, 0.2)",
+        border: "1px solid rgba(148, 163, 184, 0.7)",
         marginBottom: 24,
       }}
       bodyStyle={{ padding: 24 }}

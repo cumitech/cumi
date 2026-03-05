@@ -132,23 +132,23 @@ export class SEOValidator {
     }
 
     if (result.issues.some(issue => issue.includes('missing alt text'))) {
-      tips.push('🖼️ Add descriptive alt text to all images for better accessibility and SEO');
+      tips.push('Add descriptive alt text to all images for better accessibility and SEO');
     }
 
     if (result.issues.some(issue => issue.includes('title is missing'))) {
-      tips.push('📝 Add unique, descriptive page titles (30-60 characters)');
+      tips.push('Add unique, descriptive page titles (30-60 characters)');
     }
 
     if (result.issues.some(issue => issue.includes('Meta description is missing'))) {
-      tips.push('📄 Add compelling meta descriptions (120-160 characters)');
+      tips.push('Add compelling meta descriptions (120-160 characters)');
     }
 
     if (result.warnings.some(warning => warning.includes('too long'))) {
-      tips.push('✂️ Shorten titles and descriptions to optimal lengths');
+      tips.push('Shorten titles and descriptions to optimal lengths');
     }
 
     if (result.warnings.some(warning => warning.includes('too short'))) {
-      tips.push('📏 Expand titles and descriptions to provide more value');
+      tips.push('Expand titles and descriptions to provide more value');
     }
 
     return tips;

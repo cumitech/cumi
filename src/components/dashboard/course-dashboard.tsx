@@ -292,7 +292,7 @@ return (
         <Row justify="space-between" align="middle">
           <Col>
             <Title level={3} style={{ margin: 0 }}>
-              My Courses 🎓
+              My Courses
             </Title>
             <Text type="secondary">
               Continue your learning journey and track your progress

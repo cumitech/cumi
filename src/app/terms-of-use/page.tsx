@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { SITE_URL } from "@constants/api-url";
 import TermsOfUsePageComponent from "../../components/page-components/terms-of-use-page.component";
 import { generateDynamicPageMetadata, defaultImages } from "../../lib/seo";
 
@@ -18,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "legal policy",
     "terms and conditions"
   ],
-  url: "https://cumi.dev/terms-of-use",
+  url: "`${SITE_URL}/terms-of-use`",
   image: defaultImages[0],
   images: [
     {
@@ -35,7 +36,7 @@ export async function generateMetadata(): Promise<Metadata> {
     images: [defaultImages[0]],
     siteName: "CUMI",
     locale: "en_US",
-    url: "https://cumi.dev/terms-of-use"
+    url: "`${SITE_URL}/terms-of-use`"
   },
   twitter: {
     card: "summary_large_image",

@@ -1,10 +1,12 @@
 import { Metadata } from "next";
+import { SITE_URL } from "@constants/api-url";
 import RegisterPageComponent from "@components/page-components/register-page.component";
 import { generateDynamicPageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
   return await generateDynamicPageMetadata("/register", {
     title: "Register - Create Your CUMI Account",
+    robots: { index: false, follow: false },
     description: "Join CUMI and create your account to access our technology courses, events, and career opportunities. Start your journey in software development and digital innovation.",
     keywords: [
       "register",
@@ -23,9 +25,9 @@ export async function generateMetadata(): Promise<Metadata> {
       "platform registration",
       "free account creation"
     ],
-    url: "https://cumi.dev/register",
+    url: `${SITE_URL}/register`,
     alternates: {
-      canonical: "https://cumi.dev/register"
+      canonical: `${SITE_URL}/register`
     },
     image: defaultImages[0],
     images: [
@@ -43,7 +45,7 @@ export async function generateMetadata(): Promise<Metadata> {
       images: [defaultImages[0]],
       siteName: "CUMI",
       locale: "en_US",
-      url: "https://cumi.dev/register"
+      url: `${SITE_URL}/register`
     },
     twitter: {
       card: "summary_large_image",
@@ -55,11 +57,11 @@ export async function generateMetadata(): Promise<Metadata> {
     schema: generateStructuredData('webpage', {
       name: "Register - CUMI Account Creation",
       description: "User registration page for CUMI platform to create new accounts and join the community",
-      url: "https://cumi.dev/register",
+      url: `${SITE_URL}/register`,
       isPartOf: {
         "@type": "WebSite",
         "name": "CUMI",
-        "url": "https://cumi.dev"
+        "url": SITE_URL
       }
     })
   });

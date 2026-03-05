@@ -23,6 +23,7 @@ import {
 import { AppNav } from "@components/nav/nav.component";
 import { AppFooter } from "@components/footer/footer";
 import { AppFootnote } from "@components/footnote/footnote";
+import BannerComponent from "@components/banner/banner.component";
 
 const { Title, Text, Paragraph } = Typography;
 const { Search } = Input;
@@ -158,17 +159,6 @@ const RecommendationsPageComponent: React.FC = () => {
     return colors[priceRange] || "default";
   };
 
-  if (loading) {
-    return (
-      <div style={{ textAlign: "center", padding: "50px" }}>
-        <Spin size="large" />
-        <div style={{ marginTop: "16px" }}>
-          <Text>Loading recommendations...</Text>
-        </div>
-      </div>
-    );
-  }
-
   if (error) {
     console.log("error: ", error);
     return (
@@ -188,38 +178,38 @@ const RecommendationsPageComponent: React.FC = () => {
       <div className="container-fluid" style={{ width: "100%" }}>
         <AppNav logoPath="/" />
       </div>
-      <div style={{ padding: "24px", maxWidth: "1400px", margin: "0 auto" }}>
-        {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: "32px" }}>
-          <Title level={1} style={{ color: "#22C55E", marginBottom: "16px" }}>
-            🛠️ Recommended Tools & Services
-          </Title>
-          <Paragraph
-            style={{
-              fontSize: "18px",
-              color: "#6B7280",
-              maxWidth: "800px",
-              margin: "0 auto",
-            }}
-          >
-            Discover handpicked tools and services that we use and recommend.
-            These are carefully curated recommendations based on our experience
-            and expertise.
-          </Paragraph>
-        </div>
 
-        {/* Search and Filters */}
-        <Card style={{ marginBottom: "24px", borderRadius: "12px" }}>
-          <Row gutter={[16, 16]} align="middle">
-            <Col xs={24} sm={12} md={8}>
-              <Search
-                placeholder="Search tools and services..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                prefix={<SearchOutlined />}
-                size="large"
-              />
-            </Col>
+      <BannerComponent
+        pageTitle="Recommended Tools & Services"
+        breadcrumbs={[{ label: "Tools", uri: "recommendations" }]}
+      />
+
+      <section style={{ padding: "60px 0", minHeight: "70vh" }}>
+        <div className="container">
+          {/* Search and Filters */}
+          <Card
+            style={{
+              marginBottom: "32px",
+              borderRadius: "12px",
+              border: "1px solid #f0f0f0",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
+            }}
+            styles={{ body: { padding: "24px" } }}
+          >
+            <Row gutter={[16, 16]} align="middle">
+              <Col xs={24} sm={12} md={8}>
+                <Search
+                  placeholder="Search tools and services..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  prefix={<SearchOutlined style={{ color: "#20b2aa" }} />}
+                  size="large"
+                  style={{
+                    borderRadius: "8px",
+                    border: "1px solid #e8e8e8",
+                  }}
+                />
+              </Col>
             <Col xs={12} sm={6} md={4}>
               <Select
                 value={selectedCategory}
@@ -248,18 +238,41 @@ const RecommendationsPageComponent: React.FC = () => {
                 ))}
               </Select>
             </Col>
-            <Col xs={24} sm={12} md={8}>
-              <Text type="secondary">
-                Showing {filteredReferrals.length} of {referrals.length}{" "}
-                recommendations
-              </Text>
-            </Col>
-          </Row>
-        </Card>
+              <Col xs={24} sm={12} md={8}>
+                <Text type="secondary" style={{ fontSize: "14px" }}>
+                  Showing {filteredReferrals.length} of {referrals.length}{" "}
+                  recommendations
+                </Text>
+              </Col>
+            </Row>
+          </Card>
 
-        {/* Results */}
-        {filteredReferrals.length === 0 ? (
-          <Card style={{ textAlign: "center", padding: "50px" }}>
+          {/* Results */}
+          {loading ? (
+            <div
+              style={{
+                minHeight: "260px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Spin size="large" />
+              <div style={{ marginTop: 16 }}>
+                <Text>Loading recommendations...</Text>
+              </div>
+            </div>
+          ) : filteredReferrals.length === 0 ? (
+          <Card
+            style={{
+              textAlign: "center",
+              padding: "48px",
+              borderRadius: "16px",
+              border: "1px solid #f0f0f0",
+            }}
+            styles={{ body: { padding: "48px" } }}
+          >
             <Empty
               description="No recommendations found"
               image={Empty.PRESENTED_IMAGE_SIMPLE}
@@ -276,192 +289,172 @@ const RecommendationsPageComponent: React.FC = () => {
             </Empty>
           </Card>
         ) : (
-          <Row gutter={[24, 24]}>
+          <Row gutter={[32, 32]}>
             {filteredReferrals.map((referral) => (
-              <Col xs={24} sm={12} lg={8} key={referral.id}>
+              <Col key={referral.id} xs={24} sm={12} md={8} lg={8}>
                 <Card
                   hoverable
                   style={{
                     height: "100%",
                     borderRadius: "16px",
                     border: referral.isFeatured
-                      ? "2px solid #22C55E"
-                      : "1px solid #E5E7EB",
+                      ? "2px solid #20b2aa"
+                      : "1px solid #f0f0f0",
                     boxShadow: referral.isFeatured
-                      ? "0 8px 24px rgba(34, 197, 94, 0.12)"
-                      : "0 2px 8px rgba(0, 0, 0, 0.08)",
-                    transition: "all 0.3s ease",
+                      ? "0 8px 24px rgba(32, 178, 170, 0.15)"
+                      : "0 4px 16px rgba(0, 0, 0, 0.08)",
+                    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                    overflow: "hidden",
+                    position: "relative",
+                    background: "white",
                   }}
-                  bodyStyle={{ padding: "24px" }}
+                  styles={{
+                    body: {
+                      padding: "24px",
+                      display: "flex",
+                      flexDirection: "column",
+                      minHeight: "380px",
+                    },
+                  }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = "translateY(-4px)";
-                    e.currentTarget.style.boxShadow = "0 12px 32px rgba(0, 0, 0, 0.12)";
+                    e.currentTarget.style.transform = "translateY(-8px)";
+                    e.currentTarget.style.boxShadow = referral.isFeatured
+                      ? "0 16px 40px rgba(32, 178, 170, 0.25)"
+                      : "0 12px 32px rgba(32, 178, 170, 0.2)";
+                    e.currentTarget.style.borderColor = "#20b2aa";
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = "translateY(0)";
+                    e.currentTarget.style.boxShadow = referral.isFeatured
+                      ? "0 8px 24px rgba(32, 178, 170, 0.15)"
+                      : "0 4px 16px rgba(0, 0, 0, 0.08)";
+                    e.currentTarget.style.borderColor = referral.isFeatured
+                      ? "#20b2aa"
+                      : "#f0f0f0";
                   }}
                 >
-                  {/* Featured Badge */}
+                  {/* Featured Badge - positioned relative to card */}
                   {referral.isFeatured && (
-                    <div style={{ 
-                      position: 'absolute', 
-                      top: 16, 
-                      right: 16,
-                      zIndex: 1,
-                    }}>
-                      <Tag 
-                        color="success" 
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: 16,
+                        right: 16,
+                        zIndex: 1,
+                      }}
+                    >
+                      <Tag
+                        color="cyan"
                         icon={<StarOutlined />}
                         style={{
-                          fontSize: '12px',
+                          fontSize: "12px",
                           fontWeight: 600,
-                          borderRadius: '8px',
-                          padding: '4px 12px',
-                          border: 'none',
-                          boxShadow: '0 2px 8px rgba(34, 197, 94, 0.3)',
+                          borderRadius: "8px",
+                          padding: "4px 12px",
+                          border: "none",
+                          margin: 0,
                         }}
                       >
                         Featured
                       </Tag>
                     </div>
                   )}
-                  
-                  {/* Category Badge */}
-                  <div style={{ marginBottom: "16px" }}>
-                    <Tag 
-                      color={getCategoryColor(referral.category)}
-                      style={{
-                        fontSize: '11px',
-                        padding: '4px 12px',
-                        borderRadius: '8px',
-                        fontWeight: 600,
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.5px',
-                      }}
-                    >
-                      {referral.category}
-                    </Tag>
-                    <Tag 
-                      color={getPriceRangeColor(referral.priceRange)}
-                      style={{
-                        fontSize: '11px',
-                        padding: '4px 12px',
-                        borderRadius: '8px',
-                        fontWeight: 600,
-                        marginLeft: '8px',
-                      }}
-                    >
-                      {referral.priceRange}
-                    </Tag>
+
+                  {/* Tags row */}
+                  <div style={{ marginBottom: "12px" }}>
+                    <Space size={[8, 8]} wrap>
+                      <Tag
+                        color={getCategoryColor(referral.category)}
+                        style={{
+                          fontSize: "11px",
+                          padding: "2px 10px",
+                          borderRadius: "6px",
+                          margin: 0,
+                          textTransform: "uppercase",
+                        }}
+                      >
+                        {referral.category}
+                      </Tag>
+                      <Tag
+                        color={getPriceRangeColor(referral.priceRange)}
+                        style={{
+                          fontSize: "11px",
+                          padding: "2px 10px",
+                          borderRadius: "6px",
+                          margin: 0,
+                        }}
+                      >
+                        {referral.priceRange}
+                      </Tag>
+                    </Space>
                   </div>
 
-                  {/* Company Name with Icon */}
-                  <div style={{ 
-                    marginBottom: "12px",
-                    padding: '12px',
-                    background: 'linear-gradient(135deg, #f0fdf4 0%, #ecfeff 100%)',
-                    borderRadius: '10px',
-                    border: '1px solid rgba(34, 197, 94, 0.15)',
-                  }}>
-                    <Text 
-                      style={{ 
-                        fontSize: '13px', 
-                        color: '#6b7280',
-                        fontWeight: 600,
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.5px',
-                      }}
-                    >
-                      {referral.company}
-                    </Text>
-                  </div>
-                  {/* Tool Name */}
-                  <Title level={4} style={{ marginBottom: "12px", fontSize: '20px', color: '#1f2937' }}>
+                  {/* Tool name (primary) */}
+                  <Title
+                    level={4}
+                    style={{
+                      marginBottom: "4px",
+                      fontSize: "18px",
+                      color: "#1f2937",
+                      fontWeight: 600,
+                    }}
+                  >
                     {referral.name}
                   </Title>
+
+                  {/* Company (secondary) */}
+                  <Text
+                    type="secondary"
+                    style={{
+                      fontSize: "13px",
+                      marginBottom: "12px",
+                      display: "block",
+                    }}
+                  >
+                    {referral.company}
+                  </Text>
 
                   {/* Description */}
                   <Paragraph
                     style={{
-                      color: "#4b5563",
+                      color: "#6b7280",
                       marginBottom: "16px",
-                      minHeight: "60px",
-                      lineHeight: '1.6',
+                      lineHeight: 1.6,
+                      flex: 1,
+                      minHeight: "48px",
                     }}
                     ellipsis={{ rows: 3 }}
                   >
                     {referral.description}
                   </Paragraph>
 
-                  {/* Rating with Stars */}
-                  <div style={{ 
-                    marginBottom: "16px",
-                    padding: '12px',
-                    background: '#fff',
-                    borderRadius: '10px',
-                    border: '1px solid #e5e7eb',
-                  }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <Space size="small">
-                        <Text strong style={{ color: '#4b5563', fontSize: '13px' }}>Rating:</Text>
-                        {renderStars(referral.rating)}
-                        <Text style={{ fontWeight: 600, color: '#22C55E' }}>
-                          {referral.rating}/5
-                        </Text>
-                      </Space>
-                    </div>
+                  {/* Rating - compact inline */}
+                  <div style={{ marginBottom: "12px" }}>
+                    <Space size={4}>
+                      {renderStars(referral.rating)}
+                      <Text style={{ fontSize: "13px", fontWeight: 600 }}>
+                        {referral.rating}/5
+                      </Text>
+                    </Space>
                   </div>
 
-                  {/* Discount and Bonus Badges */}
+                  {/* Discount and Bonus */}
                   {(referral.discount || referral.bonus) && (
                     <div style={{ marginBottom: "16px" }}>
-                      <Space wrap>
+                      <Space wrap size={[8, 8]}>
                         {referral.discount && (
-                          <Tag 
-                            color="success" 
-                            style={{ 
-                              fontSize: "12px",
-                              fontWeight: 600,
-                              padding: '4px 12px',
-                              borderRadius: '6px',
-                            }}
-                          >
+                          <Tag color="green" style={{ margin: 0 }}>
                             {referral.discount}
                           </Tag>
                         )}
                         {referral.bonus && (
-                          <Tag 
-                            color="processing" 
-                            style={{ 
-                              fontSize: "12px",
-                              fontWeight: 600,
-                              padding: '4px 12px',
-                              borderRadius: '6px',
-                            }}
-                          >
+                          <Tag color="blue" style={{ margin: 0 }}>
                             {referral.bonus}
                           </Tag>
                         )}
                       </Space>
                     </div>
                   )}
-
-                  {/* Stats */}
-                  <div style={{ 
-                    marginBottom: "20px",
-                    padding: '12px 16px',
-                    background: 'linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%)',
-                    borderRadius: '10px',
-                  }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <Text type="secondary" style={{ fontSize: "11px", fontWeight: 600 }}>
-                        👆 {referral.clickCount || 0} clicks
-                      </Text>
-                      <Text type="secondary" style={{ fontSize: "11px", fontWeight: 600 }}>
-                        🎯 {referral.conversionCount || 0} conversions
-                      </Text>
-                    </div>
-                  </div>
 
                   {/* Visit Button */}
                   <Button
@@ -472,15 +465,13 @@ const RecommendationsPageComponent: React.FC = () => {
                     onClick={() =>
                       handleReferralClick(referral.id, referral.referralUrl)
                     }
-                    style={{ 
+                    style={{
                       borderRadius: "12px",
-                      height: '44px',
+                      height: "44px",
                       fontWeight: 600,
-                      background: referral.isFeatured
-                        ? 'linear-gradient(135deg, #22C55E 0%, #14B8A6 100%)'
-                        : 'linear-gradient(135deg, #0EA5E9 0%, #0284c7 100%)',
-                      border: 'none',
-                      boxShadow: '0 4px 12px rgba(14, 165, 233, 0.3)',
+                      background: "#20b2aa",
+                      border: "none",
+                      marginTop: "auto",
                     }}
                   >
                     Visit {referral.company}
@@ -491,30 +482,40 @@ const RecommendationsPageComponent: React.FC = () => {
           </Row>
         )}
 
-        {/* Footer */}
-        <div
-          style={{ textAlign: "center", marginTop: "48px", padding: "24px" }}
-        >
-          <Card style={{ borderRadius: "12px" }}>
-            <Title level={3} style={{ color: "#22C55E" }}>
-              Why These Recommendations?
-            </Title>
-            <Paragraph
+          {/* Footer CTA */}
+          <div
+            style={{
+              textAlign: "center",
+              marginTop: "48px",
+              padding: "24px 0",
+            }}
+          >
+            <Card
               style={{
-                fontSize: "16px",
-                color: "#6B7280",
-                maxWidth: "800px",
-                margin: "0 auto",
+                borderRadius: "16px",
+                border: "1px solid #f0f0f0",
+                boxShadow: "0 4px 16px rgba(0,0,0,0.06)",
               }}
+              styles={{ body: { padding: "32px" } }}
             >
-              These tools and services are carefully selected based on our
-              personal experience, industry best practices, and proven track
-              records. We only recommend solutions that we genuinely use and
-              believe will add value to your projects and business.
-            </Paragraph>
-          </Card>
+              <Title level={3} style={{ color: "#20b2aa", marginBottom: "16px" }}>
+                Why These Recommendations?
+              </Title>
+              <Paragraph
+                style={{
+                  fontSize: "16px",
+                  color: "#6b7280",
+                  maxWidth: "800px",
+                  margin: "0 auto",
+                  lineHeight: 1.7,
+                }}
+              >
+                We recommend these based on our own experience. We only include tools we use and find useful for our projects.
+              </Paragraph>
+            </Card>
+          </div>
         </div>
-      </div>
+      </section>
       <AppFooter logoPath="/" />
       <AppFootnote />
     </>

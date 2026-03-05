@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { SITE_URL } from "@constants/api-url";
 import ProjectDetailPageComponent from "@components/page-components/project-detail-page.component";
 import { generatePageMetadata, generateStructuredData, defaultImages } from "../../../lib/seo";
 import SchemaRenderer from "@components/shared/schema-renderer.component";
@@ -30,7 +31,7 @@ export async function generateMetadata({ params }: ProjectDetailPageProps): Prom
     return generatePageMetadata({
       title: "Project - CUMI Software Development Portfolio",
       description: "Explore our innovative software development projects and digital solutions.",
-      url: "https://cumi.dev/projects"
+      url: `${SITE_URL}/projects`
     });
   }
 
@@ -40,7 +41,7 @@ export async function generateMetadata({ params }: ProjectDetailPageProps): Prom
     return generatePageMetadata({
       title: "Project - CUMI Software Development Portfolio",
       description: "Explore our innovative software development projects and digital solutions.",
-      url: `https://cumi.dev/projects/${params.slug}`
+      url: `${SITE_URL}/projects/${params.slug}`
     });
   }
 
@@ -75,7 +76,7 @@ export async function generateMetadata({ params }: ProjectDetailPageProps): Prom
     title: `${project.title} - CUMI Software Development Project`,
     description: project.description || `Explore ${project.title}, an innovative software development project from CUMI's portfolio. Discover cutting-edge web development solutions, mobile applications, and technology implementations.`,
     keywords,
-    url: `https://cumi.dev/projects/${params.slug}`,
+    url: `${SITE_URL}/projects/${params.slug}`,
     image: projectImage,
     images: [
       {
@@ -88,7 +89,7 @@ export async function generateMetadata({ params }: ProjectDetailPageProps): Prom
     publishedTime: new Date(project.createdAt).toISOString(),
     modifiedTime: new Date(project.updatedAt).toISOString(),
     alternates: {
-      canonical: `https://cumi.dev/projects/${params.slug}`
+      canonical: `${SITE_URL}/projects/${params.slug}`
     },
     openGraph: {
       type: "article",
@@ -97,7 +98,7 @@ export async function generateMetadata({ params }: ProjectDetailPageProps): Prom
       images: [projectImage],
       siteName: "CUMI",
       locale: "en_US",
-      url: `https://cumi.dev/projects/${params.slug}`
+      url: `${SITE_URL}/projects/${params.slug}`
     },
     twitter: {
       card: "summary_large_image",

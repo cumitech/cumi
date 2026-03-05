@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { SITE_URL } from "@constants/api-url";
 import TutorialDetailPageComponent from "@components/page-components/tutorial-detail-page.component";
 import { generatePageMetadata, generateStructuredData, defaultImages } from "../../../lib/seo";
 import SchemaRenderer from "@components/shared/schema-renderer.component";
@@ -30,7 +31,7 @@ export async function generateMetadata({ params }: TutorialDetailPageProps): Pro
     return generatePageMetadata({
       title: "Tutorial - CUMI Learning Guides",
       description: "Explore our comprehensive tutorials and learning resources.",
-      url: "https://cumi.dev/tutorials"
+      url: `${SITE_URL}/tutorials`
     });
   }
 
@@ -40,7 +41,7 @@ export async function generateMetadata({ params }: TutorialDetailPageProps): Pro
     return generatePageMetadata({
       title: "Tutorial - CUMI Learning Guides",
       description: "Explore our comprehensive tutorials and learning resources.",
-      url: `https://cumi.dev/tutorials/${params.slug}`
+      url: `${SITE_URL}/tutorials/${params.slug}`
     });
   }
 
@@ -63,7 +64,7 @@ export async function generateMetadata({ params }: TutorialDetailPageProps): Pro
     title: `${tutorial.title} - CUMI Tutorial`,
     description: tutorial.description || `Learn with our step-by-step tutorial: ${tutorial.title}. Master software development through our comprehensive guides.`,
     keywords,
-    url: `https://cumi.dev/tutorials/${params.slug}`,
+    url: `${SITE_URL}/tutorials/${params.slug}`,
     image: tutorialImage,
     images: [
       {
@@ -76,7 +77,7 @@ export async function generateMetadata({ params }: TutorialDetailPageProps): Pro
     publishedTime: new Date(tutorial.createdAt).toISOString(),
     modifiedTime: new Date(tutorial.updatedAt).toISOString(),
     alternates: {
-      canonical: `https://cumi.dev/tutorials/${params.slug}`
+      canonical: `${SITE_URL}/tutorials/${params.slug}`
     },
     openGraph: {
       type: "article",
@@ -85,7 +86,7 @@ export async function generateMetadata({ params }: TutorialDetailPageProps): Pro
       images: [tutorialImage],
       siteName: "CUMI",
       locale: "en_US",
-      url: `https://cumi.dev/tutorials/${params.slug}`
+      url: `${SITE_URL}/tutorials/${params.slug}`
     },
     twitter: {
       card: "summary_large_image",

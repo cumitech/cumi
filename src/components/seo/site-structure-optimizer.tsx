@@ -172,11 +172,11 @@ export default function SiteStructureOptimizer() {
             <div className="optimization-tips mt-4">
               <h5>Optimization Recommendations:</h5>
               <ul>
-                <li>✅ Main navigation is well-structured with 1-click access to key sections</li>
-                <li>✅ Content pages are accessible within 2-3 clicks from homepage</li>
-                <li>⚠️ Dashboard areas are deeper but acceptable for admin functionality</li>
-                <li>💡 Consider adding more internal linking between related content</li>
-                <li>💡 Add breadcrumb navigation for better user experience</li>
+                <li>Main navigation is well-structured with 1-click access to key sections</li>
+                <li>Content pages are accessible within 2-3 clicks from homepage</li>
+                <li>Dashboard areas are deeper but acceptable for admin functionality</li>
+                <li>Consider adding more internal linking between related content</li>
+                <li>Add breadcrumb navigation for better user experience</li>
               </ul>
             </div>
           </Card>

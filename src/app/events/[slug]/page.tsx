@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { SITE_URL } from "@constants/api-url";
 import EventDetailPageComponent from "@components/page-components/event-detail-page.component";
 import { generatePageMetadata, generateStructuredData, fetchApiData, defaultImages } from "../../../lib/seo";
 import SchemaRenderer from "@components/shared/schema-renderer.component";
@@ -23,7 +24,7 @@ export async function generateMetadata({ params }: EventDetailPageProps): Promis
     return generatePageMetadata({
       title: "Event - CUMI Technology Events",
       description: "Join CUMI's technology events and workshops.",
-      url: "https://cumi.dev/events"
+      url: `${SITE_URL}/events`
     });
   }
 
@@ -33,7 +34,7 @@ export async function generateMetadata({ params }: EventDetailPageProps): Promis
     return generatePageMetadata({
       title: "Event - CUMI Technology Events",
       description: "Join CUMI's technology events and workshops.",
-      url: "https://cumi.dev/events"
+      url: `${SITE_URL}/events`
     });
   }
 
@@ -63,9 +64,9 @@ export async function generateMetadata({ params }: EventDetailPageProps): Promis
       event.location,
       event.category
     ].filter(Boolean),
-    url: `https://cumi.dev/events/${params.slug}`,
+    url: `${SITE_URL}/events/${params.slug}`,
     alternates: {
-      canonical: `https://cumi.dev/events/${params.slug}`,
+      canonical: `${SITE_URL}/events/${params.slug}`,
     },
     images: event.imageUrl ? [{
       url: event.imageUrl,
@@ -88,7 +89,7 @@ export async function generateMetadata({ params }: EventDetailPageProps): Promis
       images: event.imageUrl ? [event.imageUrl] : [defaultImages[0]],
       siteName: "CUMI",
       locale: "en_US",
-      url: `https://cumi.dev/events/${params.slug}`,
+      url: `${SITE_URL}/events/${params.slug}`,
     },
     // Twitter
     twitter: {
@@ -122,8 +123,8 @@ export async function generateMetadata({ params }: EventDetailPageProps): Promis
       "organizer": {
         "@type": "Organization",
         "name": "CUMI",
-        "url": "https://cumi.dev",
-        "logo": "https://cumi.dev/img/cumi-green.jpg"
+        "url": SITE_URL,
+        "logo": `${SITE_URL}/img/cumi-green.png`
       },
       "offers": event.price ? {
         "@type": "Offer",
@@ -163,8 +164,8 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
     "organizer": {
       "@type": "Organization",
       "name": "CUMI",
-      "url": "https://cumi.dev",
-      "logo": "https://cumi.dev/cumi-green.jpg"
+      "url": SITE_URL,
+      "logo": `${SITE_URL}/cumi-green.png`
     },
     "offers": event.price ? {
       "@type": "Offer",

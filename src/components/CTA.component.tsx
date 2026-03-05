@@ -15,6 +15,7 @@ export const AppCTA = () => {
   const { t } = useTranslation();
   return (
     <section
+      className="cta-wrapper"
       style={{
         padding: "80px 0",
         position: "relative",
@@ -262,19 +263,19 @@ export const AppCTA = () => {
                     {
                       icon: <RocketOutlined />,
                       title: "Fast Delivery",
-                      desc: "Quick turnaround time",
+                      desc: "From concept to launch",
                       color: "#22C55E",
                     },
                     {
                       icon: <PhoneOutlined />,
-                      title: "24/7 Support",
-                      desc: "Always here to help",
+                      title: "Direct Support",
+                      desc: "We work with you",
                       color: "#14B8A6",
                     },
                     {
                       icon: <MailOutlined />,
-                      title: "Expert Team",
-                      desc: "Skilled professionals",
+                      title: "Solutions That Scale",
+                      desc: "Small business to enterprise",
                       color: "#0EA5E9",
                     },
                   ].map((item, index) => (

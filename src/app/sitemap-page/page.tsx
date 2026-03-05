@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { SITE_URL } from "@constants/api-url";
 import SitemapPageComponent from "@components/page-components/sitemap-page.component";
 import { generateDynamicPageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
 
@@ -38,9 +39,9 @@ export async function generateMetadata(): Promise<Metadata> {
     "mobile app pages",
     "responsive design pages"
   ],
-  url: "https://cumi.dev/sitemap-page",
+  url: "`${SITE_URL}/sitemap-page`",
   alternates: {
-    canonical: "https://cumi.dev/sitemap-page"
+    canonical: `${SITE_URL}/sitemap-page`,
   },
   image: defaultImages[2],
   images: [
@@ -64,7 +65,7 @@ export async function generateMetadata(): Promise<Metadata> {
     images: [defaultImages[2], defaultImages[0]],
     siteName: "CUMI",
     locale: "en_US",
-    url: "https://cumi.dev/sitemap-page"
+    url: "`${SITE_URL}/sitemap-page`"
   },
   twitter: {
     card: "summary_large_image",
@@ -76,7 +77,7 @@ export async function generateMetadata(): Promise<Metadata> {
   schema: generateStructuredData('webpage', {
     name: "Application Sitemap",
     description: "Complete overview of all pages, routes, and API endpoints in the CUMI platform",
-    url: "https://cumi.dev/sitemap-page",
+    url: "`${SITE_URL}/sitemap-page`",
     mainEntity: {
       "@type": "ItemList",
       "name": "CUMI Platform Pages",

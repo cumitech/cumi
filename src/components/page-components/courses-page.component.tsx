@@ -339,7 +339,7 @@ return (
                             fontSize: 12,
                           }}
                         >
-                          📚 {t("courses.course")}
+                          {t("courses.course")}
                         </div>
                         <div
                           style={{
@@ -376,7 +376,7 @@ return (
                             opacity: 0.8,
                           }}
                         >
-                          ✓ {t("courses.enrolled")}
+                          {t("courses.enrolled")}
                         </Button>
                       ) : (
                         <EnrollButton

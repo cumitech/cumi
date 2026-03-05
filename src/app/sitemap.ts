@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next'
+import { SITE_URL } from "@constants/api-url";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXTAUTH_URL || "https://cumi.dev";
+  const baseUrl = SITE_URL;
 
   try {
     // Fetch dynamic content in parallel
@@ -244,6 +245,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: 'monthly',
         priority: 0.6,
       },
+      {
+        url: `${baseUrl}/sitemap-page`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.5,
+      },
+      {
+        url: `${baseUrl}/recommendations`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.6,
+      },
     ];
 
     // Combine all URLs
@@ -364,6 +377,36 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         lastModified: new Date(),
         changeFrequency: 'yearly',
         priority: 0.2,
+      },
+      {
+        url: `${baseUrl}/terms-of-use`,
+        lastModified: new Date(),
+        changeFrequency: 'yearly',
+        priority: 0.4,
+      },
+      {
+        url: `${baseUrl}/privacy-policy`,
+        lastModified: new Date(),
+        changeFrequency: 'yearly',
+        priority: 0.4,
+      },
+      {
+        url: `${baseUrl}/mobile-app`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.6,
+      },
+      {
+        url: `${baseUrl}/sitemap-page`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.5,
+      },
+      {
+        url: `${baseUrl}/recommendations`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.6,
       },
     ];
   }

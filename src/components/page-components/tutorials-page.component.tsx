@@ -105,19 +105,9 @@ export default function TutorialsPageComponent() {
   return (
     <PageLayout
       showBanner={true}
-      bannerTitle={t('tutorials.title')}
-      bannerBreadcrumbs={[{ label: t('tutorials.breadcrumb'), uri: "tutorials" }]}
+      bannerTitle={t("tutorials.title")}
+      bannerBreadcrumbs={[{ label: t("tutorials.breadcrumb"), uri: "tutorials" }]}
     >
-      {/* SEO Breadcrumb */}
-      <div className="container py-3">
-        <Breadcrumb 
-          items={[
-            { label: t('nav.welcome'), href: '/' },
-            { label: t('tutorials.breadcrumb'), href: '/tutorials' }
-          ]}
-        />
-      </div>
-
       <div className="container py-5 mb-5">
         {apiError && <h1>{t('tutorials.something_wrong')}</h1>}
 

@@ -1,12 +1,13 @@
 import { Metadata } from "next";
+import { SITE_URL } from "@constants/api-url";
 import ContactUsPageComponent from "@components/page-components/contact-us-page.component";
 import { generateDynamicPageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
 import SchemaRenderer from "@components/shared/schema-renderer.component";
 
 export async function generateMetadata(): Promise<Metadata> {
   return await generateDynamicPageMetadata("/contact-us", {
-  title: "Contact Us - CUMI Software Development Company",
-  description: "Get in touch with CUMI's expert software development team. Contact us for web applications, mobile apps, cloud solutions, digital transformation, and custom software development services.",
+  title: "Contact Us - CUMI Digital Agency",
+  description: "Get in touch with CUMI. We build web apps, mobile apps, and custom software for small businesses and enterprises. Let's discuss your project.",
   keywords: [
     "contact CUMI",
     "software development consultation",
@@ -29,9 +30,9 @@ export async function generateMetadata(): Promise<Metadata> {
     "full-stack development contact",
     "DevOps services consultation"
   ],
-  url: "https://cumi.dev/contact-us",
+  url: `${SITE_URL}/contact-us`,
   alternates: {
-    canonical: "https://cumi.dev/contact-us"
+    canonical: `${SITE_URL}/contact-us`
   },
   image: defaultImages[2],
   images: [
@@ -50,17 +51,17 @@ export async function generateMetadata(): Promise<Metadata> {
   ],
   openGraph: {
     type: "website",
-    title: "Contact CUMI - Software Development Experts",
-    description: "Get in touch with CUMI's expert team for software development, web applications, mobile apps, and digital transformation services.",
+    title: "Contact CUMI - Digital Agency",
+    description: "Get in touch with CUMI. We build solutions for small businesses and enterprises. Let's discuss your project.",
     images: [defaultImages[2], defaultImages[0]],
     siteName: "CUMI",
     locale: "en_US",
-    url: "https://cumi.dev/contact-us"
+    url: `${SITE_URL}/contact-us`
   },
   twitter: {
     card: "summary_large_image",
-    title: "Contact CUMI - Software Development Team",
-    description: "Get in touch with CUMI's expert team for software development and digital transformation services.",
+    title: "Contact CUMI - Digital Agency",
+    description: "Get in touch with CUMI. We build solutions for small businesses and enterprises.",
     images: [defaultImages[2]],
     creator: "@cumi_dev"
   },
@@ -68,11 +69,11 @@ export async function generateMetadata(): Promise<Metadata> {
     "@context": "https://schema.org",
     "@type": "ContactPage",
     "name": "Contact CUMI",
-    "description": "Contact CUMI for software development services and digital transformation solutions",
+    "description": "Contact CUMI for digital solutions. We build web apps, mobile apps, and custom software for small businesses and enterprises",
     "mainEntity": {
       "@type": "Organization",
       "name": "CUMI",
-      "url": "https://cumi.dev",
+      "url": SITE_URL,
       "contactPoint": {
         "@type": "ContactPoint",
         "contactType": "customer service",
@@ -100,11 +101,11 @@ export default function ContactUsPage() {
     "@context": "https://schema.org",
     "@type": "ContactPage",
     "name": "Contact CUMI",
-    "description": "Contact CUMI for software development services and digital transformation solutions",
+    "description": "Contact CUMI for digital solutions. We build web apps, mobile apps, and custom software for small businesses and enterprises",
     "mainEntity": {
       "@type": "Organization",
       "name": "CUMI",
-      "url": "https://cumi.dev",
+      "url": SITE_URL,
       "contactPoint": {
         "@type": "ContactPoint",
         "contactType": "customer service",

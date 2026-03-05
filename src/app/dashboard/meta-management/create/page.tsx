@@ -1,5 +1,6 @@
 "use client";
 
+import { SITE_URL } from "@constants/api-url";
 import { Create, useForm } from "@refinedev/antd";
 import {
   Form,
@@ -79,7 +80,7 @@ export default function MetaManagementCreate() {
               if (length === 0) {
                 helpText = `Recommended: ${optimalRange.min}-${optimalRange.max} characters`;
               } else if (isOptimal) {
-                helpText = `${length} characters - Optimal length ✓`;
+                helpText = `${length} characters - Optimal length`;
                 helpType = "success";
               } else if (isTooShort) {
                 helpText = `${length} characters - Too short (recommended: ${optimalRange.min}-${optimalRange.max})`;
@@ -146,7 +147,7 @@ export default function MetaManagementCreate() {
       process.env.NEXT_PUBLIC_BASE_URL ||
       (typeof window !== "undefined"
         ? window.location.origin
-        : "https://cumi.dev");
+        : SITE_URL);
 
     const transformed = { ...values };
 
@@ -300,7 +301,7 @@ export default function MetaManagementCreate() {
           label="Canonical URL"
           rules={[{ required: true, message: "Please enter canonical URL" }]}
         >
-          <Input size="large" placeholder="https://cumi.dev/about-us" />
+          <Input size="large" placeholder={`${SITE_URL}/about-us`} />
         </Form.Item>
 
         <Form.Item
@@ -356,7 +357,7 @@ export default function MetaManagementCreate() {
         <Row gutter={[16, 16]}>
           <Col xs={24} lg={12}>
             <Form.Item name="ogUrl" label="OG URL">
-              <Input size="large" placeholder="https://cumi.dev/page-url" />
+              <Input size="large" placeholder={`${SITE_URL}/page-url`} />
             </Form.Item>
           </Col>
 
@@ -510,7 +511,7 @@ export default function MetaManagementCreate() {
                 </div>
                 <div className="url">
                   {formProps.form?.getFieldValue("canonical") ||
-                    "https://cumi.dev/page"}
+                    `${SITE_URL}/page`}
                 </div>
                 <div className="description">
                   {formProps.form?.getFieldValue("description") ||

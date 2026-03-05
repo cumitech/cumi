@@ -141,18 +141,19 @@ return (
                       }}
                     >
                       {partner.logo ? (
-                        <div style={{ width: "100%", height: "100%", position: "relative" }}>
-                          <Image
-                            src={partner.logo}
-                            alt={partner.name}
-                            fill
-                            sizes="140px"
-                            style={{
-                              objectFit: "contain",
-                              padding: "8px",
-                            }}
-                          />
-                        </div>
+                        <img
+                          src={partner.logo}
+                          alt={partner.name}
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "contain",
+                            padding: "8px",
+                          }}
+                          onError={(e) => {
+                            (e.currentTarget as HTMLImageElement).src = "/favicon.svg";
+                          }}
+                        />
                       ) : (
                         <div
                           style={{
@@ -191,7 +192,7 @@ return (
                           fontWeight: "500",
                         }}
                       >
-                        <span style={{ fontSize: "16px" }}>📍</span> {partner.location}
+                        {partner.location}
                       </Text>
                       <Paragraph
                         ellipsis={{ rows: 3 }}

@@ -1,0 +1,437 @@
+/* Dark mode – unified overrides for Ant Design, Bootstrap, and custom components */
+
+[data-theme="dark"] {
+  /* Home.scss / legacy section variables (used by .block, .titleHolder, etc.) */
+  --background-color: #111827;
+  --default-color: #e5e7eb;
+  --heading-color: #f9fafb;
+  --contrast-color: #f9fafb;
+
+  /* Global text colors for static content */
+  body {
+    color: var(--cumi-text-secondary);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--cumi-text-primary);
+  }
+
+  p,
+  span,
+  li {
+    color: var(--cumi-text-secondary);
+  }
+  /* ---- App nav (Bootstrap navbar) ---- */
+  .app-nav {
+    background: var(--cumi-bg-secondary) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+    border-bottom-color: var(--cumi-border-light) !important;
+  }
+
+  .app-nav .nav-link {
+    color: var(--cumi-text-secondary) !important;
+  }
+
+  .app-nav .nav-link:hover,
+  .app-nav .nav-link:focus {
+    color: #22c55e !important;
+    background: rgba(34, 197, 94, 0.12) !important;
+  }
+
+  .app-nav .nav-link.active {
+    color: #22c55e !important;
+    background: rgba(34, 197, 94, 0.15) !important;
+    border-color: rgba(34, 197, 94, 0.3) !important;
+  }
+
+  .app-nav a[href="/login"],
+  .app-nav .ant-space a {
+    color: var(--cumi-text-secondary) !important;
+  }
+
+  .app-nav .ant-tooltip .anticon,
+  .app-nav .navbar-toggler {
+    color: var(--cumi-text-secondary) !important;
+    border-color: var(--cumi-border-medium) !important;
+  }
+
+  .app-nav .navbar-toggler-icon {
+    filter: invert(1);
+    opacity: 0.85;
+  }
+
+  /* ---- Bootstrap navbar (global) ---- */
+  .navbar {
+    background-color: var(--cumi-bg-secondary) !important;
+  }
+
+  .navbar-brand,
+  .navbar .nav-link {
+    color: var(--cumi-text-primary) !important;
+  }
+
+  /* ---- Sections: block, titleHolder (about, features, etc.) ---- */
+  .block {
+    border-bottom-color: var(--cumi-border-light) !important;
+    background-color: transparent;
+  }
+
+  .titleHolder h2,
+  .titleHolder p,
+  .titleHolder .text-muted {
+    color: var(--cumi-text-primary) !important;
+  }
+
+  .titleHolder p {
+    color: var(--cumi-text-secondary) !important;
+  }
+
+  .titleHolder:after {
+    background: var(--cumi-teal);
+  }
+
+  /* ---- Cards (Bootstrap + Ant Design) ---- */
+  .card,
+  .bg-white,
+  .ant-card.bg-white,
+  #about .ant-card,
+  .shadow.ant-card,
+  .ant-card:not(.cta-gradient-card):not(.search-filter-card) {
+    background-color: var(--cumi-bg-secondary) !important;
+    border-color: var(--cumi-border-light) !important;
+  }
+
+  .card-body,
+  .ant-card-body {
+    color: var(--cumi-text-primary);
+  }
+
+  .ant-card .fw-bold,
+  .ant-card p,
+  .ant-card small {
+    color: var(--cumi-text-primary) !important;
+  }
+
+  .ant-card small {
+    color: var(--cumi-text-secondary) !important;
+  }
+
+  /* ---- Containers and layout ---- */
+  .container-fluid,
+  .container {
+    background-color: transparent !important;
+  }
+
+  /* ---- Search/filter card (preserve gradient in dark) ---- */
+  .search-filter-card.ant-card {
+    background: linear-gradient(135deg, var(--cumi-bg-secondary) 0%, var(--cumi-bg-tertiary) 100%) !important;
+  }
+
+  /* ---- Home section variables (home.scss) ---- */
+  .block .titleHolder h2 {
+    color: var(--cumi-text-primary) !important;
+  }
+
+  /* ---- Footer ---- */
+  footer.section,
+  footer[class*="section"] {
+    background: linear-gradient(180deg, var(--cumi-bg-tertiary) 0%, var(--cumi-bg-secondary) 100%) !important;
+    border-top-color: var(--cumi-border-light) !important;
+  }
+
+  footer .footerTitle,
+  footer h5 {
+    color: var(--cumi-text-primary) !important;
+  }
+
+  footer a,
+  footer .ant-typography {
+    color: var(--cumi-text-secondary) !important;
+  }
+
+  footer a:hover {
+    color: #22c55e !important;
+  }
+
+  footer .subheading {
+    color: var(--cumi-text-secondary) !important;
+  }
+
+  /* ---- Dashboard layouts (creator, student, user) ---- */
+  .creator-layout,
+  .student-layout {
+    background-color: var(--cumi-bg-primary) !important;
+  }
+
+  /* ---- Admin dashboard (Refine ThemedLayoutV2 / Ant Design Layout) ---- */
+  .ant-layout {
+    background: var(--cumi-bg-primary) !important;
+  }
+
+  .ant-layout-sider,
+  .ant-layout-sider-trigger {
+    background: var(--cumi-bg-secondary) !important;
+  }
+
+  .ant-layout-header {
+    background: var(--cumi-bg-secondary) !important;
+    border-bottom-color: var(--cumi-border-light) !important;
+  }
+
+  .ant-menu,
+  .ant-menu-sub {
+    background: transparent !important;
+  }
+
+  .ant-menu-item,
+  .ant-menu-submenu-title {
+    color: var(--cumi-text-secondary) !important;
+  }
+
+  .ant-menu-item-selected,
+  .ant-menu-item:hover,
+  .ant-menu-submenu-title:hover {
+    color: var(--cumi-text-primary) !important;
+  }
+
+  /* Dashboard content area */
+  .ant-layout-content {
+    background: var(--cumi-bg-primary) !important;
+    color: var(--cumi-text-primary);
+  }
+
+  /* Ant Design table and stat cards in dashboard */
+  .ant-table,
+  .ant-table-content {
+    background: var(--cumi-bg-secondary) !important;
+  }
+
+  .ant-table-thead > tr > th {
+    background: var(--cumi-bg-tertiary) !important;
+    color: var(--cumi-text-primary) !important;
+    border-color: var(--cumi-border-light) !important;
+  }
+
+  .ant-table-tbody > tr > td {
+    border-color: var(--cumi-border-light) !important;
+    color: var(--cumi-text-primary);
+  }
+
+  .ant-statistic-title,
+  .ant-statistic-content {
+    color: var(--cumi-text-secondary) !important;
+  }
+
+  .ant-card {
+    background: var(--cumi-bg-secondary) !important;
+    border-color: var(--cumi-border-light) !important;
+  }
+
+  /* Buttons with light background (e.g. login social buttons) */
+  .ant-btn:not(.ant-btn-primary):not(.ant-btn-link) {
+    background: var(--cumi-bg-tertiary) !important;
+    border-color: var(--cumi-border-medium) !important;
+    color: var(--cumi-text-primary) !important;
+  }
+
+  .ant-btn:hover:not(.ant-btn-primary):not(.ant-btn-link) {
+    background: var(--cumi-bg-secondary) !important;
+    border-color: var(--cumi-border-dark) !important;
+    color: var(--cumi-text-primary) !important;
+  }
+
+  /* ---- "Digital Solutions That Scale" services section ---- */
+  .services-section {
+    background: linear-gradient(135deg, var(--cumi-bg-tertiary) 0%, var(--cumi-bg-secondary) 100%) !important;
+  }
+
+  .services-section .ant-typography,
+  .services-section .ant-typography.ant-typography-secondary {
+    color: var(--cumi-text-primary) !important;
+  }
+
+  .services-section .ant-typography + .ant-typography {
+    color: var(--cumi-text-secondary) !important;
+  }
+
+  .services-section .ant-card {
+    background: var(--cumi-bg-secondary) !important;
+    border-color: var(--cumi-border-light) !important;
+  }
+
+  .services-section .ant-card .ant-typography,
+  .services-section .ant-card p,
+  .services-section .ant-card div[style*="color"] {
+    color: var(--cumi-text-primary) !important;
+  }
+
+  .services-section .ant-card .ant-typography + .ant-typography,
+  .services-section .ant-card small {
+    color: var(--cumi-text-secondary) !important;
+  }
+
+  .services-section .ant-btn.ant-btn-text {
+    background: var(--cumi-bg-secondary) !important;
+    border-color: var(--cumi-border-medium) !important;
+    color: var(--cumi-teal) !important;
+  }
+
+  .services-section .ant-btn.ant-btn-text:hover {
+    background: var(--cumi-teal) !important;
+    border-color: var(--cumi-teal) !important;
+    color: var(--cumi-text-white) !important;
+  }
+
+  /* ---- CTA: "Ready to scale your business?" (#work-with-us) ---- */
+  #work-with-us {
+    background: transparent;
+  }
+
+  #work-with-us .bg-light {
+    background: var(--cumi-bg-secondary) !important;
+    color: var(--cumi-text-primary) !important;
+    border: 1px solid var(--cumi-border-light) !important;
+  }
+
+  #work-with-us h3,
+  #work-with-us p {
+    color: var(--cumi-text-primary) !important;
+  }
+
+  #work-with-us .primary-btn {
+    background: #22c55e !important;
+    border-color: #22c55e !important;
+    color: #0f172a !important;
+  }
+
+  #work-with-us .primary-btn:hover {
+    background: #16a34a !important;
+    border-color: #16a34a !important;
+    color: #0b1120 !important;
+  }
+
+  /* ---- Projects CTA gradient card (AppCTA) ---- */
+  .cta-wrapper {
+    background: radial-gradient(
+      circle at top,
+      var(--cumi-bg-secondary) 0%,
+      var(--cumi-bg-primary) 40%,
+      #020617 100%
+    ) !important;
+  }
+
+  .cta-gradient-card {
+    background: linear-gradient(
+      135deg,
+      #059669 0%,
+      #0f766e 40%,
+      #0f172a 100%
+    ) !important;
+    box-shadow: 0 20px 60px rgba(15, 23, 42, 0.6) !important;
+  }
+
+  .cta-gradient-card h2,
+  .cta-gradient-card h3,
+  .cta-gradient-card p,
+  .cta-gradient-card span,
+  .cta-gradient-card .ant-typography {
+    color: #e5e7eb !important;
+  }
+
+  .cta-gradient-card .ant-btn-primary {
+    background: #e5e7eb !important;
+    color: #065f46 !important;
+    border-color: transparent !important;
+  }
+
+  .cta-gradient-card .ant-btn-primary:hover {
+    background: #f9fafb !important;
+    color: #047857 !important;
+  }
+
+  .cta-gradient-card .ant-btn:not(.ant-btn-primary):not(.ant-btn-link) {
+    background: rgba(15, 23, 42, 0.3) !important;
+    border-color: rgba(148, 163, 184, 0.7) !important;
+    color: #e5e7eb !important;
+  }
+
+  .cta-gradient-card .ant-btn:not(.ant-btn-primary):not(.ant-btn-link):hover {
+    background: rgba(15, 23, 42, 0.6) !important;
+    border-color: #e5e7eb !important;
+    color: #f9fafb !important;
+  }
+
+  /* Tutorials header card border in dark mode */
+  .tutorials-header-card.ant-card {
+    background: linear-gradient(
+      135deg,
+      var(--cumi-bg-secondary) 0%,
+      var(--cumi-bg-tertiary) 100%
+    ) !important;
+    border-color: var(--cumi-border-light) !important;
+  }
+
+  /* ---- Banner (menu pages: About, Services, Contact, etc.) ---- */
+  .custom__banner {
+    background: radial-gradient(
+      circle at center,
+      var(--cumi-bg-primary) 0%,
+      var(--cumi-bg-secondary) 40%,
+      rgba(34, 197, 94, 0.08) 100%
+    ) !important;
+  }
+
+  .custom__banner .ant-typography,
+  .custom__banner .ant-breadcrumb,
+  .custom__banner .ant-breadcrumb a {
+    color: var(--cumi-text-primary) !important;
+  }
+
+  .custom__banner .text-black-50,
+  .custom__banner .ant-typography.ant-typography-secondary {
+    color: var(--cumi-text-secondary) !important;
+  }
+
+  .custom__banner .cumi-gradient-border.text-black {
+    color: var(--cumi-text-primary) !important;
+    border-color: var(--cumi-border-medium) !important;
+  }
+
+  .custom__banner .cumi-gradient-border.text-black:hover {
+    color: var(--cumi-text-primary) !important;
+  }
+
+  /* ---- Menu pages main content (about-us, our-services, contact-us, etc.) ---- */
+  .py-5,
+  section.py-5,
+  [class*="page"].py-5 {
+    background-color: transparent !important;
+  }
+
+  .py-5 .ant-typography,
+  .py-5 h1, .py-5 h2, .py-5 h3, .py-5 h4, .py-5 h5, .py-5 h6 {
+    color: var(--cumi-text-primary) !important;
+  }
+
+  .py-5 p,
+  .py-5 .ant-typography.ant-typography-secondary,
+  .py-5 .text-muted {
+    color: var(--cumi-text-secondary) !important;
+  }
+
+  .py-5 .ant-card,
+  .py-5 .card {
+    background: var(--cumi-bg-secondary) !important;
+    border-color: var(--cumi-border-light) !important;
+  }
+
+  .py-5 .ant-statistic-title,
+  .py-5 .ant-statistic-content {
+    color: var(--cumi-text-primary) !important;
+  }
+}

@@ -43,25 +43,7 @@ export const ServicesSection: React.FC<IServicesSectionProps> = ({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  if (isLoading) {
-    return (
-      <div
-        style={{
-          minHeight: "400px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Spin size="large" />
-        <div style={{ marginTop: "16px", fontSize: "16px", color: "#666" }}>
-          {t("common.loading")}
-        </div>
-      </div>
-    );
-  }
-
-  if (!services || services.length === 0) {
+  if (!isLoading && (!services || services.length === 0)) {
     return null;
   }
 
@@ -77,6 +59,7 @@ export const ServicesSection: React.FC<IServicesSectionProps> = ({
 
   return (
     <section
+      className="services-section"
       style={{
         padding: "80px 0",
         background: "linear-gradient(135deg, #f8fafb 0%, #ffffff 100%)",

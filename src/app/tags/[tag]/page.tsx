@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { SITE_URL } from "@constants/api-url";
 import TagDetailPageComponent from "@components/page-components/tag-detail-page.component";
 import { generatePageMetadata, generateStructuredData, fetchApiData, defaultImages } from "../../../lib/seo";
 
@@ -22,7 +23,7 @@ export async function generateMetadata({ params }: TagPageProps): Promise<Metada
     return generatePageMetadata({
       title: "Tag - CUMI Technology Blog",
       description: "Explore technology blog posts by tag.",
-      url: "https://cumi.dev/tags"
+      url: `${SITE_URL}/tags`
     });
   }
 
@@ -32,9 +33,42 @@ export async function generateMetadata({ params }: TagPageProps): Promise<Metada
     return generatePageMetadata({
       title: "Tag - CUMI Technology Blog",
       description: "Explore technology blog posts by tag.",
-      url: "https://cumi.dev/tags"
+      url: `${SITE_URL}/tags`
     });
   }
+
+  const baseUrl = SITE_URL;
+  const tagUrl = `${baseUrl}/tags/${params.tag}`;
+  const postImages = tag.posts?.slice(0, 3).map((post: any) => ({
+    url: post.imageUrl
+      ? (post.imageUrl.startsWith("http") ? post.imageUrl : `${baseUrl}/uploads/posts/${post.imageUrl}`)
+      : defaultImages[0],
+    width: 800,
+    height: 600,
+    alt: post.title,
+  })) || [{ url: defaultImages[0], width: 1200, height: 630, alt: tag.name }];
+
+  const collectionSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: `${tag.name} Articles | CUMI Technology Blog`,
+    description: tag.description || `Discover articles tagged with ${tag.name}`,
+    url: tagUrl,
+    mainEntity: {
+      "@type": "ItemList",
+      name: `${tag.name} Articles`,
+      numberOfItems: tag.posts?.length || 0,
+      itemListElement: tag.posts?.slice(0, 10).map((post: any, index: number) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        item: {
+          "@type": "BlogPosting",
+          name: post.title,
+          url: `${baseUrl}/blog-posts/${post.slug}`,
+        },
+      })) || [],
+    },
+  };
 
   return generatePageMetadata({
     title: `${tag.name} Content | CUMI Technology Blog`,
@@ -46,75 +80,36 @@ export async function generateMetadata({ params }: TagPageProps): Promise<Metada
       "programming",
       "digital transformation",
       "tech articles",
-      "programming tutorials",
-      "software engineering",
-      "API development",
-      "database design",
-      "user experience design",
-      "responsive web design",
-      "e-commerce development",
-      "cloud solutions",
-      "DevOps",
-      "business automation",
-      "tech industry insights",
-      "development best practices",
-      "coding tutorials",
       tag.name,
-      ...(tag.posts?.slice(0, 3).map((post: any) => post.title.split(" ")) || []).flat(),
       `${tag.name} articles`,
       `${tag.name} blog posts`,
-      `posts about ${tag.name}`
+      `posts about ${tag.name}`,
     ].filter(Boolean),
-    url: `https://cumi.dev/tags/${params.tag}`,
+    url: tagUrl,
     alternates: {
-      canonical: `https://cumi.dev/tags/${params.tag}`,
+      canonical: tagUrl,
     },
-    images: tag.posts?.slice(0, 3).map((post: any) => ({
-      url: post.imageUrl || defaultImages[0],
-      width: 800,
-      height: 600,
-      alt: post.title,
-    })) || [defaultImages[0]],
+    image: defaultImages[0],
+    images: postImages,
     publishedTime: new Date(tag.createdAt).toISOString(),
     modifiedTime: new Date(tag.updatedAt).toISOString(),
-    // OpenGraph
     openGraph: {
       type: "website",
-      title: `${tag.name} Content Collection`,
-      description: `${tag.posts?.length || ""} articles tagged with ${tag.name}`,
-      images: [defaultImages[0], defaultImages[1]],
+      title: `${tag.name} Content Collection | CUMI Technology Blog`,
+      description: tag.description || `Discover ${tag.posts?.length || ""} articles tagged with ${tag.name}`,
+      images: postImages.map((img: { url: string }) => img.url),
       siteName: "CUMI",
       locale: "en_US",
-      url: "https://cumi.dev",
+      url: tagUrl,
     },
-    // Twitter
     twitter: {
       card: "summary_large_image",
-      title: `#${tag.name} Articles`,
+      title: `${tag.name} Articles | CUMI Technology Blog`,
       description: `Explore ${tag.posts?.length || ""} posts about ${tag.name}`,
-      images: [defaultImages[0]],
+      images: [postImages[0]?.url || defaultImages[0]],
       creator: "@cumi_dev",
     },
-    // Structured data
-    schema: {
-      collectionPage: {
-        name: `${tag.name} Articles`,
-        about: tag.name,
-        description: `Collection of content tagged with ${tag.name}`,
-        hasPart: tag.posts?.map((post: any) => ({
-          "@type": "BlogPosting",
-          name: post.title,
-          url: `https://cumi.dev/blog-posts/${post.slug}`,
-          keywords: tag.name,
-        })) || [],
-      },
-      // Add hashtag schema for better topic recognition
-      hashtag: {
-        "@type": "Thing",
-        name: tag.name,
-        url: `https://cumi.dev/tags/${params.tag}`,
-      },
-    },
+    schema: collectionSchema,
   });
 }
 

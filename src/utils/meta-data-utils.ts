@@ -1,13 +1,13 @@
 import { Metadata } from "next";
 import { metaDataService } from "@services/meta-data.service";
 import { IMetaData } from "@domain/models/meta-data.model";
-import { APP_URL } from "@constants/api-url";
+import { SITE_URL } from "@constants/api-url";
 
 /**
  * Generate Next.js metadata from MetaData entity
  */
 export function generateMetadataFromMetaData(metaData: IMetaData): Metadata {
-  const baseUrl = APP_URL;
+  const baseUrl = SITE_URL;
 
   return {
     title: metaData.title,
@@ -61,7 +61,7 @@ export async function getPageMetadata(pagePath: string, fallbackTitle?: string, 
     console.error('Error getting page metadata:', error);
     
     // Fallback to basic metadata
-    const baseUrl = APP_URL;
+    const baseUrl = SITE_URL;
     const title = fallbackTitle || `${pagePath.charAt(1).toUpperCase() + pagePath.slice(2)} - CUMI`;
     const description = fallbackDescription || `Learn more about ${pagePath.charAt(1).toUpperCase() + pagePath.slice(2)} on CUMI.`;
 
@@ -131,7 +131,7 @@ export async function deletePageMetaData(id: string): Promise<boolean> {
  * Generate schema.org JSON-LD from MetaData
  */
 export function generateSchemaFromMetaData(metaData: IMetaData): any {
-  const baseUrl = APP_URL;
+  const baseUrl = SITE_URL;
 
   if (metaData.customSchema) {
     return metaData.customSchema;

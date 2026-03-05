@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import TagsPageComponent from "@components/page-components/tags-page.component";
-import { generateDynamicPageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
+import { generateDynamicPageMetadata, defaultImages } from "../../lib/seo";
+import { SITE_URL } from "@constants/api-url";
 
 export async function generateMetadata(): Promise<Metadata> {
   return await generateDynamicPageMetadata("/tags", {
@@ -28,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "development best practices",
     "coding tutorials"
   ],
-  url: "https://cumi.dev/tags",
+  url: `${SITE_URL}/tags`,
   image: defaultImages[1],
   images: [
     {
@@ -51,7 +52,7 @@ export async function generateMetadata(): Promise<Metadata> {
     images: [defaultImages[1], defaultImages[0]],
     siteName: "CUMI",
     locale: "en_US",
-    url: "https://cumi.dev/tags"
+    url: `${SITE_URL}/tags`
   },
   twitter: {
     card: "summary_large_image",
@@ -65,7 +66,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "@type": "CollectionPage",
     "name": "CUMI Technology Blog Tags",
     "description": "Technology blog tags and topics for easy content discovery",
-    "url": "https://cumi.dev/tags",
+    "url": `${SITE_URL}/tags`,
     "mainEntity": {
       "@type": "ItemList",
       "name": "Blog Tags",

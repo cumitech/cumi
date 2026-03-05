@@ -658,15 +658,24 @@
   }
 }
 
-/* Dark Mode Support */
+/* Dark Mode Support - Bootstrap variables for fluid theme */
 [data-theme="dark"] {
   --bs-body-color: var(--cumi-text-primary) !important;
   --bs-body-color-rgb: 249, 250, 251 !important;
   --bs-body-bg: var(--cumi-bg-primary) !important;
   --bs-body-bg-rgb: 17, 24, 39 !important;
-  
+
+  --bs-secondary-color: var(--cumi-text-secondary) !important;
+  --bs-tertiary-color: var(--cumi-text-muted) !important;
+
   --bs-border-color: var(--cumi-border-light) !important;
   --bs-border-color-translucent: rgba(55, 65, 81, 0.175) !important;
+
+  .card {
+    --bs-card-bg: var(--cumi-bg-secondary) !important;
+    --bs-card-border-color: var(--cumi-border-light) !important;
+    --bs-card-color: var(--cumi-text-primary) !important;
+  }
 }
 
 /* Print Styles */

@@ -1,10 +1,12 @@
 import { Metadata } from "next";
+import { SITE_URL } from "@constants/api-url";
 import LoginFormComponent from "@components/page-components/login-form.component";
 import { generateDynamicPageMetadata, generateStructuredData, defaultImages } from "../../lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
   return await generateDynamicPageMetadata("/login", {
     title: "Login - Access Your CUMI Account",
+    robots: { index: false, follow: false },
     description: "Sign in to your CUMI account to access courses, events, career opportunities, and the latest technology insights. Join our community of software developers and digital innovators.",
     keywords: [
       "login",
@@ -23,9 +25,9 @@ export async function generateMetadata(): Promise<Metadata> {
       "account sign in",
       "community access"
     ],
-    url: "https://cumi.dev/login",
+    url: `${SITE_URL}/login`,
     alternates: {
-      canonical: "https://cumi.dev/login"
+      canonical: `${SITE_URL}/login`
     },
     image: defaultImages[0],
     images: [
@@ -43,7 +45,7 @@ export async function generateMetadata(): Promise<Metadata> {
       images: [defaultImages[0]],
       siteName: "CUMI",
       locale: "en_US",
-      url: "https://cumi.dev/login"
+      url: `${SITE_URL}/login`
     },
     twitter: {
       card: "summary_large_image",
@@ -55,11 +57,11 @@ export async function generateMetadata(): Promise<Metadata> {
     schema: generateStructuredData('webpage', {
       name: "Login - CUMI Account Access",
       description: "Secure login page for CUMI users to access their accounts and personalized learning experience",
-      url: "https://cumi.dev/login",
+      url: `${SITE_URL}/login`,
       isPartOf: {
         "@type": "WebSite",
         "name": "CUMI",
-        "url": "https://cumi.dev"
+        "url": SITE_URL
       }
     })
   });

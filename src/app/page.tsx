@@ -2,11 +2,12 @@ import { Metadata } from "next";
 import HomePageComponent from "@components/page-components/home-page.component";
 import { generateDynamicPageMetadata, generateStructuredData, defaultImages } from "../lib/seo";
 import SchemaRenderer from "@components/shared/schema-renderer.component";
+import { SITE_URL } from "@constants/api-url";
 
 export async function generateMetadata(): Promise<Metadata> {
   return await generateDynamicPageMetadata("/", {
-  title: "CUMI - Leading Software Development & Digital Solutions Company",
-  description: "Transform your business with CUMI's cutting-edge software development, web applications, mobile apps, and digital solutions. Expert team delivering innovative technology solutions for startups to enterprises.",
+  title: "CUMI - Digital Agency | Software Solutions for Scaling Businesses",
+  description: "CUMI is a digital agency that helps businesses scale. We build web apps, mobile apps, and custom software for small businesses and enterprises.",
   keywords: [
     "software development company",
     "web development services",
@@ -29,34 +30,34 @@ export async function generateMetadata(): Promise<Metadata> {
     "mobile applications",
     "technology innovation"
   ],
-  url: "https://cumi.dev",
+  url: SITE_URL,
   image: defaultImages[0],
   images: defaultImages.map((img) => ({
     url: img,
     width: 1200,
     height: 630,
-    alt: "CUMI - Software Development & Digital Solutions",
+    alt: "CUMI - Digital Agency for Business Growth",
   })),
   openGraph: {
     type: "website",
-    title: "CUMI - Leading Software Development & Digital Solutions",
-    description: "Transform your business with CUMI's cutting-edge software development, web applications, mobile apps, and digital solutions.",
+    title: "CUMI - Digital Agency | Software Solutions for Scaling Businesses",
+    description: "Digital agency helping businesses scale. Web apps, mobile apps, and custom software for small businesses and enterprises.",
     images: defaultImages,
     siteName: "CUMI",
     locale: "en_US",
-    url: "https://cumi.dev",
+    url: SITE_URL,
   },
   twitter: {
     card: "summary_large_image",
-    title: "CUMI - Software Development & Digital Solutions",
-    description: "Transform your business with CUMI's cutting-edge software development and digital solutions.",
+    title: "CUMI - Digital Agency | Software Solutions for Scaling Businesses",
+    description: "Digital agency helping businesses scale. Custom software for small businesses and enterprises.",
     images: defaultImages,
     creator: "@cumi_dev",
   },
   schema: generateStructuredData("organization", {
     name: "CUMI",
-    description: "Leading software development company specializing in web applications, mobile apps, and digital transformation solutions",
-    url: "https://cumi.dev",
+    description: "Digital agency helping businesses scale through web applications, mobile apps, and custom software for small businesses and enterprises",
+    url: SITE_URL,
     foundingDate: "2020",
     numberOfEmployees: "50+",
     industry: "Software Development",
@@ -76,8 +77,8 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function IndexPage() {
   const homePageSchema = generateStructuredData("organization", {
     name: "CUMI",
-    description: "Leading software development company specializing in web applications, mobile apps, and digital transformation solutions",
-    url: "https://cumi.dev",
+    description: "Digital agency helping businesses scale through web applications, mobile apps, and custom software for small businesses and enterprises",
+    url: SITE_URL,
     foundingDate: "2020",
     numberOfEmployees: "50+",
     industry: "Software Development",

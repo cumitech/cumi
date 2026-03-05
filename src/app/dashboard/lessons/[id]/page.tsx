@@ -1818,7 +1818,7 @@ const LessonDetailsPage: React.FC = () => {
                       }
                       style={{ margin: "2px 4px 2px 0" }}
                     >
-                      {index === viewQuiz.correctAnswerIndex ? "✓ " : ""}
+                      {index === viewQuiz.correctAnswerIndex ? "(Correct) " : ""}
                       {answer}
                     </Tag>
                   ))}

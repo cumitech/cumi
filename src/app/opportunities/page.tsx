@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { SITE_URL } from "@constants/api-url";
 import OpportunitiesPageComponent from "@components/page-components/opportunities-page.component";
 import { generateDynamicPageMetadata, defaultImages } from "../../lib/seo";
 import SchemaRenderer from "@components/shared/schema-renderer.component";
@@ -29,7 +30,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "technology consulting positions",
     "IT jobs"
   ],
-  url: "https://cumi.dev/opportunities",
+  url: "`${SITE_URL}/opportunities`",
   image: defaultImages[1],
   images: [
     {
@@ -52,7 +53,7 @@ export async function generateMetadata(): Promise<Metadata> {
     images: [defaultImages[1], defaultImages[2]],
     siteName: "CUMI",
     locale: "en_US",
-    url: "https://cumi.dev/opportunities"
+    url: "`${SITE_URL}/opportunities`"
   },
   twitter: {
     card: "summary_large_image",
@@ -66,7 +67,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "@type": "CollectionPage",
     "name": "CUMI Career Opportunities",
     "description": "Software development jobs, internships, and career opportunities",
-    "url": "https://cumi.dev/opportunities",
+    "url": "`${SITE_URL}/opportunities`",
     "mainEntity": {
       "@type": "ItemList",
       "name": "Job Opportunities",
@@ -82,7 +83,7 @@ export default function OpportunitiesPage() {
     "@type": "CollectionPage",
     "name": "CUMI Career Opportunities",
     "description": "Software development jobs, internships, and career opportunities",
-    "url": "https://cumi.dev/opportunities",
+    "url": "`${SITE_URL}/opportunities`",
     "mainEntity": {
       "@type": "ItemList",
       "name": "Job Opportunities",

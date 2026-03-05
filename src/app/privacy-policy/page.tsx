@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { SITE_URL } from "@constants/api-url";
 import PrivacyPolicyPageComponent from "../../components/page-components/privacy-policy-page.component";
 import { generateDynamicPageMetadata, defaultImages } from "../../lib/seo";
 
@@ -18,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "privacy practices",
     "data usage"
   ],
-  url: "https://cumi.dev/privacy-policy",
+  url: "`${SITE_URL}/privacy-policy`",
   image: defaultImages[0],
   images: [
     {
@@ -35,7 +36,7 @@ export async function generateMetadata(): Promise<Metadata> {
     images: [defaultImages[0]],
     siteName: "CUMI",
     locale: "en_US",
-    url: "https://cumi.dev/privacy-policy"
+    url: "`${SITE_URL}/privacy-policy`"
   },
   twitter: {
     card: "summary_large_image",

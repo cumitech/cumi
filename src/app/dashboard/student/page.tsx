@@ -255,7 +255,7 @@ export default function StudentDashboard() {
       router.push(`/dashboard/student/courses/${courseId}/learn?continue=true`);
       open?.({
         type: "success",
-        message: "Continuing Course! 📚",
+        message: "Continuing Course",
         description: `Welcome back to "${courseTitle.length > 50 ? courseTitle.substring(0, 50) + '...' : courseTitle}"`,
       });
     } catch (error) {
@@ -285,7 +285,7 @@ export default function StudentDashboard() {
       open?.({
         type: "success",
         message: t("student_dashboard.already_enrolled"),
-        description: "You are already enrolled in this course! 📚",
+        description: "You are already enrolled in this course",
       });
       return;
     }
@@ -333,7 +333,7 @@ export default function StudentDashboard() {
           open?.({
             type: "success",
             message: t("student_dashboard.already_enrolled"),
-            description: "You are already enrolled in this course! 📚",
+            description: "You are already enrolled in this course",
           });
         } else {
           open?.({
@@ -490,7 +490,7 @@ export default function StudentDashboard() {
         open?.({
           type: "success",
           message: "Feature Coming Soon",
-          description: "Post interactions feature is coming soon! 👍",
+          description: "Post interactions feature is coming soon",
         });
       } else if (error?.data?.status === 401 || error?.status === 401) {
         open?.({
@@ -506,7 +506,7 @@ export default function StudentDashboard() {
           type: "success",
           message: "Feature Setup in Progress",
           description:
-            "Post interactions feature is being set up. Please try again later! 🚀",
+            "Post interactions feature is being set up. Please try again later",
         });
       } else {
         open?.({
@@ -1374,7 +1374,7 @@ export default function StudentDashboard() {
         }}
       >
         <Title level={1} style={{ color: "white", marginBottom: "8px" }}>
-          🎓 {t("student_dashboard.learning_hub")}
+          {t("student_dashboard.learning_hub")}
         </Title>
         <Text style={{ color: "rgba(255,255,255,0.9)", fontSize: "18px" }}>
           {t("student_dashboard.welcome_back")}, {session?.user?.name}! {t("student_dashboard.ready_to_learn")}
@@ -1386,7 +1386,7 @@ export default function StudentDashboard() {
         <Col span={24}>
           <div style={{ textAlign: "center", marginBottom: "24px" }}>
             <Title level={3} style={{ color: "#2c3e50", marginBottom: "8px" }}>
-              📊 {t("student_dashboard.learning_analytics")}
+              {t("student_dashboard.learning_analytics")}
             </Title>
             <Text style={{ color: "#7f8c8d", fontSize: "16px" }}>
               {t("student_dashboard.track_progress")}
@@ -1463,7 +1463,7 @@ export default function StudentDashboard() {
           <div style={{ padding: "24px" }}>
             <div style={{ marginBottom: "24px", textAlign: "center" }}>
               <Title level={3} style={{ marginBottom: "8px" }}>
-                📚 {t("student_dashboard.my_enrolled_courses")}
+                {t("student_dashboard.my_enrolled_courses")}
               </Title>
               <Text style={{ fontSize: "16px" }}>
                 {t("student_dashboard.continue_learning_journey")}
@@ -1819,10 +1819,10 @@ export default function StudentDashboard() {
           }}
         >
           <Title level={3} style={{ margin: 0, color: "#2c3e50" }}>
-            🎓 Explore Learning Opportunities
+            Explore Learning Opportunities
           </Title>
           <Text style={{ color: "#7f8c8d", fontSize: "16px" }}>
-            Discover courses, posts, and events to advance your skills
+            Browse courses, posts, and events to advance your skills
           </Text>
         </div>
         <Tabs

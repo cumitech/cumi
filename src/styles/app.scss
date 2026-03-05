@@ -6,6 +6,8 @@
 @import "./modal-responsive.css";
 @import "./footer-responsive.css";
 @import "./browser-compatibility.css";
+/* Dark mode overrides MUST be last so they win in the cascade */
+@import "./dark-mode.scss";
 
 :root {
   /* Legacy variables for backward compatibility */
@@ -50,17 +52,20 @@ body {
   }
 }
 
-/* Default white background for all containers and cards */
+/* Default background for most containers and cards */
 .container,
 .container-fluid,
 .card,
 .ant-card,
 .ant-card-body,
-.cumi-card,
-[class*="card"],
-[class*="container"],
-[class*="Card"] {
+.cumi-card {
   background-color: var(--cumi-bg-primary) !important;
+}
+
+/* Tutorials header card border in light mode */
+.tutorials-header-card.ant-card {
+  border-radius: 16px;
+  border: 1px solid rgba(148, 163, 184, 0.7) !important;
 }
 
 /* Override for CTA gradient card - preserve gradient background */
