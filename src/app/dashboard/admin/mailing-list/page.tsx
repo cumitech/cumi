@@ -38,7 +38,7 @@ import {
 } from "@ant-design/icons";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import RichTextEditor from "@components/shared/rich-text-editor";
+import RichTextEditor from "../../../../components/shared/rich-text-editor";
 
 dayjs.extend(relativeTime);
 

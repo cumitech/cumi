@@ -41,8 +41,8 @@ import {
   ICourseReviewsResponse,
   IReviewResponse,
   IReviewRequest,
-} from "@/store/api/review_api";
-import { courseAPI } from "@/store/api/course_api";
+} from "../../../../store/api/review_api";
+import { courseAPI } from "../../../../store/api/course_api";
 
 const { Title, Text } = Typography;
 const { Content } = Layout;

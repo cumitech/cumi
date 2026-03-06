@@ -19,7 +19,7 @@ import {
   MailOutlined,
 } from "@ant-design/icons";
 import { useRouter, useSearchParams } from "next/navigation";
-import { userAPI } from "@store/api/user_api";
+import { userAPI } from "../../../store/api/user_api";
 
 const { Title, Text, Paragraph } = Typography;
 
