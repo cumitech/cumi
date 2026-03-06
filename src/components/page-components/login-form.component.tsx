@@ -18,7 +18,6 @@ import {
   SiAuth0,
   SiGoogle,
   SiFacebook,
-  SiTwitter,
   SiGithub,
   SiLinkedin,
   SiMicrosoft,
