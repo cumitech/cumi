@@ -220,19 +220,18 @@ return (
                 </div>
               </Col>
 
-<Col xs={24} style={{ textAlign: 'center' }}>
+              <Col xs={24} style={{ textAlign: 'center' }}>
                 <Search
                   placeholder={t("events.search_placeholder")}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   prefix={<SearchOutlined style={{ color: '#f59e0b' }} />}
-                  style={{ maxWidth: "500px", marginBottom: 24 }}
-                  styles={{
-                    affixWrapper: {
-                      height: "48px",
-                      borderRadius: '12px',
-                      border: '1.5px solid #e5e7eb',
-                    },
+                  style={{
+                    maxWidth: "500px",
+                    marginBottom: 24,
+                    height: "48px",
+                    borderRadius: "12px",
+                    border: "1.5px solid #e5e7eb",
                   }}
                   allowClear
                   size="large"
