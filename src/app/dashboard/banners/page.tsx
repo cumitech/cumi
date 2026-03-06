@@ -1,6 +1,6 @@
 "use client";
 
-import PageBreadCrumbs from "../../../../components/shared/page-breadcrumb/page-breadcrumb.component";
+import PageBreadCrumbs from "../../../components/shared/page-breadcrumb/page-breadcrumb.component";
 import {
   DeleteButton,
   EditButton,

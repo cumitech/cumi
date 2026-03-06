@@ -62,11 +62,7 @@ return (
             onChange={(e) => onSearchChange(e.target.value)}
             onSearch={onSearchChange}
             enterButton={<SearchOutlined />}
-            styles={{
-              affixWrapper: {
-                height: "44px",
-              },
-            }}
+            style={{ height: "44px" }}
             allowClear
             size="large"
           />

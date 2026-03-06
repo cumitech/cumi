@@ -345,12 +345,11 @@ export default function OpportunitiesPageComponent() {
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
                       prefix={<SearchOutlined />}
-                      style={{ maxWidth: "400px", marginBottom: 30 }}
-                      styles={{
-                        affixWrapper: {
-                          height: "44px",
-                        },
-                      }}
+                    style={{
+                      maxWidth: "400px",
+                      marginBottom: 30,
+                      height: "44px",
+                    }}
                       allowClear
                       size="large"
                     />

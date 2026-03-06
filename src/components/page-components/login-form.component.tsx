@@ -18,10 +18,6 @@ import {
   SiAuth0,
   SiGoogle,
   SiFacebook,
-  SiGithub,
-  SiLinkedin,
-  SiMicrosoft,
-  SiApple,
 } from "react-icons/si";
 import Link from "next/link";
 import { FaLock, FaEnvelope, FaEye, FaEyeSlash, FaUser } from "react-icons/fa";
