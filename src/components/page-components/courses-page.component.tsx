@@ -216,12 +216,8 @@ return (
                   placeholder={t("courses.search_placeholder")}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
+                  style={{ height: "44px" }}
                   prefix={<SearchOutlined />}
-                  styles={{
-                    affixWrapper: {
-                      height: "44px",
-                    },
-                  }}
                   allowClear
                   size="large"
                 />
