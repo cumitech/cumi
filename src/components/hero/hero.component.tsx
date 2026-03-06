@@ -1,65 +1,133 @@
 "use client";
 
 import React from "react";
-import { Button, Space } from "antd";
+import { Button, Space, Carousel } from "antd";
 import useWindowSize from "@hooks/windows-resize/window-resize.hook";
 import Image from "next/image";
 import { useTranslation } from "@contexts/translation.context";
 
 export const AppHero = () => {
-  const { width } = useWindowSize()
-  const { t } = useTranslation()
+  const { width } = useWindowSize();
+  const { t } = useTranslation();
 
-return (
+  const isMobile = width < 768;
+
+  const heroImages = [
+    {
+      src: "/img/IMG_4491-min.jpeg",
+      alt: "Software engineering team at CUMI - Professional developers working on innovative digital solutions",
+    },
+    {
+      src: "/img/christopher-gower-m_HRfLhgABo-unsplash.jpg",
+      alt: "CUMI brand visuals representing digital solutions for growing businesses",
+    },
+    {
+      src: "/img/daniel-korpai-pKRNxEguRgM-unsplash.jpg",
+      alt: "CUMI brand visuals representing digital solutions for growing businesses",
+    },
+    {
+      src: "/img/desola-lanre-ologun-IgUR1iX0mqM-unsplash.jpg",
+      alt: "CUMI brand visuals representing digital solutions for growing businesses",
+    },
+  ];
+
+  const textBlock = (
+    <div className="col-12 d-flex flex-column col-md-5">
+      <h1
+        className="gradient-title"
+        style={{
+          fontSize: isMobile ? "1.9rem" : "2.5rem",
+          fontWeight: "700",
+          marginBottom: "1rem",
+          lineHeight: isMobile ? 1.2 : 1.25,
+        }}
+      >
+        {t("hero.title")}
+      </h1>
+      <p className="text-wrap">{t("hero.description")}</p>
+      <div className="mt-3">
+        <Space size="middle" direction="horizontal">
+          <Button
+            className="primary-btn shadow-sm"
+            shape="round"
+            href="/our-services"
+            size="large"
+          >
+            {t("hero.hire_services")}
+          </Button>
+          <Button
+            size="large"
+            href="/about-us"
+            className="default-btn fw-bold"
+            shape="round"
+          >
+            {t("hero.our_mission")}
+          </Button>
+        </Space>
+      </div>
+    </div>
+  );
+
+  const imageBlock = (
+    <div
+      className="ms-auto d-md-inline col-md-6"
+      style={{
+        marginTop: width < 767 ? 24 : 0,
+        marginBottom: width < 767 ? 24 : 0,
+      }}
+    >
+      <Carousel
+        autoplay
+        autoplaySpeed={5000}
+        dots={false}
+        arrows={false}
+        pauseOnHover={false}
+        effect="fade"
+        className="hero-image-carousel"
+      >
+        {heroImages.map((img) => (
+          <div key={img.src}>
+            <Image
+              src={img.src}
+              alt={img.alt}
+              height={500}
+              width={1200}
+              quality={85}
+              priority
+              style={{
+                width: "100%",
+                height: "23rem",
+                borderRadius: 50,
+                objectFit: "cover",
+                border: "6px solid #54c6aa",
+              }}
+            />
+          </div>
+        ))}
+      </Carousel>
+    </div>
+  );
+
+  return (
     <div
       className="mx-auto row align-items-center"
-      style={{ marginTop: "4rem", width: "90%", minHeight: "23rem" }}
+      style={{
+        marginTop: isMobile ? "1.5rem" : "4rem",
+        width: "90%",
+        minHeight: "23rem",
+      }}
     >
-      <div className="col-12 d-flex flex-column col-md-5">
-        <h1 className="gradient-title" style={{ fontSize: '2.5rem', fontWeight: '700', marginBottom: '1rem' }}>{t('hero.title')}</h1>
-        <p className="text-wrap">
-          {t('hero.description')}
-        </p>
-        <div className="mt-3">
-          <Space size="middle" direction="horizontal">
-            <Button
-              className="primary-btn shadow-sm"
-              shape="round"
-              href="/our-services"
-              size="large"
-            >
-              {t('hero.hire_services')}
-            </Button>
-            <Button
-              size="large"
-              href="/about-us"
-              className="default-btn fw-bold"
-              shape="round"
-            >
-              {t('hero.our_mission')}
-            </Button>
-          </Space>
-        </div>
-      </div>
-      <div className="d-sm-none ms-auto d-md-inline col-md-6" style={{ marginTop: width < 767 ? 40 : 0 }}>
-        <Image
-          src={"/img/IMG_4491-min.jpeg"}
-          alt="Software engineering team at CUMI - Professional developers working on innovative digital solutions"
-          height={500}
-          width={1200}
-          quality={85}
-          priority
-          placeholder="blur"
-          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
-          style={{
-            width: "100%",
-            height: "23rem",
-            borderRadius: 50,
-            objectFit: "cover",
-            border: "6px solid #54c6aa",
-          }}
-        />
-      </div>
+      {isMobile ? (
+        <>
+          {imageBlock}
+          {textBlock}
+        </>
+      ) : (
+        <>
+          {textBlock}
+          {imageBlock}
+        </>
+      )}
     </div>
   );
 };

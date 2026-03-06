@@ -29,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "development best practices",
     "coding tutorials"
   ],
-  url: "`${SITE_URL}/categories`",
+  url: `${SITE_URL}/categories`,
   image: defaultImages[0],
   images: [
     {
@@ -52,7 +52,7 @@ export async function generateMetadata(): Promise<Metadata> {
     images: [defaultImages[0], defaultImages[1]],
     siteName: "CUMI",
     locale: "en_US",
-    url: "`${SITE_URL}/categories`"
+    url: `${SITE_URL}/categories`
   },
   twitter: {
     card: "summary_large_image",
@@ -66,7 +66,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "@type": "CollectionPage",
     "name": "CUMI Technology Blog Categories",
     "description": "Technology blog posts organized by categories and topics",
-    "url": "`${SITE_URL}/categories`",
+    "url": `${SITE_URL}/categories`,
     "mainEntity": {
       "@type": "ItemList",
       "name": "Blog Categories",

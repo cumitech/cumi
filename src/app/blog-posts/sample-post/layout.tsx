@@ -22,7 +22,7 @@ export const metadata: Metadata = generatePageMetadata({
     "SEO",
     "web design",
   ],
-  url: "`${SITE_URL}/blog-posts/sample-post`",
+  url: `${SITE_URL}/blog-posts/sample-post`,
   image: defaultImages[0],
   images: [
     {
@@ -33,7 +33,7 @@ export const metadata: Metadata = generatePageMetadata({
     },
   ],
   alternates: {
-    canonical: "`${SITE_URL}/blog-posts/sample-post`",
+    canonical: `${SITE_URL}/blog-posts/sample-post`,
   },
   openGraph: {
     type: "article",
@@ -42,7 +42,7 @@ export const metadata: Metadata = generatePageMetadata({
     images: [defaultImages[0]],
     siteName: "CUMI",
     locale: "en_US",
-    url: "`${SITE_URL}/blog-posts/sample-post`",
+    url: `${SITE_URL}/blog-posts/sample-post`,
   },
   twitter: {
     card: "summary_large_image",

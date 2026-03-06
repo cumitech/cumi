@@ -46,18 +46,6 @@ export const useMenu = () => {
       },
     },
     {
-      name: "meta-data",
-      list: "/dashboard/meta-management",
-      create: "/dashboard/meta-management/create",
-      edit: "/dashboard/meta-management/edit/:id",
-      show: "/dashboard/meta-management/show/:id",
-      meta: {
-        canAccess: ["admin"],
-        label: "SEO Meta Management",
-      },
-      icon: <FiEdit3 />,
-    },
-    {
       name: "posts",
       list: "/dashboard/blog-posts",
       create: "/dashboard/blog-posts/create",

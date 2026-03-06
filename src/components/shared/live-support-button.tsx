@@ -333,7 +333,7 @@ try {
       }
 
 // Create WhatsApp message
-      const whatsappMessage = `Hello! I need support from ${companyName}. I was chatting with your AI assistant and would like to speak with a live agent.`;
+      const whatsappMessage = `Hello! I need support from ${companyName}. I was using your support bot and would like to speak with a live agent.`;
 
 // Create WhatsApp URL with proper encoding
       const whatsappUrl = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(whatsappMessage)}`;
@@ -528,7 +528,7 @@ return (
                   })
                 }}
               >
-                {t('support.ai_chat') || 'AI Assistant'}
+                {t('support.ai_chat') || 'Support Bot'}
               </Button>
               <Button
                 type="default"

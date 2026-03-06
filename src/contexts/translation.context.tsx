@@ -93,10 +93,10 @@ const translations = {
     
     // Support
     'support.title': 'Customer Support',
-    'support.ai_chat': 'AI Assistant',
+    'support.ai_chat': 'Support Bot',
     'support.live_agent': 'WhatsApp Agent',
     'support.help': 'Help & Support',
-    'support.chat_with_ai': 'Chat with AI',
+    'support.chat_with_ai': 'Chat with our support bot',
     'support.connect_agent': 'Connect to Live Agent',
     'support.available': 'Available',
     'support.busy': 'Busy',
@@ -781,13 +781,13 @@ const translations = {
     
     // Hero Section
     'hero.title': 'Scale Your Business with Digital Solutions',
-    'hero.description': 'We design, build, and ship web and mobile products that help businesses grow—from early-stage startups to large enterprises.',
+    'hero.description': 'We design, build, and ship web and mobile products that help businesses grow from early-stage startups to large enterprises.',
     'hero.hire_services': 'Our services',
     'hero.our_mission': 'Our Mission',
     
     // Features Section
     'features.title': 'Solutions for Every Stage',
-    'features.subtitle': 'From idea to launch to scale—we build for small businesses and enterprises.',
+    'features.subtitle': 'From idea to launch to scale, we build for small businesses and enterprises.',
     'features.custom_solutions.title': 'Custom Digital Solutions',
     'features.custom_solutions.description': 'CUMI builds custom software for businesses of all sizes. From concept to execution, we deliver web apps, mobile apps, and solutions that scale.',
     'features.training.title': 'Software Development Training',
@@ -833,7 +833,7 @@ const translations = {
     'faq.marketing.question': 'Can you help with SEO and digital marketing?',
     'faq.marketing.answer': 'Yes, we offer comprehensive digital marketing services including SEO optimization, social media marketing, content marketing, PPC advertising, and analytics setup. We can help improve your online visibility and drive more traffic to your website.',
     'faq.difference.question': 'What makes CUMI different?',
-    'faq.difference.answer': 'We help businesses scale. We combine technical expertise with a focus on solutions that grow with you—from startups to enterprises. We build for the long term.',
+    'faq.difference.answer': 'We help businesses scale. We combine technical expertise with a focus on solutions that grow with you, from startups to enterprises. We build for the long term.',
     'faq.cta.title': 'Still Have Questions?',
     'faq.cta.description': 'Can\'t find the answer you\'re looking for? Our team is here to help. Contact us directly and we\'ll get back to you within 24 hours.',
     'faq.cta.email': 'Email Us',
@@ -1190,7 +1190,7 @@ const translations = {
     'about.our_journey': 'Our Journey',
     'about.journey_description': 'A timeline of our growth and achievements over the years.',
     'about.meet_team': 'Meet Our Team',
-    'about.team_description': 'The team behind CUMI—helping businesses scale.',
+    'about.team_description': 'The team behind CUMI, helping businesses scale.',
     'about.skills': 'Skills:',
     'about.experience': 'Experience:',
     'about.location': 'Location:',
@@ -1393,10 +1393,10 @@ const translations = {
     
     // Support
     'support.title': 'Support Client',
-    'support.ai_chat': 'Assistant IA',
+    'support.ai_chat': 'Assistant virtuel',
     'support.live_agent': 'Agent WhatsApp',
     'support.help': 'Aide et support',
-    'support.chat_with_ai': 'Discuter avec l\'IA',
+    'support.chat_with_ai': 'Discuter avec notre assistant virtuel',
     'support.connect_agent': 'Se connecter à un agent',
     'support.available': 'Disponible',
     'support.busy': 'Occupé',
@@ -2081,13 +2081,13 @@ const translations = {
     
     // Hero Section
     'hero.title': 'Développez votre entreprise grâce aux solutions numériques',
-    'hero.description': 'Nous concevons, développons et lançons des produits web et mobiles qui accompagnent la croissance des entreprises—des startups aux grandes organisations.',
+    'hero.description': 'Nous concevons, développons et lançons des produits web et mobiles qui accompagnent la croissance des entreprises, des startups aux grandes organisations.',
     'hero.hire_services': 'Nos prestations',
     'hero.our_mission': 'Notre Mission',
     
     // Features Section
     'features.title': 'Solutions pour Chaque Étape',
-    'features.subtitle': 'De l\'idée au lancement à l\'échelle—nous construisons pour les PME et les grandes entreprises.',
+    'features.subtitle': 'De l\'idée au lancement à l\'échelle, nous construisons pour les PME et les grandes entreprises.',
     'features.custom_solutions.title': 'Solutions Numériques Personnalisées',
     'features.custom_solutions.description': 'CUMI construit des logiciels sur mesure pour les entreprises de toutes tailles. De la conception à l\'exécution, nous livrons des applications web, mobiles et des solutions qui évoluent.',
     'features.training.title': 'Formation en Développement Logiciel',
@@ -2133,7 +2133,7 @@ const translations = {
     'faq.marketing.question': 'Pouvez-vous aider avec le SEO et le marketing numérique?',
     'faq.marketing.answer': 'Oui, nous offrons des services de marketing numérique complets incluant l\'optimisation SEO, le marketing des médias sociaux, le marketing de contenu, la publicité PPC et la configuration d\'analytics. Nous pouvons aider à améliorer votre visibilité en ligne et à attirer plus de trafic vers votre site web.',
     'faq.difference.question': 'Qu\'est-ce qui rend CUMI différent?',
-    'faq.difference.answer': 'Nous aidons les entreprises à évoluer. Nous combinons l\'expertise technique avec des solutions qui grandissent avec vous—des startups aux grandes entreprises. Nous construisons pour le long terme.',
+    'faq.difference.answer': 'Nous aidons les entreprises à évoluer. Nous combinons l\'expertise technique avec des solutions qui grandissent avec vous, des startups aux grandes entreprises. Nous construisons pour le long terme.',
     'faq.cta.title': 'Vous avez encore des questions?',
     'faq.cta.description': 'Vous ne trouvez pas la réponse que vous cherchez? Notre équipe est là pour vous aider. Contactez-nous directement et nous vous répondrons dans les 24 heures.',
     'faq.cta.email': 'Nous Écrire',
@@ -2490,7 +2490,7 @@ const translations = {
     'about.our_journey': 'Notre Parcours',
     'about.journey_description': 'Une chronologie de notre croissance et de nos réalisations au fil des années.',
     'about.meet_team': 'Rencontrez Notre Équipe',
-    'about.team_description': 'L\'équipe derrière CUMI—aidant les entreprises à évoluer.',
+    'about.team_description': 'L\'équipe derrière CUMI, qui aide les entreprises à évoluer.',
     'about.skills': 'Compétences:',
     'about.experience': 'Expérience:',
     'about.location': 'Localisation:',

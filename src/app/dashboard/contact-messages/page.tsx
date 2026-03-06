@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { List, useTable, EditButton, ShowButton, DeleteButton } from "@refinedev/antd";
 import { Table, Space, Tag } from "antd";

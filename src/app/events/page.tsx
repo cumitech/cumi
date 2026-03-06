@@ -29,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "tech networking events",
     "industry conferences"
   ],
-  url: "`${SITE_URL}/events`",
+  url: `${SITE_URL}/events`,
   image: defaultImages[2],
   images: [
     {
@@ -52,7 +52,7 @@ export async function generateMetadata(): Promise<Metadata> {
     images: [defaultImages[2], defaultImages[0]],
     siteName: "CUMI",
     locale: "en_US",
-    url: "`${SITE_URL}/events`"
+    url: `${SITE_URL}/events`
   },
   twitter: {
     card: "summary_large_image",
@@ -66,7 +66,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "@type": "CollectionPage",
     "name": "CUMI Technology Events",
     "description": "Technology workshops, conferences, and events for software development professionals",
-    "url": "`${SITE_URL}/events`",
+    "url": `${SITE_URL}/events`,
     "mainEntity": {
       "@type": "ItemList",
       "name": "Technology Events",

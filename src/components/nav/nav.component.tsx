@@ -1,6 +1,5 @@
 "use client";
-
-import { Affix, Button, Dropdown, Avatar, Space, Tooltip } from "antd";
+import { Dropdown, Avatar, Space, Tooltip, Drawer } from "antd";
 import {
   UserOutlined,
   SettingOutlined,
@@ -8,6 +7,10 @@ import {
   DashboardOutlined,
   BulbOutlined,
   SunOutlined,
+  EnvironmentOutlined,
+  PhoneOutlined,
+  MailOutlined,
+  MenuOutlined,
 } from "@ant-design/icons";
 import Image from "next/image";
 import Link from "next/link";
@@ -29,6 +32,7 @@ export const AppNav: React.FC<Props> = ({ logoPath }) => {
   const { data: session, status } = useSession();
   const [isNavigating, setIsNavigating] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { t } = useTranslation();
   const { mode, setMode } = useContext(ColorModeContext);
   const toggleTheme = () => setMode(mode === "light" ? "dark" : "light");
@@ -37,9 +41,7 @@ export const AppNav: React.FC<Props> = ({ logoPath }) => {
     setIsMounted(true);
   }, []);
 
-  useEffect(() => {
-  }, [session]);
-
+  useEffect(() => {}, [session]);
 
   const handleLogout = useCallback(async () => {
     setIsNavigating(true);
@@ -53,25 +55,20 @@ export const AppNav: React.FC<Props> = ({ logoPath }) => {
     }
   }, []);
 
-  const handleNavigation = useCallback((href: string) => {
-    setIsNavigating(true);
-    setTimeout(() => setIsNavigating(false), 1000);
-  }, []);
+  const primaryLinks = [
+    { path: "/", label: t("nav.welcome") },
+    { path: "/our-services", label: t("nav.services") },
+    { path: "/projects", label: t("nav.projects") },
+    { path: "/tutorials", label: t("nav.tutorials") },
+    { path: "/opportunities", label: t("nav.opportunities") },
+    { path: "/recommendations", label: t("nav.tools") },
+    { path: "/about-us", label: t("nav.about-us") },
+    { path: "/contact-us", label: t("nav.contact-us") },
+  ];
 
-  const getLinkStyle = (path: string) => ({
-    color: pathname === path ? "#22C55E" : "#4b5563",
-    fontWeight: pathname === path ? "600" : "500",
-    letterSpacing: "0.3px",
-    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-    position: "relative" as const,
-    background:
-      pathname === path
-        ? "linear-gradient(135deg, #f0fdf4 0%, #ecfeff 100%)"
-        : "transparent",
-  });
-
-  const getLinkClassName = (path: string) =>
-    `nav-link ${pathname === path ? " active fw-bold" : ""}`;
+  const handleNavClick = () => {
+    setIsMobileMenuOpen(false);
+  };
 
   const userMenuItems = [
     {
@@ -187,221 +184,70 @@ export const AppNav: React.FC<Props> = ({ logoPath }) => {
       danger: true,
     },
   ];
-   const navContent = (
-    <nav
-      className="navbar navbar-expand-lg navbar-full-width app-nav"
-      style={{
-        background: "linear-gradient(180deg, #ffffff 0%, #f9fafb 100%)",
-        boxShadow: "0 4px 20px rgba(0,0,0,0.06)",
-        borderImage:
-          "linear-gradient(90deg, #22C55E 0%, #14B8A6 50%, #0EA5E9 100%) 1",
-        borderImageSlice: "0 0 1 0",
-        transition: "all 0.3s ease",
-        position: "relative",
-      }}
-    >
-      <div
-        className="container-fluid bg-none"
-        style={{
-          width: "100%",
-          maxWidth: "none",
-          padding: "8px 16px",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            flexWrap: "nowrap",
-          }}
-        >
-          <Link href={"/"} style={{ flexShrink: 0, order: 1 }}>
+
+  const navContent = (
+    <header className="cumi-header-sticky">
+      <div className="cumi-topbar">
+        <div className="cumi-topbar-inner">
+          <div className="cumi-topbar-text">
+            <span className="cumi-topbar-item">
+              <EnvironmentOutlined /> Bamenda, Cameroon
+            </span>
+            <span className="cumi-topbar-item">
+              <PhoneOutlined /> +237 681 289 411
+            </span>
+            <span className="cumi-topbar-item">
+              <MailOutlined /> <a href="mailto:info@cumi.dev">info@cumi.dev</a>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div className="app-nav cumi-main-nav">
+        <div className="cumi-main-nav-inner">
+          <Link href="/" className="cumi-nav-logo">
             <Image
               src={`${logoPath || "/"}cumi-green.png`}
-              height={60}
+              height={48}
               width={120}
               quality={100}
-              alt="CumiTech Logo"
+              alt="CUMI Logo"
               priority
-              style={{
-                borderRadius: "8px",
-                boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-                transition: "transform 0.2s ease",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "scale(1.05)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "scale(1)";
-              }}
             />
           </Link>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-            style={{ flexShrink: 0, order: 2, marginLeft: "auto" }}
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-        </div>
-        <div
-          className="collapse navbar-collapse"
-          id="navbarSupportedContent"
-          style={{
-            overflow: "hidden",
-            flex: 1,
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <div
-            style={{
-              flex: 1,
-              display: "flex",
-              justifyContent: "center",
-              minWidth: 0,
-              marginLeft: 24,
-              marginRight: 24,
-            }}
-          >
-          <ul
-            className="navbar-nav mb-2 mb-lg-0"
-            style={{
-              gap: "4px",
-              flexWrap: "nowrap",
-              overflow: "auto",
-              scrollbarWidth: "none",
-              msOverflowStyle: "none",
-            }}
-          >
-            <li className="nav-item">
+
+          <nav className="cumi-nav-links cumi-nav-links-desktop">
+            {primaryLinks.map(({ path, label }) => (
               <Link
-                className={`nav-link ${
-                  pathname === "/" ? "active fw-bold" : ""
+                key={path}
+                href={path}
+                className={`cumi-nav-link ${
+                  pathname === path ? "cumi-nav-link-active" : ""
                 }`}
-                style={{
-                  color: pathname === "/" ? "#22C55E" : "#4b5563",
-                  fontWeight: pathname === "/" ? "600" : "500",
-                  letterSpacing: "0.3px",
-                  padding: "8px 16px",
-                  borderRadius: "10px",
-                  transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                  position: "relative",
-                  whiteSpace: "nowrap",
-                  fontSize: "15px",
-                  background:
-                    pathname === "/"
-                      ? "linear-gradient(135deg, #f0fdf4 0%, #ecfeff 100%)"
-                      : "transparent",
-                  border:
-                    pathname === "/"
-                      ? "1px solid rgba(34, 197, 94, 0.2)"
-                      : "1px solid transparent",
-                }}
-                aria-current="page"
-                href="/"
-                onMouseEnter={(e) => {
-                  if (pathname !== "/") {
-                    e.currentTarget.style.background =
-                      "linear-gradient(135deg, #f0fdf4 0%, #ecfeff 100%)";
-                    e.currentTarget.style.color = "#22C55E";
-                    e.currentTarget.style.borderColor =
-                      "rgba(34, 197, 94, 0.2)";
-                    e.currentTarget.style.transform = "translateX(2px)";
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (pathname !== "/") {
-                    e.currentTarget.style.background = "transparent";
-                    e.currentTarget.style.color = "#4b5563";
-                    e.currentTarget.style.borderColor = "transparent";
-                    e.currentTarget.style.transform = "translateX(0)";
-                  }
-                }}
+                onClick={handleNavClick}
               >
-                {t("nav.welcome")}
+                {label}
               </Link>
-            </li>
-            {[
-              { path: "/our-services", label: t("nav.services") },
-              { path: "/projects", label: t("nav.projects") },
-              { path: "/tutorials", label: t("nav.tutorials") },
-              { path: "/opportunities", label: t("nav.opportunities") },
-              { path: "/recommendations", label: t("nav.tools") },
-              { path: "/about-us", label: t("nav.about-us") },
-              { path: "/contact-us", label: t("nav.contact-us") },
-            ].map(({ path, label }) => (
-              <li className="nav-item" key={path}>
-                <Link
-                  className={getLinkClassName(path)}
-                  style={{
-                    ...getLinkStyle(path),
-                    padding: "8px 16px",
-                    borderRadius: "10px",
-                    whiteSpace: "nowrap",
-                    fontSize: "15px",
-                    border:
-                      pathname === path
-                        ? "1px solid rgba(34, 197, 94, 0.2)"
-                        : "1px solid transparent",
-                  }}
-                  href={path}
-                  onMouseEnter={(e) => {
-                    if (pathname !== path) {
-                      e.currentTarget.style.background =
-                        "linear-gradient(135deg, #f0fdf4 0%, #ecfeff 100%)";
-                      e.currentTarget.style.color = "#22C55E";
-                      e.currentTarget.style.borderColor =
-                        "rgba(34, 197, 94, 0.2)";
-                      e.currentTarget.style.transform = "translateX(2px)";
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (pathname !== path) {
-                      e.currentTarget.style.background = "transparent";
-                      e.currentTarget.style.color = "#4b5563";
-                      e.currentTarget.style.borderColor = "transparent";
-                      e.currentTarget.style.transform = "translateX(0)";
-                    }
-                  }}
-                >
-                  {label}
-                </Link>
-              </li>
             ))}
-          </ul>
-          </div>
-          <div
-            className="d-flex flex-sm-column flex-md-row align-items-center"
-            style={{ flexShrink: 0 }}
-          >
+          </nav>
+
+          <div className="cumi-nav-actions cumi-nav-actions-desktop">
             <Space size="small" align="center">
               <LanguageSelector />
-              <Tooltip title={mode === "dark" ? t("nav.theme_light") : t("nav.theme_dark")}>
+              <Tooltip
+                title={
+                  mode === "dark" ? t("nav.theme_light") : t("nav.theme_dark")
+                }
+              >
                 <span
                   role="button"
                   tabIndex={0}
                   onClick={toggleTheme}
                   onKeyDown={(e) => e.key === "Enter" && toggleTheme()}
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    width: 36,
-                    height: 36,
-                    borderRadius: "8px",
-                    cursor: "pointer",
-                    color: "currentColor",
-                    transition: "opacity 0.2s",
-                  }}
-                  aria-label={mode === "dark" ? t("nav.theme_light") : t("nav.theme_dark")}
+                  className="cumi-nav-theme-toggle"
+                  aria-label={
+                    mode === "dark" ? t("nav.theme_light") : t("nav.theme_dark")
+                  }
                 >
                   {mode === "dark" ? (
                     <SunOutlined style={{ fontSize: 18 }} />
@@ -411,94 +257,144 @@ export const AppNav: React.FC<Props> = ({ logoPath }) => {
                 </span>
               </Tooltip>
               {status === "loading" ? (
-                <span style={{ fontSize: "14px", color: "var(--cumi-text-muted, #6b7280)" }}>
-                  {t("common.loading")}
-                </span>
+                <span className="cumi-nav-loading">{t("common.loading")}</span>
               ) : session ? (
                 <Dropdown
                   menu={{
                     items: userMenuItems,
                     style: {
-                      borderRadius: "10px",
+                      borderRadius: 10,
                       boxShadow: "0 4px 16px rgba(0,0,0,0.12)",
-                      padding: "4px",
-                      minWidth: "200px",
+                      padding: 4,
+                      minWidth: 220,
                     },
                   }}
                   placement="bottomRight"
                   arrow={{ pointAtCenter: true }}
                 >
-                  <Space
-                    className="cursor-pointer"
-                    style={{
-                      padding: "6px 12px",
-                      borderRadius: "12px",
-                      transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                      background:
-                        "linear-gradient(135deg, #f0fdf4 0%, #ecfeff 100%)",
-                      border: "1px solid rgba(34, 197, 94, 0.15)",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background =
-                        "linear-gradient(135deg, #dcfce7 0%, #cffafe 100%)";
-                      e.currentTarget.style.borderColor =
-                        "rgba(34, 197, 94, 0.3)";
-                      e.currentTarget.style.transform = "translateY(-2px)";
-                      e.currentTarget.style.boxShadow =
-                        "0 4px 12px rgba(34, 197, 94, 0.2)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background =
-                        "linear-gradient(135deg, #f0fdf4 0%, #ecfeff 100%)";
-                      e.currentTarget.style.borderColor =
-                        "rgba(34, 197, 94, 0.15)";
-                      e.currentTarget.style.transform = "translateY(0)";
-                      e.currentTarget.style.boxShadow = "none";
-                    }}
-                  >
+                  <Space className="cumi-nav-userpill">
                     <Avatar
-                      size={44}
+                      size={40}
                       src={session.user?.image}
                       icon={<UserOutlined />}
-                      style={{
-                        background:
-                          "linear-gradient(135deg, #22C55E 0%, #14B8A6 100%)",
-                        border: "2px solid white",
-                        boxShadow: "0 2px 8px rgba(34, 197, 94, 0.3)",
-                      }}
                     />
                   </Space>
                 </Dropdown>
               ) : (
-                <Link
-                  href="/login"
-                  style={{
-                    color: "inherit",
-                    fontWeight: 500,
-                    fontSize: "15px",
-                    letterSpacing: "0.3px",
-                    padding: "8px 16px",
-                    borderRadius: "8px",
-                    textDecoration: "none",
-                    transition: "opacity 0.2s",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.opacity = "0.8";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.opacity = "1";
-                  }}
-                >
+                <Link href="/login" className="cumi-nav-login">
                   {t("nav.login")}
                 </Link>
               )}
             </Space>
           </div>
+
+          <button
+            type="button"
+            className="cumi-nav-hamburger"
+            aria-label="Toggle navigation"
+            aria-expanded={isMobileMenuOpen}
+            onClick={() => setIsMobileMenuOpen(true)}
+          >
+            <MenuOutlined />
+          </button>
         </div>
       </div>
-    </nav>
+
+      <Drawer
+        placement="right"
+        width={280}
+        closable
+        onClose={() => setIsMobileMenuOpen(false)}
+        open={isMobileMenuOpen}
+        className="cumi-nav-drawer"
+        zIndex={1600}
+        styles={{
+          body: {
+            padding: 16,
+            display: "flex",
+            flexDirection: "column",
+            gap: 16,
+          },
+        }}
+      >
+        <nav className="cumi-nav-links-mobile">
+          {primaryLinks.map(({ path, label }) => (
+            <Link
+              key={path}
+              href={path}
+              className={`cumi-nav-link ${
+                pathname === path ? "cumi-nav-link-active" : ""
+              }`}
+              onClick={handleNavClick}
+            >
+              {label}
+            </Link>
+          ))}
+        </nav>
+
+        <div className="cumi-nav-drawer-footer">
+          <Space size="middle" align="center">
+            <LanguageSelector />
+            <Tooltip
+              title={
+                mode === "dark" ? t("nav.theme_light") : t("nav.theme_dark")
+              }
+            >
+              <span
+                role="button"
+                tabIndex={0}
+                onClick={toggleTheme}
+                onKeyDown={(e) => e.key === "Enter" && toggleTheme()}
+                className="cumi-nav-theme-toggle"
+                aria-label={
+                  mode === "dark" ? t("nav.theme_light") : t("nav.theme_dark")
+                }
+              >
+                {mode === "dark" ? (
+                  <SunOutlined style={{ fontSize: 18 }} />
+                ) : (
+                  <BulbOutlined style={{ fontSize: 18 }} />
+                )}
+              </span>
+            </Tooltip>
+            {status === "loading" ? (
+              <span className="cumi-nav-loading">{t("common.loading")}</span>
+            ) : session ? (
+              <Dropdown
+                menu={{
+                  items: userMenuItems,
+                  style: {
+                    borderRadius: 10,
+                    boxShadow: "0 4px 16px rgba(0,0,0,0.12)",
+                    padding: 4,
+                    minWidth: 220,
+                  },
+                }}
+                placement="bottomRight"
+                arrow={{ pointAtCenter: true }}
+              >
+                <Space className="cumi-nav-userpill">
+                  <Avatar
+                    size={40}
+                    src={session.user?.image}
+                    icon={<UserOutlined />}
+                  />
+                </Space>
+              </Dropdown>
+            ) : (
+              <Link
+                href="/login"
+                className="cumi-nav-login"
+                onClick={handleNavClick}
+              >
+                {t("nav.login")}
+              </Link>
+            )}
+          </Space>
+        </div>
+      </Drawer>
+    </header>
   );
 
-  // Only use Affix on client to prevent hydration mismatch
-  return isMounted ? <Affix offsetTop={0}>{navContent}</Affix> : navContent;
+  return navContent;
 };

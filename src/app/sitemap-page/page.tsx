@@ -39,7 +39,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "mobile app pages",
     "responsive design pages"
   ],
-  url: "`${SITE_URL}/sitemap-page`",
+  url: `${SITE_URL}/sitemap-page`,
   alternates: {
     canonical: `${SITE_URL}/sitemap-page`,
   },
@@ -65,7 +65,7 @@ export async function generateMetadata(): Promise<Metadata> {
     images: [defaultImages[2], defaultImages[0]],
     siteName: "CUMI",
     locale: "en_US",
-    url: "`${SITE_URL}/sitemap-page`"
+    url: `${SITE_URL}/sitemap-page`
   },
   twitter: {
     card: "summary_large_image",
@@ -77,7 +77,7 @@ export async function generateMetadata(): Promise<Metadata> {
   schema: generateStructuredData('webpage', {
     name: "Application Sitemap",
     description: "Complete overview of all pages, routes, and API endpoints in the CUMI platform",
-    url: "`${SITE_URL}/sitemap-page`",
+    url: `${SITE_URL}/sitemap-page`,
     mainEntity: {
       "@type": "ItemList",
       "name": "CUMI Platform Pages",

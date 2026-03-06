@@ -27,7 +27,7 @@ return (
             <Card
               bordered={false}
               hoverable
-              className="shadow d-flex flex-column align-items-center justify-content-center bg-white"
+              className="shadow d-flex flex-column align-items-center justify-content-center bg-white why-cumi-card"
             >
               <p className="fw-bold text-center">{t('about_note.expertise.title')}</p>
               <GrUserExpert
@@ -44,11 +44,11 @@ return (
             </Card>
           </div>
 
-<div className="col-sm-6 col-lg-3 p-3">
+          <div className="col-sm-6 col-lg-3 p-3">
             <Card
               bordered={false}
               hoverable
-              className="shadow d-flex flex-column align-items-center justify-content-center bg-white"
+              className="shadow d-flex flex-column align-items-center justify-content-center bg-white why-cumi-card"
             >
               <p className="fw-bold text-center">{t('about_note.innovation.title')}</p>
               <MdLightbulbOutline
@@ -62,11 +62,11 @@ return (
             </Card>
           </div>
 
-<div className="col-sm-6 col-lg-3 p-3">
+          <div className="col-sm-6 col-lg-3 p-3">
             <Card
               bordered={false}
               hoverable
-              className="shadow d-flex flex-column align-items-center justify-content-center bg-white"
+              className="shadow d-flex flex-column align-items-center justify-content-center bg-white why-cumi-card"
             >
               <p className="fw-bold text-center">{t('about_note.collaboration.title')}</p>
               <IoPeopleOutline
@@ -79,11 +79,11 @@ return (
             </Card>
           </div>
 
-<div className="col-sm-6 col-lg-3 p-3">
+          <div className="col-sm-6 col-lg-3 p-3">
             <Card
               bordered={false}
               hoverable
-              className="shadow d-flex flex-column align-items-center justify-content-center bg-white"
+              className="shadow d-flex flex-column align-items-center justify-content-center bg-white why-cumi-card"
             >
               <p className="fw-bold text-center">{t('about_note.excellence.title')}</p>
               <IoMedalOutline

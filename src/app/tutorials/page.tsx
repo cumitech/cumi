@@ -68,7 +68,7 @@ export async function generateMetadata(): Promise<Metadata> {
   schema: generateStructuredData('webpage', {
     name: "CUMI Tutorials",
     description: "Comprehensive tutorials and learning guides for software development",
-    url: "`${SITE_URL}/tutorials`",
+    url: `${SITE_URL}/tutorials`,
     mainEntity: {
       "@type": "CollectionPage",
       "name": "Tutorials",

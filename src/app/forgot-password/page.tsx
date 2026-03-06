@@ -17,7 +17,7 @@ export const metadata: Metadata = generatePageMetadata({
     "email verification",
     "user authentication",
   ],
-  url: "`${SITE_URL}/forgot-password`",
+  url: `${SITE_URL}/forgot-password`,
   robots: { index: false, follow: false },
   alternates: { canonical: `${SITE_URL}/forgot-password` },
   image: defaultImages[0],
@@ -31,7 +31,7 @@ export const metadata: Metadata = generatePageMetadata({
     images: [defaultImages[0]],
     siteName: "CUMI",
     locale: "en_US",
-    url: "`${SITE_URL}/forgot-password`",
+    url: `${SITE_URL}/forgot-password`,
   },
   twitter: {
     card: "summary_large_image",

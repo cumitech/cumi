@@ -3,7 +3,7 @@ import { SITE_URL } from "@constants/api-url";
 
 /**
  * robots.txt for SEO.
- * Do NOT disallow /_next/ — Googlebot needs JS/CSS to render the page.
+ * Do NOT disallow /_next/ because Googlebot needs JS/CSS to render the page.
  * @see https://developers.google.com/search/docs/essentials/technical
  * @see https://www.adeelhere.com/blog/2025-12-09-complete-nextjs-seo-guide-from-zero-to-hero
  */

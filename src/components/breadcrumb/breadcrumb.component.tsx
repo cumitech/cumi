@@ -67,11 +67,11 @@ export default function Breadcrumb({
   };
   
   return (
-    <>
+    <div className="breadcrumb-wrapper">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(structuredData)
+          __html: JSON.stringify(structuredData),
         }}
       />
       <nav aria-label="Breadcrumb" className="breadcrumb-nav">
@@ -84,12 +84,12 @@ export default function Breadcrumb({
               </Link>
             </li>
           )}
-          
+
           {breadcrumbItems.map((item, index) => (
-            <li 
-              key={index} 
-              className={`breadcrumb-item ${!item.href ? 'active' : ''}`}
-              aria-current={!item.href ? 'page' : undefined}
+            <li
+              key={index}
+              className={`breadcrumb-item ${!item.href ? "active" : ""}`}
+              aria-current={!item.href ? "page" : undefined}
             >
               {item.href ? (
                 <Link href={item.href} className="text-decoration-none">
@@ -102,6 +102,6 @@ export default function Breadcrumb({
           ))}
         </ol>
       </nav>
-    </>
+    </div>
   );
 }

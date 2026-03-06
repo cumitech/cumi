@@ -14,7 +14,6 @@ import {
 } from "../lib/seo";
 import { SITE_URL } from "@constants/api-url";
 import Script from "next/script";
-import ServiceWorkerProvider from "@components/service-worker-provider";
 import TawkChat from "@components/shared/tawk.component";
 import SchemaRenderer from "@components/shared/schema-renderer.component";
 
@@ -143,12 +142,6 @@ export default async function RootLayout({
         />
         <link rel="shortcut icon" href="/favicon.ico" />
 
-        {/* PWA manifest */}
-        <link rel="manifest" href="/manifest.json" />
-        <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="application-name" content="CUMI" />
-        <meta name="apple-mobile-web-app-title" content="CUMI" />
         {/* Apple Touch Icons */}
         <link
           rel="apple-touch-icon"
@@ -223,7 +216,6 @@ export default async function RootLayout({
         />
 
         {/* Manifest and Theme */}
-        <link rel="manifest" href="/manifest.json" />
         <meta name="msapplication-TileColor" content="#ffffff" />
         <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
         <link
@@ -262,15 +254,13 @@ export default async function RootLayout({
             style={{ display: "none", visibility: "hidden" }}
           ></iframe>
         </noscript>
-        <ServiceWorkerProvider>
-          <Suspense fallback={null}>
-            <NextIntlClientProvider locale={locale} messages={messages}>
-              <RefineContext defaultMode={defaultMode}>
-                {children}
-              </RefineContext>
-            </NextIntlClientProvider>
-          </Suspense>
-        </ServiceWorkerProvider>
+        <Suspense fallback={null}>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <RefineContext defaultMode={defaultMode}>
+              {children}
+            </RefineContext>
+          </NextIntlClientProvider>
+        </Suspense>
 
         <script
           src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"

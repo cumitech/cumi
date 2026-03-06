@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import { getPageMetadata } from '@utils/meta-data-utils';
 import { SITE_URL } from '@constants/api-url';
 
 const url = SITE_URL;
@@ -383,32 +382,10 @@ export function generateStructuredData(type: string, data: any) {
   }
 }
 
-/**
- * Generate dynamic metadata for a page using the meta-data system
- * This function will check if custom meta data exists for the page,
- * and fall back to generated metadata if not found
- */
 export async function generateDynamicPageMetadata(
   pagePath: string,
   fallbackOptions: PageMetadataOptions
 ): Promise<Metadata> {
-  try {
-    // Try to get custom meta data first
-    const dynamicMetadata = await getPageMetadata(
-      pagePath,
-      fallbackOptions.title,
-      fallbackOptions.description
-    );
-    
-    // If we got custom metadata, use it
-    if (dynamicMetadata) {
-      return dynamicMetadata;
-    }
-  } catch (error) {
-    console.error('Error getting dynamic metadata:', error);
-  }
-  
-  // Fall back to generating metadata with the provided options
   return generatePageMetadata(fallbackOptions);
 }
 

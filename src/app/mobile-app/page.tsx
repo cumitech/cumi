@@ -24,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "online learning mobile",
     "mobile course platform"
   ],
-  url: "`${SITE_URL}/mobile-app`",
+  url: `${SITE_URL}/mobile-app`,
   image: defaultImages[0],
   images: [
     {
@@ -41,7 +41,7 @@ export async function generateMetadata(): Promise<Metadata> {
     images: [defaultImages[0]],
     siteName: "CUMI",
     locale: "en_US",
-    url: "`${SITE_URL}/mobile-app`"
+    url: `${SITE_URL}/mobile-app`
   },
   twitter: {
     card: "summary_large_image",

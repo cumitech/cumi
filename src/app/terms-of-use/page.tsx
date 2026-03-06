@@ -19,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "legal policy",
     "terms and conditions"
   ],
-  url: "`${SITE_URL}/terms-of-use`",
+  url: `${SITE_URL}/terms-of-use`,
   image: defaultImages[0],
   images: [
     {
@@ -36,7 +36,7 @@ export async function generateMetadata(): Promise<Metadata> {
     images: [defaultImages[0]],
     siteName: "CUMI",
     locale: "en_US",
-    url: "`${SITE_URL}/terms-of-use`"
+    url: `${SITE_URL}/terms-of-use`
   },
   twitter: {
     card: "summary_large_image",

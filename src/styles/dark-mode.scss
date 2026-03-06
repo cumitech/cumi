@@ -27,42 +27,55 @@
     color: var(--cumi-text-secondary);
   }
   /* ---- App nav (Bootstrap navbar) ---- */
-  .app-nav {
-    background: var(--cumi-bg-secondary) !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
-    border-bottom-color: var(--cumi-border-light) !important;
+  .cumi-main-nav {
+    background: linear-gradient(
+      180deg,
+      var(--cumi-bg-secondary) 0%,
+      var(--cumi-bg-primary) 100%
+    ) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+    border-bottom: 1px solid var(--cumi-border-light) !important;
   }
 
-  .app-nav .nav-link {
+  .cumi-nav-link {
     color: var(--cumi-text-secondary) !important;
   }
 
-  .app-nav .nav-link:hover,
-  .app-nav .nav-link:focus {
+  .cumi-nav-link:hover {
     color: #22c55e !important;
     background: rgba(34, 197, 94, 0.12) !important;
   }
 
-  .app-nav .nav-link.active {
+  .cumi-nav-link-active {
     color: #22c55e !important;
-    background: rgba(34, 197, 94, 0.15) !important;
-    border-color: rgba(34, 197, 94, 0.3) !important;
+    background: rgba(34, 197, 94, 0.18) !important;
+    box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.45);
   }
 
-  .app-nav a[href="/login"],
-  .app-nav .ant-space a {
+  .cumi-nav-login {
     color: var(--cumi-text-secondary) !important;
   }
 
-  .app-nav .ant-tooltip .anticon,
-  .app-nav .navbar-toggler {
+  .cumi-nav-theme-toggle {
     color: var(--cumi-text-secondary) !important;
-    border-color: var(--cumi-border-medium) !important;
   }
 
-  .app-nav .navbar-toggler-icon {
-    filter: invert(1);
-    opacity: 0.85;
+  .cumi-nav-hamburger {
+    background: rgba(15, 23, 42, 0.85);
+    border-color: var(--cumi-border-medium);
+    color: var(--cumi-text-secondary);
+  }
+
+  .cumi-nav-hamburger:hover {
+    background: rgba(15, 23, 42, 0.95);
+  }
+
+  .cumi-nav-drawer .ant-drawer-body {
+    background: var(--cumi-bg-secondary);
+  }
+
+  .cumi-nav-drawer .cumi-nav-link {
+    color: var(--cumi-text-secondary) !important;
   }
 
   /* ---- Bootstrap navbar (global) ---- */
@@ -285,6 +298,21 @@
     background: var(--cumi-teal) !important;
     border-color: var(--cumi-teal) !important;
     color: var(--cumi-text-white) !important;
+  }
+
+  /* Topbar in dark mode */
+  .cumi-topbar {
+    background: linear-gradient(
+      90deg,
+      var(--cumi-bg-secondary) 0%,
+      var(--cumi-bg-primary) 60%,
+      #020617 100%
+    ) !important;
+    color: #e5e7eb !important;
+  }
+
+  .cumi-topbar a {
+    color: #bbf7d0 !important;
   }
 
   /* ---- CTA: "Ready to scale your business?" (#work-with-us) ---- */

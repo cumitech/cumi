@@ -255,7 +255,7 @@ export default function ReferralsSidebar({
           borderRadius: '0 0 16px 16px',
         }}>
           <Text type="secondary" style={{ fontSize: 11 }}>
-            Affiliate links — I earn a small commission at no extra cost to you
+            Some links are affiliate links; I may earn a small commission at no extra cost to you.
           </Text>
         </div>
       </Card>

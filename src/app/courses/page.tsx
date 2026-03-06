@@ -30,7 +30,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "business automation training",
     "technology certification"
   ],
-  url: "`${SITE_URL}/courses`",
+  url: `${SITE_URL}/courses`,
   image: defaultImages[0],
   images: [
     {
@@ -53,7 +53,7 @@ export async function generateMetadata(): Promise<Metadata> {
     images: [defaultImages[0], defaultImages[1]],
     siteName: "CUMI",
     locale: "en_US",
-    url: "`${SITE_URL}/courses`"
+    url: `${SITE_URL}/courses`
   },
   twitter: {
     card: "summary_large_image",
@@ -67,7 +67,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "@type": "CollectionPage",
     "name": "CUMI Software Development Courses",
     "description": "Comprehensive software development courses and technology training programs",
-    "url": "`${SITE_URL}/courses`",
+    "url": `${SITE_URL}/courses`,
     "mainEntity": {
       "@type": "ItemList",
       "name": "Software Development Courses",
@@ -83,7 +83,7 @@ export default function CoursesPage() {
     "@type": "CollectionPage",
     "name": "CUMI Software Development Courses",
     "description": "Comprehensive software development courses and technology training programs",
-    "url": "`${SITE_URL}/courses`",
+    "url": `${SITE_URL}/courses`,
     "mainEntity": {
       "@type": "ItemList",
       "name": "Software Development Courses",

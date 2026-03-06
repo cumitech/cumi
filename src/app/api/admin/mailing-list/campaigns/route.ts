@@ -7,6 +7,9 @@ import { EmailCampaignRepository } from "@data/repositories/impl/email-campaign.
 const emailCampaignRepository = new EmailCampaignRepository();
 const emailCampaignUseCase = new EmailCampaignUseCase(emailCampaignRepository);
 
+// This route depends on request headers/session, so force dynamic rendering
+export const dynamic = "force-dynamic";
+
 export async function GET(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);

@@ -29,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "tech industry insights",
     "development best practices writers"
   ],
-  url: "`${SITE_URL}/authors`",
+  url: `${SITE_URL}/authors`,
   image: defaultImages[1],
   images: [
     {
@@ -52,7 +52,7 @@ export async function generateMetadata(): Promise<Metadata> {
     images: [defaultImages[1], defaultImages[2]],
     siteName: "CUMI",
     locale: "en_US",
-    url: "`${SITE_URL}/authors`"
+    url: `${SITE_URL}/authors`
   },
   twitter: {
     card: "summary_large_image",
@@ -66,7 +66,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "@type": "CollectionPage",
     "name": "CUMI Technology Blog Authors",
     "description": "Collection of expert authors and contributors writing about technology, software development, and digital transformation",
-    "url": "`${SITE_URL}/authors`",
+    "url": `${SITE_URL}/authors`,
     "mainEntity": {
       "@type": "ItemList",
       "name": "Technology Blog Authors",

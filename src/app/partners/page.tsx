@@ -19,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
     "strategic alliances",
     "partner network"
   ],
-  url: "`${SITE_URL}/partners`",
+  url: `${SITE_URL}/partners`,
   image: defaultImages[0],
   images: [
     {
@@ -36,7 +36,7 @@ export async function generateMetadata(): Promise<Metadata> {
     images: [defaultImages[0]],
     siteName: "CUMI",
     locale: "en_US",
-    url: "`${SITE_URL}/partners`"
+    url: `${SITE_URL}/partners`
   },
   twitter: {
     card: "summary_large_image",
@@ -48,7 +48,7 @@ export async function generateMetadata(): Promise<Metadata> {
   schema: generateStructuredData("organization", {
     name: "CUMI Partners",
     description: "CUMI's network of trusted partners and collaborators across the technology industry",
-    url: "`${SITE_URL}/partners`"
+    url: `${SITE_URL}/partners`
   }),
   });
 }
@@ -57,7 +57,7 @@ export default function PartnersPage() {
   const partnersSchema = generateStructuredData("organization", {
     name: "CUMI Partners",
     description: "CUMI's network of trusted partners and collaborators across the technology industry",
-    url: "`${SITE_URL}/partners`"
+    url: `${SITE_URL}/partners`
   });
 
   return (
