@@ -3,9 +3,9 @@
 import React from "react";
 import { Card, Row, Col, Statistic, Descriptions, Tag, Spin, Typography } from "antd";
 import { BookOutlined, ClockCircleOutlined, TrophyOutlined, FileTextOutlined } from "@ant-design/icons";
-import EnhancedBreadcrumb from "@components/shared/enhanced-breadcrumb/enhanced-breadcrumb.component";
+import EnhancedBreadcrumb from "../../../../components/shared/enhanced-breadcrumb/enhanced-breadcrumb.component";
 import { useParams } from "next/navigation";
-import { useGetSingleAssignmentQuery } from "@store/api/assignment_api";
+import { useGetSingleAssignmentQuery } from "../../../../store/api/assignment_api";
 
 const { Text } = Typography;
 

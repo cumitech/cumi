@@ -1,7 +1,7 @@
 "use client";
 
-import PageBreadCrumbs from "@components/shared/page-breadcrumb/page-breadcrumb.component";
-import ImageUploadField from "@components/shared/image-upload-field.component";
+import PageBreadCrumbs from "../../../../../../components/shared/page-breadcrumb/page-breadcrumb.component";
+import ImageUploadField from "../../../../../../components/shared/image-upload-field.component";
 import { Edit, useForm } from "@refinedev/antd";
 import { Form, Input } from "antd";
 
