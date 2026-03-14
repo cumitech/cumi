@@ -27,14 +27,16 @@ export async function GET() {
       day: "numeric",
     });
 
+    const documentElement = React.createElement(ServicesGuideDocument, {
+      services: forPdf,
+      generatedDate,
+    });
+    // ServicesGuideDocument renders <Document> at root; cast satisfies @react-pdf typings
     const pdf = await renderToBuffer(
-      React.createElement(ServicesGuideDocument, {
-        services: forPdf,
-        generatedDate,
-      })
+      documentElement as Parameters<typeof renderToBuffer>[0]
     );
 
-    return new NextResponse(pdf, {
+    return new NextResponse(new Uint8Array(pdf), {
       status: 200,
       headers: {
         "Content-Type": "application/pdf",
