@@ -25,6 +25,8 @@ import {
   Referral,
   ReferralClick,
   MetaData,
+  Testimonial,
+  TeamMember,
 } from "@data/entities/index";
 
 import { IBanner } from "@domain/models/banner.model";
@@ -43,6 +45,8 @@ import { IService } from "@domain/models/service.model";
 import { ITag } from "@domain/models/tag";
 import { IUser } from "@domain/models/user";
 import { IPartner } from "@domain/models/partner.model";
+import { ITestimonial } from "@domain/models/testimonial.model";
+import { ITeamMember } from "@domain/models/team-member.model";
 import { IModule } from "@domain/models/module.model";
 import { IAssignment } from "@domain/models/assignment.model";
 import { ICourseProgress } from "@domain/models/course-progress.model";
@@ -263,6 +267,26 @@ export class PartnerMapper {
       return entity;
     });
     return _partners;
+  }
+}
+
+export class TestimonialMapper {
+  toDTO(t: InstanceType<typeof Testimonial>): ITestimonial {
+    const entity = (t as any).toJSON?.() ?? t.get?.();
+    return entity as ITestimonial;
+  }
+  toDTOs(list: InstanceType<typeof Testimonial>[]): ITestimonial[] {
+    return list.map((t) => this.toDTO(t));
+  }
+}
+
+export class TeamMemberMapper {
+  toDTO(m: InstanceType<typeof TeamMember>): ITeamMember {
+    const entity = (m as any).toJSON?.() ?? (m as any).get?.();
+    return entity as ITeamMember;
+  }
+  toDTOs(list: InstanceType<typeof TeamMember>[]): ITeamMember[] {
+    return list.map((m) => this.toDTO(m));
   }
 }
 

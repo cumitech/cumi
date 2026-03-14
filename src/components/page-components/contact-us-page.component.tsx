@@ -28,6 +28,7 @@ import {
   validatePhoneNumber,
   normalizePhoneNumber,
 } from "@utils/country-codes";
+import { trackFormGoal } from "@lib/analytics";
 
 const { TextArea } = Input;
 const { Title, Paragraph, Text } = Typography;
@@ -41,6 +42,7 @@ export default function ContactUsPageComponent() {
   const handleSubmit = async (values: any) => {
     setLoading(true);
     try {
+      const recaptchaToken = await (await import("@lib/recaptcha-client")).getRecaptchaToken("CONTACT_FORM");
       const countryCode = values.countryCode || "CM";
       const payload = {
         ...values,
@@ -48,6 +50,8 @@ export default function ContactUsPageComponent() {
           ? normalizePhoneNumber(countryCode, values.phone)
           : values.phone,
         countryCode,
+        recaptchaToken,
+        recaptchaAction: "CONTACT_FORM",
       };
       const response = await fetch("/api/contact-messages", {
         method: "POST",
@@ -69,6 +73,7 @@ export default function ContactUsPageComponent() {
         placement: "topRight",
         duration: 4,
       });
+      trackFormGoal("contact_form", { page: "contact-us" });
       form.resetFields();
     } catch (error) {
       console.error("Error sending message:", error);

@@ -2914,7 +2914,7 @@ const LearningPage: React.FC<LearningPageProps> = () => {
                             fontSize: "16px",
                           }}
                         >
-                          🚧
+                          (Under construction)
                         </div>
                         <Text style={{ fontSize: "16px", color: "#5a6c7d" }}>
                           The course content is still being prepared
@@ -3574,7 +3574,7 @@ const LearningPage: React.FC<LearningPageProps> = () => {
                                     fontWeight: "bold",
                                   }}
                                 >
-                                  ✗ Your Answer
+                                  Your Answer
                                 </span>
                               )}
                               {isUserAnswer && isCorrect && (

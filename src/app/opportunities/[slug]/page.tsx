@@ -114,7 +114,7 @@ export async function generateMetadata({ params }: OpportunityDetailPageProps): 
         "@type": "Organization",
         "name": "CUMI",
         "url": SITE_URL,
-        "logo": `${SITE_URL}/cumi-green.png`
+        "logo": `${SITE_URL}/logo-shadow-png.png`
       },
       "jobLocation": opportunity.location ? {
         "@type": "Place",
@@ -154,7 +154,7 @@ export default async function OpportunityDetailPage({ params }: OpportunityDetai
       "@type": "Organization",
       "name": "CUMI",
       "url": SITE_URL,
-      "logo": `${SITE_URL}/cumi-green.png`
+      "logo": `${SITE_URL}/logo-shadow-png.png`
     },
     "jobLocation": opportunity.location ? {
       "@type": "Place",

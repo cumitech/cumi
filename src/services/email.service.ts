@@ -51,7 +51,7 @@ class EmailService {
     });
     this.domain = process.env.MAILGUN_DOMAIN || "mail.cumi.dev";
     this.baseUrl = SITE_URL;
-    this.logoUrl = `${this.baseUrl}/cumi-green.png`;
+    this.logoUrl = `${this.baseUrl}/logo-shadow-png.png`;
     
     logger.info("Email Service Initialized:", {
       domain: this.domain,

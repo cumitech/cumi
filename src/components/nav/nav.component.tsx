@@ -55,14 +55,24 @@ export const AppNav: React.FC<Props> = ({ logoPath }) => {
     }
   }, []);
 
-  const primaryLinks = [
+  const primaryLinks: Array<
+    | { path: string; label: string }
+    | { type: "dropdown"; label: string; children: Array<{ path: string; label: string }> }
+  > = [
     { path: "/", label: t("nav.welcome") },
     { path: "/our-services", label: t("nav.services") },
-    { path: "/projects", label: t("nav.projects") },
-    { path: "/tutorials", label: t("nav.tutorials") },
-    { path: "/opportunities", label: t("nav.opportunities") },
-    { path: "/recommendations", label: t("nav.tools") },
-    { path: "/about-us", label: t("nav.about-us") },
+    { path: "/blog-posts", label: t("nav.blog-posts") },
+    { path: "/projects", label: t("nav.our_work") },
+    { path: "/pricing", label: t("nav.pricing") },
+    {
+      type: "dropdown",
+      label: t("nav.our_company"),
+      children: [
+        { path: "/about-us", label: t("nav.about-us") },
+        { path: "/partners", label: t("nav.partners") },
+        { path: "/our-team", label: t("nav.our_team") },
+      ],
+    },
     { path: "/contact-us", label: t("nav.contact-us") },
   ];
 
@@ -207,9 +217,9 @@ export const AppNav: React.FC<Props> = ({ logoPath }) => {
         <div className="cumi-main-nav-inner">
           <Link href="/" className="cumi-nav-logo">
             <Image
-              src={`${logoPath || "/"}cumi-green.png`}
-              height={48}
-              width={120}
+              src={`${logoPath || "/"}logo-shadow-png.png`}
+              height={64}
+              width={180}
               quality={100}
               alt="CUMI Logo"
               priority
@@ -217,18 +227,51 @@ export const AppNav: React.FC<Props> = ({ logoPath }) => {
           </Link>
 
           <nav className="cumi-nav-links cumi-nav-links-desktop">
-            {primaryLinks.map(({ path, label }) => (
-              <Link
-                key={path}
-                href={path}
-                className={`cumi-nav-link ${
-                  pathname === path ? "cumi-nav-link-active" : ""
-                }`}
-                onClick={handleNavClick}
-              >
-                {label}
-              </Link>
-            ))}
+            {primaryLinks.map((item, idx) =>
+              "type" in item && item.type === "dropdown" ? (
+                <Dropdown
+                  key={idx}
+                  menu={{
+                    items: item.children.map(({ path, label }) => ({
+                      key: path,
+                      label: (
+                        <Link href={path} onClick={handleNavClick}>
+                          {label}
+                        </Link>
+                      ),
+                    })),
+                    style: {
+                      borderRadius: 8,
+                      boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+                      minWidth: 160,
+                    },
+                  }}
+                  placement="bottomLeft"
+                >
+                  <span
+                    className={`cumi-nav-link ${
+                      item.children.some((c) => pathname === c.path)
+                        ? "cumi-nav-link-active"
+                        : ""
+                    }`}
+                    style={{ cursor: "pointer" }}
+                  >
+                    {item.label}
+                  </span>
+                </Dropdown>
+              ) : (
+                <Link
+                  key={"path" in item ? item.path : idx}
+                  href={"path" in item ? item.path : "#"}
+                  className={`cumi-nav-link ${
+                    pathname === ("path" in item ? item.path : "") ? "cumi-nav-link-active" : ""
+                  }`}
+                  onClick={handleNavClick}
+                >
+                  {"path" in item ? item.label : ""}
+                </Link>
+              )
+            )}
           </nav>
 
           <div className="cumi-nav-actions cumi-nav-actions-desktop">
@@ -318,18 +361,39 @@ export const AppNav: React.FC<Props> = ({ logoPath }) => {
         }}
       >
         <nav className="cumi-nav-links-mobile">
-          {primaryLinks.map(({ path, label }) => (
-            <Link
-              key={path}
-              href={path}
-              className={`cumi-nav-link ${
-                pathname === path ? "cumi-nav-link-active" : ""
-              }`}
-              onClick={handleNavClick}
-            >
-              {label}
-            </Link>
-          ))}
+          {primaryLinks.map((item, idx) =>
+            "type" in item && item.type === "dropdown" ? (
+              <div key={idx} style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                <span style={{ fontSize: "12px", color: "#64748b", fontWeight: 600, padding: "4px 0" }}>
+                  {item.label}
+                </span>
+                {item.children.map(({ path, label }) => (
+                  <Link
+                    key={path}
+                    href={path}
+                    className={`cumi-nav-link ${
+                      pathname === path ? "cumi-nav-link-active" : ""
+                    }`}
+                    style={{ paddingLeft: 16 }}
+                    onClick={handleNavClick}
+                  >
+                    {label}
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <Link
+                key={"path" in item ? item.path : idx}
+                href={"path" in item ? item.path : "#"}
+                className={`cumi-nav-link ${
+                  pathname === ("path" in item ? item.path : "") ? "cumi-nav-link-active" : ""
+                }`}
+                onClick={handleNavClick}
+              >
+                {"path" in item ? item.label : ""}
+              </Link>
+            )
+          )}
         </nav>
 
         <div className="cumi-nav-drawer-footer">

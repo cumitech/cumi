@@ -14,8 +14,9 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const { id } = params;
   try {
-    const quiz = await quizUseCase.getQuizById(params.id);
+    const quiz = await quizUseCase.getQuizById(id);
     
     if (!quiz) {
       return NextResponse.json(
@@ -49,6 +50,7 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const { id } = params;
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user) {
@@ -80,7 +82,7 @@ export async function PUT(
       );
     }
 
-    const existingQuiz = await quizUseCase.getQuizById(params.id);
+    const existingQuiz = await quizUseCase.getQuizById(id);
     if (!existingQuiz) {
       return NextResponse.json(
         {
@@ -117,6 +119,7 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const { id } = params;
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user) {
@@ -131,7 +134,7 @@ export async function DELETE(
   }
 
   try {
-    await quizUseCase.deleteQuiz(params.id);
+    await quizUseCase.deleteQuiz(id);
     
     return NextResponse.json({
       data: null,

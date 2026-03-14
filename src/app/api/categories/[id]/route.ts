@@ -48,7 +48,7 @@ export async function PATCH(
       );
     }
 
-    const id = params.id;
+    const { id } = params;
     const obj: ICategory = {
       ...emptyCategory,
       ...dto.toData(),
@@ -84,7 +84,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const { id } = params;
 
     const category = await categoryUseCase.getCategoryById(id);
     if (!category) {
@@ -110,7 +110,7 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const { id } = params;
 
     await categoryUseCase.deleteCategory(id);
 

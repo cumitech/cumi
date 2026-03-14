@@ -9,8 +9,9 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const { id: idParam } = params;
+  const id = parseInt(idParam);
   try {
-    const id = parseInt(params.id);
     const team = await teamUseCase.getById(id);
     
     if (!team) {
@@ -35,8 +36,9 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const { id: idParam } = params;
+  const id = parseInt(idParam);
   try {
-    const id = parseInt(params.id);
     const body = await request.json();
     
     const team = await teamUseCase.update(id, body);
@@ -63,8 +65,9 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const { id: idParam } = params;
+  const id = parseInt(idParam);
   try {
-    const id = parseInt(params.id);
     const success = await teamUseCase.delete(id);
     
     if (!success) {

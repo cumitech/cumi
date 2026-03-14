@@ -5,6 +5,7 @@ import { Button, Space, Carousel } from "antd";
 import useWindowSize from "@hooks/windows-resize/window-resize.hook";
 import Image from "next/image";
 import { useTranslation } from "@contexts/translation.context";
+import { trackCtaClick } from "@lib/analytics";
 
 export const AppHero = () => {
   const { width } = useWindowSize();
@@ -50,18 +51,19 @@ export const AppHero = () => {
           <Button
             className="primary-btn shadow-sm"
             shape="round"
-            href="/our-services"
+            href="/contact-us"
             size="large"
+            onClick={() => trackCtaClick("hero_get_started", "/contact-us")}
           >
-            {t("hero.hire_services")}
+            {t("cta.get_started")}
           </Button>
           <Button
             size="large"
-            href="/about-us"
+            href="/our-services"
             className="default-btn fw-bold"
             shape="round"
           >
-            {t("hero.our_mission")}
+            {t("hero.hire_services")}
           </Button>
         </Space>
       </div>

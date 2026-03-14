@@ -49,7 +49,7 @@ export async function PATCH(
       );
     }
 
-    const id = params.id;
+    const { id } = params;
     const obj: IPost = {
       ...emptyPost,
       ...dto.toData(),
@@ -86,7 +86,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const { id } = params;
 
     const post = await postUseCase.getPostById(id);
     if (!post) {
@@ -115,7 +115,7 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const { id } = params;
 
     await postUseCase.deletePost(id);
 

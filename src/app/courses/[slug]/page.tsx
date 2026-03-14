@@ -108,7 +108,7 @@ export async function generateMetadata({ params }: CourseDetailPageProps): Promi
         "@type": "Organization",
         "name": "CUMI",
         "url": SITE_URL,
-        "logo": `${SITE_URL}/img/cumi-green.png`
+        "logo": `${SITE_URL}/img/logo-shadow-png.png`
       },
       "courseMode": course.isOnline ? "online" : "blended",
       "educationalLevel": course.difficulty || "beginner",
@@ -153,7 +153,7 @@ export default async function CourseDetailPage({ params }: CourseDetailPageProps
       "@type": "Organization",
       "name": "CUMI",
       "url": SITE_URL,
-      "logo": `${SITE_URL}/img/cumi-green.png`
+      "logo": `${SITE_URL}/img/logo-shadow-png.png`
     },
     "courseMode": course.isOnline ? "online" : "blended",
     "educationalLevel": course.difficulty || "beginner",

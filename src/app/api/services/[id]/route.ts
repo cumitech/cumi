@@ -49,7 +49,7 @@ export async function PATCH(
       );
     }
 
-    const id = params.id;
+    const { id } = params;
 
     const obj: IService = {
       ...emptyService,
@@ -88,7 +88,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const { id } = params;
 
     const service = await serviceUseCase.getServiceById(id);
     if (!service) {
@@ -114,7 +114,7 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const { id } = params;
 
     await serviceUseCase.deleteService(id);
 

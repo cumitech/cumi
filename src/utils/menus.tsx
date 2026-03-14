@@ -106,6 +106,19 @@ export const useMenu = () => {
       },
       icon: <FcEditImage />,
     },
+    {
+      name: "testimonials",
+      list: "/dashboard/testimonials",
+      create: "/dashboard/testimonials/create",
+      edit: "/dashboard/testimonials/edit/:id",
+      parentName: "settings",
+      meta: {
+        canAccess: ["admin"],
+        label: "Testimonials",
+        parent: "settings",
+      },
+      icon: <FiStar />,
+    },
 
     {
       name: "events",
@@ -306,6 +319,18 @@ export const useMenu = () => {
       meta: {
         canAccess: ["admin"],
         label: "Partners",
+      },
+      icon: <FiUsers />,
+    },
+    {
+      name: "team-members",
+      list: "/dashboard/team-members",
+      create: "/dashboard/team-members/create",
+      edit: "/dashboard/team-members/edit/:id",
+      show: "/dashboard/team-members/show/:id",
+      meta: {
+        canAccess: ["admin"],
+        label: "Our team",
       },
       icon: <FiUsers />,
     },

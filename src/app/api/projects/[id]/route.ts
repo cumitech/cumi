@@ -49,7 +49,7 @@ export async function PATCH(
       );
     }
 
-    const id = params.id;
+    const { id } = params;
     const obj: IProject = {
       ...emptyProject,
       ...dto.toData(),
@@ -86,7 +86,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const { id } = params;
 
     const project = await projectUseCase.getProjectById(id);
     if (!project) {
@@ -112,7 +112,7 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const { id } = params;
 
     await projectUseCase.deleteProject(id);
 

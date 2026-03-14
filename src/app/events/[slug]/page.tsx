@@ -124,7 +124,7 @@ export async function generateMetadata({ params }: EventDetailPageProps): Promis
         "@type": "Organization",
         "name": "CUMI",
         "url": SITE_URL,
-        "logo": `${SITE_URL}/img/cumi-green.png`
+        "logo": `${SITE_URL}/img/logo-shadow-png.png`
       },
       "offers": event.price ? {
         "@type": "Offer",
@@ -165,7 +165,7 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
       "@type": "Organization",
       "name": "CUMI",
       "url": SITE_URL,
-      "logo": `${SITE_URL}/cumi-green.png`
+      "logo": `${SITE_URL}/logo-shadow-png.png`
     },
     "offers": event.price ? {
       "@type": "Offer",

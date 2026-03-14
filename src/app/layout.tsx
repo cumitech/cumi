@@ -102,7 +102,7 @@ export default async function RootLayout({
 
         <link
           rel="preload"
-          href={`${SITE_URL}/cumi-green.png`}
+          href={`${SITE_URL}/logo-shadow-png.png`}
           as="image"
           type="image/jpeg"
           fetchPriority="high"
@@ -118,13 +118,15 @@ export default async function RootLayout({
         <link rel="preconnect" href="https://wa.me" />
         <link rel="preconnect" href="https://api.whatsapp.com" />
 
-        <meta name="robots" content="index, follow" />
+        <link rel="alternate" hrefLang="en" href={SITE_URL} />
+        <link rel="alternate" hrefLang="fr" href={SITE_URL} />
+        <link rel="alternate" hrefLang="x-default" href={SITE_URL} />
         <meta name="theme-color" content="#15b9a1" />
         <meta name="msapplication-TileColor" content="#15b9a1" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
         <meta
           name="google-site-verification"
-          content="EwAFsxtAXhVOAGglKgaihgaEa3YiI9yB7cOzQc4qBw4"
+          content="-Wd8fKDKl_Wf1PAeTRbtVhGL8aSHeX0UwMXPllDsrsM"
         />
 
         {/* Image optimization hints */}
@@ -224,41 +226,60 @@ export default async function RootLayout({
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
           crossOrigin="anonymous"
         />
-        {/* Google Tag Manager */}
-        <Script id="google-tag-manager" strategy="afterInteractive">
+        {/* reCAPTCHA Enterprise */}
+        <Script
+          src={`https://www.google.com/recaptcha/enterprise.js?render=${
+            process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""
+          }`}
+          strategy="afterInteractive"
+        />
+        {/* Google Analytics (gtag.js) - in head for GA verification */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-NQMGMJT42W"
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
           {`
-          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-          })(window,document,'script','dataLayer','GTM-N98JPQ8F');
-        `}
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-NQMGMJT42W');
+          `}
         </Script>
+        {/* Google Tag Manager */}
+        <Script id="gtm" strategy="afterInteractive">
+          {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-T336R27S');`}
+        </Script>
+        {/* End Google Tag Manager */}
       </head>
 
       <body cz-shortcut-listen="false">
-        <SchemaRenderer 
+        {/* Google Tag Manager (noscript) */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-T336R27S"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+            title="Google Tag Manager"
+          />
+        </noscript>
+        {/* End Google Tag Manager (noscript) */}
+        <SchemaRenderer
           schemas={[
             generateStructuredData("organization", {}),
             generateStructuredData("website", {}),
           ]}
           includeDefaults={false}
         />
-        
-        {/* Google Tag Manager (noscript) */}
-        <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-N98JPQ8F"
-            height="0"
-            width="0"
-            style={{ display: "none", visibility: "hidden" }}
-          ></iframe>
-        </noscript>
+
         <Suspense fallback={null}>
           <NextIntlClientProvider locale={locale} messages={messages}>
-            <RefineContext defaultMode={defaultMode}>
-              {children}
-            </RefineContext>
+            <RefineContext defaultMode={defaultMode}>{children}</RefineContext>
           </NextIntlClientProvider>
         </Suspense>
 

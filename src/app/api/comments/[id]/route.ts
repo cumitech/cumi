@@ -16,8 +16,9 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const { id } = params;
   try {
-    const comment = await commentUseCase.getCommentById(params.id);
+    const comment = await commentUseCase.getCommentById(id);
 
     if (!comment) {
       return NextResponse.json(
@@ -55,6 +56,7 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const { id } = params;
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user) {
@@ -86,7 +88,7 @@ export async function PUT(
       );
     }
 
-    const comment = await commentUseCase.updateComment(params.id, dto, session.user.id);
+    const comment = await commentUseCase.updateComment(id, dto, session.user.id);
 
     if (!comment) {
       return NextResponse.json(
@@ -124,6 +126,7 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const { id } = params;
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user) {
@@ -139,7 +142,7 @@ export async function DELETE(
   }
 
   try {
-    const deleted = await commentUseCase.deleteComment(params.id, session.user.id);
+    const deleted = await commentUseCase.deleteComment(id, session.user.id);
 
     if (!deleted) {
       return NextResponse.json(

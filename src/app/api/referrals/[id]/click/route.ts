@@ -16,6 +16,7 @@ export async function POST(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const { id } = params;
   try {
     const body = await request.json();
     const { userId, sessionId, referrer } = body;
@@ -28,7 +29,7 @@ export async function POST(
 
     // Validate the request data
     const dto = new ReferralClickRequestDto();
-    dto.referralId = params.id;
+    dto.referralId = id;
     dto.userId = userId;
     dto.sessionId = sessionId;
     dto.ipAddress = ipAddress;

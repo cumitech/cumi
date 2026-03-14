@@ -48,7 +48,7 @@ export async function PATCH(
       );
     }
 
-    const id = params.id;
+    const { id } = params;
     const obj: ICourse = {
       ...emptyCourse,
       ...dto.toData(),
@@ -85,7 +85,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const { id } = params;
 
     const course = await courseUseCase.getCourseById(id);
     if (!course) {
@@ -111,7 +111,7 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const { id } = params;
 
     await courseUseCase.deleteCourse(id);
 

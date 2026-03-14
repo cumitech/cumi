@@ -233,6 +233,20 @@ const SitemapPageComponent: React.FC = () => {
           access: "public",
           type: "page",
         },
+        {
+          path: "/cookie-policy",
+          title: "Cookie Policy",
+          description: "Cookie policy and preferences",
+          access: "public",
+          type: "page",
+        },
+        {
+          path: "/pricing",
+          title: "Pricing",
+          description: "Pricing and plans",
+          access: "public",
+          type: "page",
+        },
       ],
     },
   ];
@@ -300,8 +314,7 @@ const SitemapPageComponent: React.FC = () => {
             }}
           >
             Complete overview of all pages, routes, and API endpoints in the
-            CUMI platform. This sitemap provides a comprehensive guide to the
-            application structure and navigation.
+            CUMI platform and how they are organized.
           </Paragraph>
         </div>
 

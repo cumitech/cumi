@@ -29,6 +29,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { THEME } from "@constants/constant";
 import { useTranslation } from "@contexts/translation.context";
+import { trackFormGoal } from "@lib/analytics";
 
 const { Title, Text } = Typography;
 
@@ -55,12 +56,13 @@ export const AppFooter: React.FC<Props> = ({ logoPath }) => {
 
     setLoading(true);
     try {
+      const recaptchaToken = await (await import("@lib/recaptcha-client")).getRecaptchaToken("SUBSCRIBE");
       const response = await fetch("/api/subscribers", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, name: email.split("@")[0] }),
+        body: JSON.stringify({ email, name: email.split("@")[0], recaptchaToken, recaptchaAction: "SUBSCRIBE" }),
       });
 
       const data = await response.json();
@@ -75,6 +77,7 @@ export const AppFooter: React.FC<Props> = ({ logoPath }) => {
         placement: "topRight",
         duration: 4,
       });
+      trackFormGoal("newsletter_signup", { source: "footer" });
       setEmail("");
     } catch (error) {
       console.error("Error subscribing:", error);
@@ -104,7 +107,7 @@ export const AppFooter: React.FC<Props> = ({ logoPath }) => {
               className={`${styles.content_group_logo}  d-none d-lg-block`}
             >
               <Image
-                src={`${logoPath || "/"}cumi-green.png`}
+                src={`${logoPath || "/"}logo-shadow-png.png`}
                 className={styles.logo}
                 height={90}
                 width={160}
@@ -195,10 +198,11 @@ export const AppFooter: React.FC<Props> = ({ logoPath }) => {
                 <RocketOutlined className={styles.titleIcon} />
                 {t("footer.discover")}
               </Title>
+              <Link href="/blog-posts">{t("nav.blog-posts")}</Link>
+              <Link href="/tutorials">{t("nav.tutorials")}</Link>
+              <Link href="/opportunities">{t("nav.opportunities")}</Link>
+              <Link href="/recommendations">{t("nav.tools")}</Link>
               <Link href="/partners">{t("footer.partners")}</Link>
-              <Link href="/authors">{t("footer.authors")}</Link>
-              <Link href="/sitemap-page">{t("footer.sitemap")}</Link>
-              <Link href="/mobile-app">{t("nav.mobile_app")}</Link>
             </Col>
 
             {}
@@ -212,6 +216,7 @@ export const AppFooter: React.FC<Props> = ({ logoPath }) => {
               <Link href="/faqs">{t("footer.faqs")}</Link>
               <Link href="/terms-of-use">{t("footer.terms_of_use")}</Link>
               <Link href="/privacy-policy">{t("footer.privacy_policy")}</Link>
+              <Link href="/cookie-policy">{t("footer.cookie_policy")}</Link>
             </Col>
 
             {}
@@ -236,6 +241,7 @@ export const AppFooter: React.FC<Props> = ({ logoPath }) => {
               md={12}
               lg={6}
               className={styles.content_group_waitlist}
+              id="join_mailing"
             >
               <Title level={5} className={styles.footerTitle}>
                 <MailOutlined className={styles.titleIcon} />

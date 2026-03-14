@@ -48,7 +48,7 @@ export async function PATCH(
       );
     }
 
-    const id = params.id;
+    const { id } = params;
     const obj: IRole = {
       ...emptyRole,
       ...dto.toData(),
@@ -84,7 +84,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const { id } = params;
 
     const role = await roleUseCase.getRoleById(id);
     if (!role) {
@@ -110,7 +110,7 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const { id } = params;
 
     await roleUseCase.deleteRole(id);
 

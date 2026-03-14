@@ -55,6 +55,7 @@ const handleRegistrationSubmit = async (values: any) => {
 
 setIsRegistering(true);
 
+      const recaptchaToken = await (await import("@lib/recaptcha-client")).getRecaptchaToken("EVENT_REGISTRATION");
       const countryCode = values.countryCode || 'CM';
       const registrationData = {
         eventId: event.id,
@@ -66,6 +67,8 @@ setIsRegistering(true);
         company: values.company,
         dietaryRequirements: values.dietaryRequirements,
         additionalNotes: values.additionalNotes,
+        recaptchaToken,
+        recaptchaAction: "EVENT_REGISTRATION",
         // Set admin-controlled defaults
         status: "pending",
         paymentStatus: event.isFree ? "paid" : "pending",

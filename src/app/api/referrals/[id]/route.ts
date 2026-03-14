@@ -21,8 +21,9 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const { id } = params;
   try {
-    const referral = await referralUseCase.getReferralById(params.id);
+    const referral = await referralUseCase.getReferralById(id);
     const data = referral.get({ plain: true });
     const formData = mapDatabaseToForm(data);
     console.log("formData: ", formData)
@@ -57,6 +58,7 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const { id } = params;
   try {
     const session = await getServerSession(authOptions);
 
@@ -95,7 +97,7 @@ export async function PUT(
       );
     }
 
-    const referral = await referralUseCase.updateReferral(params.id, dto);
+    const referral = await referralUseCase.updateReferral(id, dto);
 
     if (!referral) {
       return NextResponse.json(
@@ -146,7 +148,7 @@ export async function DELETE(
       );
     }
 
-    const deleted = await referralUseCase.deleteReferral(params.id);
+    const deleted = await referralUseCase.deleteReferral(id);
 
     if (!deleted) {
       return NextResponse.json(
@@ -179,6 +181,7 @@ export async function PATCH(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const { id } = params;
   try {
     const session = await getServerSession(authOptions);
 
@@ -216,7 +219,7 @@ export async function PATCH(
       );
     }
 
-    const referral = await referralUseCase.updateReferral(params.id, dto);
+    const referral = await referralUseCase.updateReferral(id, dto);
     if (!referral) {
       return NextResponse.json(
         {

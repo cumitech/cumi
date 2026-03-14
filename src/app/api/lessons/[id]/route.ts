@@ -14,8 +14,9 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const { id } = params;
   try {
-    const lesson = await lessonUseCase.getLessonById(params.id);
+    const lesson = await lessonUseCase.getLessonById(id);
 
     if (!lesson) {
       return NextResponse.json(
@@ -49,6 +50,7 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const { id } = params;
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user) {
@@ -80,7 +82,7 @@ export async function PUT(
       );
     }
 
-    const existingLesson = await lessonUseCase.getLessonById(params.id);
+    const existingLesson = await lessonUseCase.getLessonById(id);
     if (!existingLesson) {
       return NextResponse.json(
         {
@@ -94,7 +96,7 @@ export async function PUT(
 
     const updatedLesson = await lessonUseCase.updateLesson({
       ...dto.toUpdateData(existingLesson as any),
-      id: params.id,
+      id: id,
     });
 
     return NextResponse.json({
@@ -118,6 +120,7 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const { id } = params;
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user) {
@@ -132,7 +135,7 @@ export async function DELETE(
   }
 
   try {
-    await lessonUseCase.deleteLesson(params.id);
+    await lessonUseCase.deleteLesson(id);
 
     return NextResponse.json({
       data: null,

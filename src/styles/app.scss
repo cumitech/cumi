@@ -81,6 +81,7 @@ body {
   width: 100vw;
   margin-left: calc(-50vw + 50%);
   margin-right: calc(-50vw + 50%);
+  min-height: 32px;
   background: var(--cumi-gradient-secondary);
   color: #f9fafb;
   font-size: 12px;
@@ -90,7 +91,8 @@ body {
 .cumi-topbar-inner {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 12px;
+  padding: 6px 12px;
+  min-height: 32px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -148,7 +150,8 @@ body {
 .cumi-main-nav-inner {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 6px 16px;
+  padding: 14px 16px;
+  min-height: 92px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -158,6 +161,15 @@ body {
 .cumi-nav-logo {
   display: inline-flex;
   align-items: center;
+  flex-shrink: 0;
+}
+
+.cumi-nav-logo img {
+  height: 64px !important;
+  width: auto !important;
+  max-width: 220px;
+  object-fit: contain;
+  vertical-align: middle;
 }
 
 .cumi-nav-links {
@@ -336,8 +348,13 @@ body {
 /* Tighter navbar height on mobile */
 @media (max-width: 767px) {
   .cumi-main-nav-inner {
-    padding: 6px 12px;
+    padding: 12px 12px;
+    min-height: 72px;
     gap: 8px;
+  }
+
+  .cumi-nav-logo img {
+    height: 52px !important;
   }
 
   .cumi-nav-links-desktop,

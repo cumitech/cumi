@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: ProjectDetailPageProps): Prom
   if (!params?.slug) {
     return generatePageMetadata({
       title: "Project - CUMI Software Development Portfolio",
-      description: "Explore our innovative software development projects and digital solutions.",
+      description: "Software development projects and digital solutions from CUMI.",
       url: `${SITE_URL}/projects`
     });
   }
@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: ProjectDetailPageProps): Prom
   if (!project) {
     return generatePageMetadata({
       title: "Project - CUMI Software Development Portfolio",
-      description: "Explore our innovative software development projects and digital solutions.",
+      description: "Software development projects and digital solutions from CUMI.",
       url: `${SITE_URL}/projects/${params.slug}`
     });
   }
@@ -74,7 +74,7 @@ export async function generateMetadata({ params }: ProjectDetailPageProps): Prom
 
   return generatePageMetadata({
     title: `${project.title} - CUMI Software Development Project`,
-    description: project.description || `Explore ${project.title}, an innovative software development project from CUMI's portfolio. Discover cutting-edge web development solutions, mobile applications, and technology implementations.`,
+    description: project.description || `${project.title} - a software development project from CUMI's portfolio. Web development, mobile applications, and technology implementations.`,
     keywords,
     url: `${SITE_URL}/projects/${params.slug}`,
     image: projectImage,

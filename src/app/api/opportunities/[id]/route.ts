@@ -51,7 +51,7 @@ export async function PATCH(
       );
     }
 
-    const id = params.id;
+    const { id } = params;
     const obj: IOpportunity = {
       ...emptyOpportunity,
       ...dto.toData(),
@@ -87,7 +87,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const { id } = params;
 
     const opportunity = await opportunityUseCase.getOpportunityById(id);
     if (!opportunity) {
@@ -113,7 +113,7 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const { id } = params;
 
     await opportunityUseCase.deleteOpportunity(id);
 

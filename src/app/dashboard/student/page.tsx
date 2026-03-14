@@ -369,7 +369,7 @@ export default function StudentDashboard() {
       open?.({
         type: "success",
         message: "Already Registered",
-        description: "You are already registered for this event! 🎪",
+        description: "You are already registered for this event.",
       });
       return;
     }
@@ -402,7 +402,7 @@ export default function StudentDashboard() {
 
         open?.({
           type: "success",
-          message: "Registration Successful! 🎪",
+          message: "Registration Successful!",
           description: `Successfully registered for "${eventTitle}"!`,
         });
         eventsQueryResult.refetch();
@@ -417,7 +417,7 @@ export default function StudentDashboard() {
           open?.({
             type: "success",
             message: "Already Registered",
-            description: "You are already registered for this event! 🎪",
+            description: "You are already registered for this event.",
           });
         } else {
           open?.({
@@ -1620,7 +1620,7 @@ export default function StudentDashboard() {
           <div style={{ padding: "24px" }}>
             <div style={{ marginBottom: "24px", textAlign: "center" }}>
               <Title level={3} style={{ color: "white", marginBottom: "8px" }}>
-                🎪 My Registered Events
+                My Registered Events
               </Title>
               <Text
                 style={{ color: "rgba(255,255,255,0.9)", fontSize: "16px" }}

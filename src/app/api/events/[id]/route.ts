@@ -48,7 +48,7 @@ export async function PATCH(
         { status: 400 }
       );
     }
-    const id = params.id;
+    const { id } = params;
     const obj: IEvent = {
       ...emptyEvent,
       ...dto.toData(),
@@ -85,7 +85,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const { id } = params;
 
     const event = await eventUseCase.getEventById(id);
     if (!event) {
@@ -111,7 +111,7 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const { id } = params;
 
     await eventUseCase.deleteEvent(id);
 

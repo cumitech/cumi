@@ -263,11 +263,11 @@ export function generateStructuredData(type: string, data: any) {
         "url": baseUrl,
         "logo": {
           "@type": "ImageObject",
-          "url": `${baseUrl}/cumi-green.png`,
+          "url": `${baseUrl}/logo-shadow-png.png`,
           "width": 160,
           "height": 90
         },
-        "image": `${baseUrl}/cumi-green.png`,
+        "image": `${baseUrl}/logo-shadow-png.png`,
         "foundingDate": "2020",
         "address": {
           "@type": "PostalAddress",
@@ -315,7 +315,7 @@ export function generateStructuredData(type: string, data: any) {
           "name": "CUMI",
           "logo": {
             "@type": "ImageObject",
-            "url": `${baseUrl}/cumi-green.png`
+            "url": `${baseUrl}/logo-shadow-png.png`
           }
         },
         "potentialAction": {

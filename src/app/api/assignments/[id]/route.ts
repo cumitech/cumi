@@ -14,8 +14,9 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const { id } = params;
   try {
-    const assignment = await assignmentUseCase.getAssignmentById(params.id);
+    const assignment = await assignmentUseCase.getAssignmentById(id);
     
     if (!assignment) {
       return NextResponse.json(
@@ -49,6 +50,7 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const { id } = params;
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user) {
@@ -80,7 +82,7 @@ export async function PUT(
       );
     }
 
-    const existingAssignment = await assignmentUseCase.getAssignmentById(params.id);
+    const existingAssignment = await assignmentUseCase.getAssignmentById(id);
     if (!existingAssignment) {
       return NextResponse.json(
         {
@@ -117,6 +119,7 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const { id } = params;
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user) {
@@ -131,7 +134,7 @@ export async function DELETE(
   }
 
   try {
-    await assignmentUseCase.deleteAssignment(params.id);
+    await assignmentUseCase.deleteAssignment(id);
     
     return NextResponse.json({
       data: null,

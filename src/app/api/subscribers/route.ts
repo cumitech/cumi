@@ -8,6 +8,7 @@ import { displayValidationErrors } from "@utils/displayValidationErrors";
 import { getServerSession } from "next-auth";
 import authOptions from "@lib/options";
 import { emailService } from "@services/email.service";
+import { verifyRecaptchaEnterprise } from "@lib/recaptcha";
 
 const subscriberRepository = new SubscriberRepository();
 const subscriberUseCase = new SubscriberUseCase(subscriberRepository);
@@ -47,14 +48,24 @@ export async function GET(request: NextRequest) {
   }
 }
 
+const RECAPTCHA_ACTION = "SUBSCRIBE";
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    
+    const verification = await verifyRecaptchaEnterprise(body.recaptchaToken, RECAPTCHA_ACTION);
+    if (!verification.success) {
+      return NextResponse.json(
+        { error: verification.error || "reCAPTCHA verification failed" },
+        { status: 400 }
+      );
+    }
+    const { recaptchaToken: _, recaptchaAction: __, ...rest } = body;
+
     const subscriberDto = new SubscriberRequestDto();
-    subscriberDto.email = body.email;
-    subscriberDto.name = body.name;
-    subscriberDto.isActive = body.isActive ?? true;
+    subscriberDto.email = rest.email;
+    subscriberDto.name = rest.name;
+    subscriberDto.isActive = rest.isActive ?? true;
 
     const validationErrors = await validate(subscriberDto);
     if (validationErrors.length > 0) {

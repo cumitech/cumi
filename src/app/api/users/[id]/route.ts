@@ -13,6 +13,7 @@ const userUseCase = new UserUseCase(userRepository);
 const userMapper = new UserMapper();
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+  const { id } = params;
   try {
     const session = await getServerSession(authOptions);
     
@@ -24,14 +25,14 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     }
 
     // Users can only access their own data unless they're admin
-    if (session.user.id !== params.id && session.user.role !== 'admin') {
+    if (session.user.id !== id && session.user.role !== 'admin') {
       return NextResponse.json(
         { message: "Forbidden: You can only access your own data.", success: false, data: null, validationErrors: [] },
         { status: 403 }
       );
     }
 
-    const user = await userUseCase.getUserById(params.id);
+    const user = await userUseCase.getUserById(id);
     if (!user) {
       return NextResponse.json(
         { message: "User not found", success: false, data: null, validationErrors: [] },
@@ -49,6 +50,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 }
 
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+  const { id } = params;
   try {
     const session = await getServerSession(authOptions);
     
@@ -60,7 +62,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     }
 
     // Users can only update their own data unless they're admin
-    if (session.user.id !== params.id && session.user.role !== 'admin') {
+    if (session.user.id !== id && session.user.role !== 'admin') {
       return NextResponse.json(
         { message: "Forbidden: You can only update your own data.", success: false, data: null, validationErrors: [] },
         { status: 403 }
@@ -70,7 +72,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     const body = await request.json();
     
     // Get existing user data
-    const existingUser = await userUseCase.getUserById(params.id);
+    const existingUser = await userUseCase.getUserById(id);
     if (!existingUser) {
       return NextResponse.json(
         { message: "User not found", success: false, data: null, validationErrors: [] },
@@ -130,6 +132,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 }
 
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+  const { id } = params;
   try {
     const session = await getServerSession(authOptions);
     
@@ -148,7 +151,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
       );
     }
 
-    await userUseCase.deleteUser(params.id);
+    await userUseCase.deleteUser(id);
 
     return NextResponse.json(
       { message: "User deleted successfully!", success: true, data: null, validationErrors: [] },

@@ -9,6 +9,7 @@ const userRepository = new UserRepository();
 const userUseCase = new UserUseCase(userRepository);
 
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+  const { id } = params;
   try {
     const session = await getServerSession(authOptions);
     
@@ -20,7 +21,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     }
 
     // Users can only change their own password
-    if (session.user.id !== params.id) {
+    if (session.user.id !== id) {
       return NextResponse.json(
         { message: "Forbidden: You can only change your own password.", success: false, data: null, validationErrors: [] },
         { status: 403 }
@@ -45,7 +46,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     }
 
     // Get existing user data
-    const existingUser = await userUseCase.getUserById(params.id);
+    const existingUser = await userUseCase.getUserById(id);
     if (!existingUser) {
       return NextResponse.json(
         { message: "User not found", success: false, data: null, validationErrors: [] },

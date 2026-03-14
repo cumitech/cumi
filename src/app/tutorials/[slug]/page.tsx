@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: TutorialDetailPageProps): Pro
   if (!params?.slug) {
     return generatePageMetadata({
       title: "Tutorial - CUMI Learning Guides",
-      description: "Explore our comprehensive tutorials and learning resources.",
+      description: "Tutorials and learning resources from CUMI.",
       url: `${SITE_URL}/tutorials`
     });
   }
@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: TutorialDetailPageProps): Pro
   if (!tutorial) {
     return generatePageMetadata({
       title: "Tutorial - CUMI Learning Guides",
-      description: "Explore our comprehensive tutorials and learning resources.",
+      description: "Tutorials and learning resources from CUMI.",
       url: `${SITE_URL}/tutorials/${params.slug}`
     });
   }
@@ -62,7 +62,7 @@ export async function generateMetadata({ params }: TutorialDetailPageProps): Pro
 
   return generatePageMetadata({
     title: `${tutorial.title} - CUMI Tutorial`,
-    description: tutorial.description || `Learn with our step-by-step tutorial: ${tutorial.title}. Master software development through our comprehensive guides.`,
+    description: tutorial.description || `Step-by-step tutorial: ${tutorial.title}. Software development guides from CUMI.`,
     keywords,
     url: `${SITE_URL}/tutorials/${params.slug}`,
     image: tutorialImage,

@@ -4,6 +4,7 @@ import { Button } from "antd";
 import Image from "next/image";
 import React from "react";
 import { useTranslation } from "@contexts/translation.context";
+import { trackCtaClick } from "@lib/analytics";
 
 export const AppService = () => {
   const { width } = useWindowSize();
@@ -48,15 +49,17 @@ return (
               width: "10rem",
             }}
             shape="round"
+            onClick={() => trackCtaClick("cta_work_with_us", "https://wa.me/237681289411")}
           >
-            {t('service.get_in_touch')}
+            {t("cta.get_in_touch")}
           </Button>
         </div>
         <div className="col-md-6 px-5 p-md-0 ms-auto">
           <Image
             height={500}
             width={1200}
-            quality={100}
+            quality={85}
+            loading="lazy"
             src={"/img/relaxing.jpg"}
             style={{
               width: "100%",

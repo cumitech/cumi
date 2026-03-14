@@ -48,7 +48,7 @@ export async function generateMetadata(): Promise<Metadata> {
   openGraph: {
     type: "website",
     title: "CUMI Technology Blog Categories",
-    description: "Explore our technology blog posts organized by categories covering software development and digital transformation.",
+    description: "Technology blog posts by category: software development and digital transformation.",
     images: [defaultImages[0], defaultImages[1]],
     siteName: "CUMI",
     locale: "en_US",
@@ -57,7 +57,7 @@ export async function generateMetadata(): Promise<Metadata> {
   twitter: {
     card: "summary_large_image",
     title: "CUMI Technology Blog Categories",
-    description: "Explore our technology blog posts organized by categories covering software development and digital transformation.",
+    description: "Technology blog posts by category: software development and digital transformation.",
     images: [defaultImages[0]],
     creator: "@cumi_dev"
   },

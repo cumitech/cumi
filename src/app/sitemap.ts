@@ -26,18 +26,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       fetch(`${baseUrl}/api/services`).catch(() => null),
     ]);
 
-    // Parse responses safely
-    const posts = postsResponse ? await postsResponse.json().catch(() => []) : [];
-    const projects = projectsResponse ? await projectsResponse.json().catch(() => []) : [];
-    const events = eventsResponse ? await eventsResponse.json().catch(() => []) : [];
-    const courses = coursesResponse ? await coursesResponse.json().catch(() => []) : [];
-    const opportunities = opportunitiesResponse ? await opportunitiesResponse.json().catch(() => []) : [];
-    const categories = categoriesResponse ? await categoriesResponse.json().catch(() => []) : [];
-    const tags = tagsResponse ? await tagsResponse.json().catch(() => []) : [];
-    const services = servicesResponse ? await servicesResponse.json().catch(() => []) : [];
+    // Parse responses safely (APIs may return array or { data: array })
+    const postsRaw = postsResponse ? await postsResponse.json().catch(() => []) : [];
+    const projectsRaw = projectsResponse ? await projectsResponse.json().catch(() => []) : [];
+    const eventsRaw = eventsResponse ? await eventsResponse.json().catch(() => []) : [];
+    const coursesRaw = coursesResponse ? await coursesResponse.json().catch(() => []) : [];
+    const opportunitiesRaw = opportunitiesResponse ? await opportunitiesResponse.json().catch(() => []) : [];
+    const categoriesRaw = categoriesResponse ? await categoriesResponse.json().catch(() => []) : [];
+    const tagsRaw = tagsResponse ? await tagsResponse.json().catch(() => []) : [];
+    const servicesRaw = servicesResponse ? await servicesResponse.json().catch(() => []) : [];
+
+    const posts = Array.isArray(postsRaw) ? postsRaw : (postsRaw?.data ?? []);
+    const projects = Array.isArray(projectsRaw) ? projectsRaw : (projectsRaw?.data ?? []);
+    const events = Array.isArray(eventsRaw) ? eventsRaw : (eventsRaw?.data ?? []);
+    const courses = Array.isArray(coursesRaw) ? coursesRaw : (coursesRaw?.data ?? []);
+    const opportunities = Array.isArray(opportunitiesRaw) ? opportunitiesRaw : (opportunitiesRaw?.data ?? []);
+    const categories = Array.isArray(categoriesRaw) ? categoriesRaw : (categoriesRaw?.data ?? []);
+    const tags = Array.isArray(tagsRaw) ? tagsRaw : (tagsRaw?.data ?? []);
+    const services = Array.isArray(servicesRaw) ? servicesRaw : (servicesRaw?.data ?? []);
 
     // Generate dynamic URLs with enhanced metadata
-    const postsData = posts?.data?.map((post: any) => ({
+    const postsData = posts?.map((post: any) => ({
       url: `${baseUrl}/blog-posts/${post?.slug}`,
       lastModified: new Date(post?.updatedAt || post?.createdAt),
       changeFrequency: 'monthly' as const,
@@ -50,7 +59,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ] : [],
     })) || [];
 
-    const projectsData = projects?.data?.map((project: any) => ({
+    const projectsData = projects?.map((project: any) => ({
       url: `${baseUrl}/projects/${project?.slug || project?.id}`,
       lastModified: new Date(project?.updatedAt || project?.createdAt),
       changeFrequency: 'weekly' as const,
@@ -63,7 +72,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ] : [],
     })) || [];
 
-    const eventsData = events?.data?.map((event: any) => ({
+    const eventsData = events?.map((event: any) => ({
       url: `${baseUrl}/events/${event?.slug || event?.id}`,
       lastModified: new Date(event?.updatedAt || event?.createdAt),
       changeFrequency: 'weekly' as const,
@@ -76,7 +85,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ] : [],
     })) || [];
 
-    const coursesData = courses?.data?.map((course: any) => ({
+    const coursesData = courses?.map((course: any) => ({
       url: `${baseUrl}/courses/${course?.slug || course?.id}`,
       lastModified: new Date(course?.updatedAt || course?.createdAt),
       changeFrequency: 'weekly' as const,
@@ -89,14 +98,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ] : [],
     })) || [];
 
-    const opportunitiesData = opportunities?.data?.map((opportunity: any) => ({
+    const opportunitiesData = opportunities?.map((opportunity: any) => ({
       url: `${baseUrl}/opportunities/${opportunity?.slug || opportunity?.id}`,
       lastModified: new Date(opportunity?.updatedAt || opportunity?.createdAt),
       changeFrequency: 'weekly' as const,
       priority: 0.7,
     })) || [];
 
-    const servicesData = services?.data?.map((service: any) => ({
+    const servicesData = services?.map((service: any) => ({
       url: `${baseUrl}/our-services/${service?.slug}`,
       lastModified: new Date(service?.updatedAt || service?.createdAt),
       changeFrequency: 'monthly' as const,
@@ -109,14 +118,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ] : [],
     })) || [];
 
-    const categoriesData = categories?.data?.map((category: any) => ({
+    const categoriesData = categories?.map((category: any) => ({
       url: `${baseUrl}/categories/${category?.slug}`,
       lastModified: new Date(category?.updatedAt || category?.createdAt),
       changeFrequency: 'monthly' as const,
       priority: 0.6,
     })) || [];
 
-    const tagsData = tags?.data?.map((tag: any) => ({
+    const tagsData = tags?.map((tag: any) => ({
       url: `${baseUrl}/tags/${tag?.slug}`,
       lastModified: new Date(tag?.updatedAt || tag?.createdAt),
       changeFrequency: 'monthly' as const,
@@ -238,6 +247,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         lastModified: new Date(),
         changeFrequency: 'yearly',
         priority: 0.4,
+      },
+      {
+        url: `${baseUrl}/cookie-policy`,
+        lastModified: new Date(),
+        changeFrequency: 'yearly',
+        priority: 0.4,
+      },
+      {
+        url: `${baseUrl}/pricing`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.7,
       },
       {
         url: `${baseUrl}/mobile-app`,
@@ -389,6 +410,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         lastModified: new Date(),
         changeFrequency: 'yearly',
         priority: 0.4,
+      },
+      {
+        url: `${baseUrl}/cookie-policy`,
+        lastModified: new Date(),
+        changeFrequency: 'yearly',
+        priority: 0.4,
+      },
+      {
+        url: `${baseUrl}/pricing`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.7,
       },
       {
         url: `${baseUrl}/mobile-app`,

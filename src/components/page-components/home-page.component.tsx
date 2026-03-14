@@ -6,8 +6,14 @@ import AboutNote from "@components/about-note/about-note";
 import { AppNav } from "@components/nav/nav.component";
 import { AppHero } from "@components/hero/hero.component";
 import { AppService } from "@components/service/service.component";
+import { AppCTA } from "@components/CTA.component";
 import { PartnersSection } from "@components/partners/partners-section.component";
 import { ServicesSection } from "@components/services/services-section.component";
+import LeadMagnetSection from "@components/lead-magnet/lead-magnet-section";
+import TestimonialsSection from "@components/testimonials/testimonials-section";
+import StatsSection from "@components/stats/stats-section";
+import ProcessFlowSection from "@components/process-flow/process-flow-section";
+import Subscribe from "@components/subscribe/subscribe";
 
 export default function HomePageComponent() {
   return (
@@ -26,11 +32,26 @@ export default function HomePageComponent() {
       {/* 3. OUR SERVICES - Detailed service offerings */}
       <ServicesSection showViewAllButton={true} showContainer={true} />
 
-      {/* 8. CALL TO ACTION - Get started */}
+      {/* 4. STATS - Impact in numbers */}
+      <StatsSection />
+
+      {/* 5. WORK PROCESS FLOW */}
+      <ProcessFlowSection />
+
+      {/* 6. LEAD MAGNET - Services guide CTA */}
+      <LeadMagnetSection />
+
+      {/* 7. TESTIMONIALS - Social proof */}
+      <TestimonialsSection />
+
+      {/* 8. PARTNERS & TRUST - Logos / As seen in */}
+      <PartnersSection />
+
+      {/* 10. CALL TO ACTION - Get started */}
       <AppService />
 
-      {/* 7. PARTNERS & TRUST - Social proof */}
-      <PartnersSection />
+      {/* 11. CTA - Let's work together / Get quote */}
+      <AppCTA />
 
       <AppFooter logoPath="/" />
       <AppFootnote />

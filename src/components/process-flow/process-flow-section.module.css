@@ -1,0 +1,16 @@
+.processFlowDesktop {
+  display: none;
+}
+
+.processFlowVertical {
+  display: flex;
+}
+
+@media (min-width: 992px) {
+  .processFlowDesktop {
+    display: flex !important;
+  }
+  .processFlowVertical {
+    display: none !important;
+  }
+}

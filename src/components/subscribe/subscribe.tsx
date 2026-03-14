@@ -17,12 +17,13 @@ const handleSubscribe = async () => {
 
 setLoading(true);
     try {
+      const recaptchaToken = await (await import("@lib/recaptcha-client")).getRecaptchaToken("SUBSCRIBE");
       const response = await fetch("/api/subscribers", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, recaptchaToken, recaptchaAction: "SUBSCRIBE" }),
       });
 
 if (!response.ok) {

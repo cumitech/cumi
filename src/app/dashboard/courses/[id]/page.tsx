@@ -59,6 +59,7 @@ interface CourseDetailsPageProps {
 }
 
 export default function CourseDetailsPage({ params }: CourseDetailsPageProps) {
+  const { id } = params;
   const { data: session } = useSession();
   const router = useRouter();
   const { open } = useNotification();
@@ -71,8 +72,8 @@ export default function CourseDetailsPage({ params }: CourseDetailsPageProps) {
   const [viewModalData, setViewModalData] = useState<any>(null);
 
   // RTK Query hooks
-  const { data: course, isLoading: courseLoading, error: courseError } = useGetSingleCourseQuery(params.id);
-  const { data: modules = [], isLoading: modulesLoading, refetch: refetchModules } = useGetModulesByCourseQuery(params.id);
+  const { data: course, isLoading: courseLoading, error: courseError } = useGetSingleCourseQuery(id);
+  const { data: modules = [], isLoading: modulesLoading, refetch: refetchModules } = useGetModulesByCourseQuery(id);
   const [createModule, { isLoading: createLoading }] = useCreateModuleMutation();
   const [updateModule, { isLoading: updateLoading }] = useUpdateModuleMutation();
   const [deleteModule, { isLoading: deleteLoading }] = useDeleteModuleMutation();
@@ -122,7 +123,7 @@ export default function CourseDetailsPage({ params }: CourseDetailsPageProps) {
         title: values.title,
         slug: slug,
         description: values.description || "",
-        courseId: params.id,
+        courseId: id,
         userId: session?.user?.id || "",
         moduleOrder: values.moduleOrder || 1,
         status: values.status || "draft",
@@ -141,7 +142,7 @@ export default function CourseDetailsPage({ params }: CourseDetailsPageProps) {
         throw new Error("User session not found. Please log in again.");
       }
 
-      if (!params.id) {
+      if (!id) {
         throw new Error("Course ID is required.");
       }
 

@@ -27,7 +27,7 @@ return (
           }}
         >
           <Image
-            src="/cumi-green.png"
+            src="/logo-shadow-png.png"
             alt="CUMI Logo"
             width={53}
             height={41}
@@ -43,7 +43,7 @@ return (
       ) : (
         <div style={{ position: "relative", padding: "12px 24px" }}>
           <Image
-            src="/cumi-green.png"
+            src="/logo-shadow-png.png"
             alt="CUMI Logo"
             width={180}
             height={42}

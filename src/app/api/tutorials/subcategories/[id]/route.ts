@@ -12,7 +12,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const { id } = params;
     const sub = await subUseCase.getSubcategoryById(id);
     if (!sub) {
       return NextResponse.json({ data: null, success: false }, { status: 404 });
@@ -38,7 +38,7 @@ export async function PATCH(
     );
   }
   try {
-    const id = params.id;
+    const { id } = params;
     const body = await req.json();
     const updated = await subUseCase.updateSubcategory({ ...body, id });
     return NextResponse.json({ data: updated.toJSON(), success: true });
@@ -62,7 +62,7 @@ export async function DELETE(
     );
   }
   try {
-    const id = params.id;
+    const { id } = params;
     await subUseCase.deleteSubcategory(id);
     return NextResponse.json({ data: null, success: true });
   } catch (error: any) {

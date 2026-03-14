@@ -49,7 +49,7 @@ export async function PATCH(
       );
     }
 
-    const id = params.id;
+    const { id } = params;
     const obj: IBanner = {
       ...emptyBanner,
       ...dto.toData(),
@@ -86,7 +86,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const { id } = params;
 
     const banner = await bannerUseCase.getBannerById(id);
     if (!banner) {
@@ -112,7 +112,7 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const { id } = params;
 
     await bannerUseCase.deleteBanner(id);
 

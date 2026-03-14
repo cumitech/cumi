@@ -12,8 +12,8 @@ export async function GET(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const { id: courseId } = params;
   try {
-    const courseId = params.id;
 
     const lessons = await lessonUseCase.getLessonsByCourseId(courseId);
     const lessonsDTO = lessonMapper.toDTOs(lessons);

@@ -4,8 +4,11 @@ import authOptions from "@lib/options";
 import { EventRegistration } from "@data/entities/index";
 import { nanoid } from "nanoid";
 import sequelize from "@database/db-sequelize.config";
+import { verifyRecaptchaEnterprise } from "@lib/recaptcha";
 
 export const dynamic = 'force-dynamic';
+
+const RECAPTCHA_ACTION = "EVENT_REGISTRATION";
 
 export async function POST(request: NextRequest) {
   const session = await getServerSession(authOptions);
@@ -23,9 +26,17 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const { 
-      eventId, 
-      userId, 
+    const verification = await verifyRecaptchaEnterprise(body.recaptchaToken, RECAPTCHA_ACTION);
+    if (!verification.success) {
+      return NextResponse.json(
+        { message: verification.error || "reCAPTCHA verification failed", success: false, data: null },
+        { status: 400 }
+      );
+    }
+    const { recaptchaToken: _, recaptchaAction: __, ...rest } = body;
+    const {
+      eventId,
+      userId,
       name,
       email,
       phone,
@@ -34,7 +45,7 @@ export async function POST(request: NextRequest) {
       additionalNotes,
       paymentAmount = 0,
       paymentMethod
-    } = body;
+    } = rest;
 
     if (!eventId || !userId) {
       return NextResponse.json(

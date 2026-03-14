@@ -8,8 +8,9 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const { id } = params;
   try {
-    const eventRegistration = await eventRegistrationUsecase.getEventRegistrationById(params.id);
+    const eventRegistration = await eventRegistrationUsecase.getEventRegistrationById(id);
 
     if (!eventRegistration) {
       return NextResponse.json(
@@ -38,7 +39,7 @@ export async function PUT(
   try {
     const body = await request.json();
     
-    const eventRegistration = await eventRegistrationUsecase.updateEventRegistration(params.id, body);
+    const eventRegistration = await eventRegistrationUsecase.updateEventRegistration(id, body);
 
     if (!eventRegistration) {
       return NextResponse.json(
@@ -65,8 +66,9 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const { id } = params;
   try {
-    const success = await eventRegistrationUsecase.deleteEventRegistration(params.id);
+    const success = await eventRegistrationUsecase.deleteEventRegistration(id);
 
     if (!success) {
       return NextResponse.json(

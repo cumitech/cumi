@@ -61,6 +61,7 @@ const nextConfig = withNextIntl({
 
   // Experimental features for performance
   experimental: {
+    serverComponentsExternalPackages: ["@react-pdf/renderer"],
     optimizeCss: true,
     optimizePackageImports: [
       "@ant-design/icons",

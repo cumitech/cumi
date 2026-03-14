@@ -36,6 +36,8 @@ import defineReferral from "./referral";
 import defineReferralClick from "./referral-click";
 import defineTutorialSubcategory from "./tutorial-subcategory";
 import defineTutorial from "./tutorial";
+import defineTestimonial from "./testimonial";
+import defineTeamMember from "./team-member";
 
 const Banner = defineBanner(sequelize, DataTypes);
 const Category = defineCategory(sequelize, DataTypes);
@@ -72,6 +74,8 @@ const Referral = defineReferral(sequelize, DataTypes);
 const ReferralClick = defineReferralClick(sequelize, DataTypes);
 const TutorialSubcategory = defineTutorialSubcategory(sequelize, DataTypes);
 const Tutorial = defineTutorial(sequelize, DataTypes);
+const Testimonial = defineTestimonial(sequelize, DataTypes);
+const TeamMember = defineTeamMember(sequelize, DataTypes);
 
 Event.belongsToMany(Tag, {
   through: {
@@ -310,6 +314,8 @@ export {
   Referral,
   ReferralClick,
   TutorialSubcategory,
-  Tutorial
+  Tutorial,
+  Testimonial,
+  TeamMember,
 };
 

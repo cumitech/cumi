@@ -102,7 +102,7 @@ export default function BlogPostsPage() {
       "url": SITE_URL,
       "logo": {
         "@type": "ImageObject",
-        "url": `${SITE_URL}/cumi-green.png`
+        "url": `${SITE_URL}/logo-shadow-png.png`
       }
     },
     "inLanguage": "en-US",

@@ -17,7 +17,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const { id } = params;
     const moduleItem = await moduleUseCase.getModuleById(id);
     
     if (!moduleItem) {
@@ -82,7 +82,7 @@ export async function PATCH(
       );
     }
 
-    const id = params.id;
+    const { id } = params;
     const updatedModule = await moduleUseCase.updateModule({
       ...dto.toData(),
       id: id,
@@ -117,7 +117,7 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const { id } = params;
     await moduleUseCase.deleteModule(id);
 
     return NextResponse.json({

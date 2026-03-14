@@ -5,8 +5,10 @@ import { contactMessageMapper } from "@presentation/mappers/contact-message.mapp
 import { getServerSession } from "next-auth";
 import authOptions from "@lib/options";
 import { emailService } from "@services/email.service";
+import { verifyRecaptchaEnterprise } from "@lib/recaptcha";
 
 const contactMessageUseCase = new ContactMessageUseCase(new ContactMessageRepository());
+const RECAPTCHA_ACTION = "CONTACT_FORM";
 
 export async function GET(request: NextRequest) {
   try {
@@ -45,16 +47,25 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const message = await contactMessageUseCase.create(body);
+    const recaptchaToken = body.recaptchaToken;
+    const verification = await verifyRecaptchaEnterprise(recaptchaToken, RECAPTCHA_ACTION);
+    if (!verification.success) {
+      return NextResponse.json(
+        { error: verification.error || "reCAPTCHA verification failed" },
+        { status: 400 }
+      );
+    }
+    const { recaptchaToken: _, recaptchaAction: __, ...payload } = body;
+    const message = await contactMessageUseCase.create(payload);
     const messageDTO = contactMessageMapper.toDTO(message as any);
 
     // Send confirmation email to the person who submitted the contact message
     try {
       await emailService.sendNotificationEmail(
         body.email,
-        body.name || 'Valued Customer',
+        payload.name || 'Valued Customer',
         'Thank You for Contacting CUMI',
-        `Thank you for reaching out to us! We have received your message regarding "${body.subject || 'your inquiry'}" and our team will get back to you within 24 hours. We appreciate your interest in our services and look forward to assisting you.`,
+        `Thank you for reaching out to us! We have received your message regarding "${payload.subject || 'your inquiry'}" and our team will get back to you within 24 hours. We appreciate your interest in our services and look forward to assisting you.`,
         `${process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || process.env.NEXTAUTH_URL || 'http://localhost:3000'}/contact`
       );
     } catch (emailError) {
@@ -68,7 +79,7 @@ export async function POST(request: NextRequest) {
         process.env.ADMIN_EMAIL || 'admin@cumi.dev',
         'CUMI Admin',
         'New Contact Message Received',
-        `A new contact message has been received from ${body.name} (${body.email}).\n\nSubject: ${body.subject || 'No subject'}\nMessage: ${body.message}\n\nPhone: ${body.phone || 'Not provided'}`,
+        `A new contact message has been received from ${payload.name} (${payload.email}).\n\nSubject: ${payload.subject || 'No subject'}\nMessage: ${payload.message}\n\nPhone: ${payload.phone || 'Not provided'}`,
         `${process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || process.env.NEXTAUTH_URL || 'http://localhost:3000'}/dashboard/contact-messages`
       );
     } catch (adminEmailError) {

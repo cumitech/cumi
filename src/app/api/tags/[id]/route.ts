@@ -48,7 +48,7 @@ export async function PATCH(
       );
     }
 
-    const id = params.id;
+    const { id } = params;
     const obj: ITag = {
       ...emptyTag,
       ...dto.toData(),
@@ -84,7 +84,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const { id } = params;
 
     const tag = await tagUseCase.getTagById(id);
     if (!tag) {
@@ -110,7 +110,7 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const { id } = params;
 
     await tagUseCase.deleteTag(id);
 

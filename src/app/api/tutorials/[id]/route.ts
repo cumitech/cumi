@@ -13,7 +13,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const { id } = params;
     const tutorial = await tutorialUseCase.getTutorialById(id);
     if (!tutorial) {
       throw new NotFoundException("Tutorial", id);
@@ -39,7 +39,7 @@ export async function PATCH(
     );
   }
   try {
-    const id = params.id;
+    const { id } = params;
     const body = await req.json();
     const updated = await tutorialUseCase.updateTutorial({ ...body, id });
     return NextResponse.json({ data: updated.toJSON(), success: true });
@@ -63,7 +63,7 @@ export async function DELETE(
     );
   }
   try {
-    const id = params.id;
+    const { id } = params;
     await tutorialUseCase.deleteTutorial(id);
     return NextResponse.json({ data: null, success: true });
   } catch (error: any) {

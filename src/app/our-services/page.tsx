@@ -7,7 +7,7 @@ import SchemaRenderer from "@components/shared/schema-renderer.component";
 export async function generateMetadata(): Promise<Metadata> {
   return await generateDynamicPageMetadata("/our-services", {
   title: "Our Services - CUMI Digital Agency",
-  description: "Digital solutions that scale. Web apps, mobile apps, and custom software for small businesses and enterprises. Explore our services.",
+  description: "Digital solutions that scale. Web apps, mobile apps, and custom software for small businesses and enterprises.",
   keywords: [
     "software development services",
     "web application development",

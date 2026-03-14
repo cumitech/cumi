@@ -10,8 +10,9 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const { id } = params;
   try {
-    const courseEnrollment = await courseEnrollmentUsecase.getEnrollmentById(params.id);
+    const courseEnrollment = await courseEnrollmentUsecase.getEnrollmentById(id);
 
     if (!courseEnrollment) {
       return NextResponse.json(
@@ -37,10 +38,11 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const { id } = params;
   try {
     const body = await request.json();
     
-    const courseEnrollment = await courseEnrollmentUsecase.updateEnrollment(params.id, body);
+    const courseEnrollment = await courseEnrollmentUsecase.updateEnrollment(id, body);
 
     if (!courseEnrollment) {
       return NextResponse.json(
@@ -67,8 +69,9 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const { id } = params;
   try {
-    await courseEnrollmentUsecase.deleteEnrollment(params.id);
+    await courseEnrollmentUsecase.deleteEnrollment(id);
 
     return NextResponse.json({
       success: true,

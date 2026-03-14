@@ -10,18 +10,18 @@ export async function generateMetadata({ params }: ServiceDetailPageProps): Prom
   
   return {
     title: `${slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())} - Professional Services | Cumi Digital Solutions`,
-    description: `Discover our professional ${slug.replace(/-/g, ' ')} services. Expert solutions tailored to your business needs with cutting-edge technology and innovation.`,
+    description: `Professional ${slug.replace(/-/g, ' ')} services from CUMI. Solutions for your business needs.`,
     keywords: ["professional services", "web development", "digital solutions", "technology services", slug.replace(/-/g, ' ')],
     openGraph: {
       title: `${slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())} - Professional Services | Cumi Digital Solutions`,
-      description: `Discover our professional ${slug.replace(/-/g, ' ')} services. Expert solutions tailored to your business needs with cutting-edge technology and innovation.`,
+      description: `Professional ${slug.replace(/-/g, ' ')} services from CUMI. Solutions for your business needs.`,
       type: "article",
       locale: "en_US",
     },
     twitter: {
       card: "summary_large_image",
       title: `${slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())} - Professional Services | Cumi Digital Solutions`,
-      description: `Discover our professional ${slug.replace(/-/g, ' ')} services. Expert solutions tailored to your business needs with cutting-edge technology and innovation.`,
+      description: `Professional ${slug.replace(/-/g, ' ')} services from CUMI. Solutions for your business needs.`,
     },
   };
 }
