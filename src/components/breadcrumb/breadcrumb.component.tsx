@@ -53,7 +53,12 @@ export default function Breadcrumb({
   };
   
   const breadcrumbItems = generateBreadcrumbs();
-  
+
+  // Don't show duplicate "Home" when items already start with Home (any locale)
+  const firstIsHome =
+    items.length > 0 && (items[0].href === "/" || items[0].label === "Home" || items[0].label === "Accueil");
+  const effectiveShowHome = showHome && (items.length === 0 || !firstIsHome);
+
   // Generate structured data for breadcrumbs
   const structuredData = {
     "@context": "https://schema.org",
@@ -76,7 +81,7 @@ export default function Breadcrumb({
       />
       <nav aria-label="Breadcrumb" className="breadcrumb-nav">
         <ol className="breadcrumb mb-0">
-          {showHome && (
+          {effectiveShowHome && (
             <li className="breadcrumb-item">
               <Link href="/" className="text-decoration-none">
                 <i className="fas fa-home me-1"></i>

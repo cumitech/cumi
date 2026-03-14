@@ -17,6 +17,8 @@ import {
   PhoneOutlined,
   UserOutlined,
   MessageOutlined,
+  WhatsAppOutlined,
+  CalendarOutlined,
 } from "@ant-design/icons";
 import BannerComponent from "@components/banner/banner.component";
 import { AppFooter } from "@components/footer/footer";
@@ -27,6 +29,7 @@ import PhoneNumberInput from "@components/shared/phone-number-input.component";
 import {
   validatePhoneNumber,
   normalizePhoneNumber,
+  getCountryByPhonePrefix,
 } from "@utils/country-codes";
 import { trackFormGoal } from "@lib/analytics";
 
@@ -104,79 +107,110 @@ export default function ContactUsPageComponent() {
         pageTitle={t("nav.contact-us")}
       />
 
-      <section className="py-5">
+      <section id="page-content" className="py-5 contact-page-section">
         <div className="container">
           <Row justify="center" gutter={[24, 24]}>
-            <Col xs={24} lg={16}>
+            <Col xs={24} xl={18}>
               <Card
+                className="contact-form-card"
                 style={{
-                  boxShadow: "0 8px 32px rgba(0,0,0,0.08)",
-                  borderRadius: "16px",
-                  border: "none",
+                  boxShadow: "0 4px 24px rgba(0,0,0,0.06)",
+                  borderRadius: "20px",
+                  border: "1px solid rgba(0,0,0,0.06)",
+                  overflow: "hidden",
                 }}
+                styles={{ body: { padding: 0 } }}
               >
-                <div className="text-center mb-5">
-                  <Space direction="vertical" size="small">
-                    <div
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        width: "60px",
-                        height: "60px",
-                        borderRadius: "50%",
-                        background:
-                          "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                        marginBottom: "16px",
-                      }}
+                <div
+                  style={{
+                    padding: "40px 32px 32px",
+                    textAlign: "center",
+                    background: "linear-gradient(180deg, #f0fdf4 0%, #ffffff 100%)",
+                    borderBottom: "1px solid rgba(34, 197, 94, 0.12)",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: "64px",
+                      height: "64px",
+                      borderRadius: "16px",
+                      background: "linear-gradient(135deg, #22C55E 0%, #14B8A6 100%)",
+                      marginBottom: "20px",
+                      boxShadow: "0 8px 24px rgba(34, 197, 94, 0.25)",
+                    }}
+                  >
+                    <MailOutlined style={{ fontSize: "28px", color: "white" }} />
+                  </div>
+                  <Title level={2} style={{ marginBottom: "8px", color: "#1e293b", fontWeight: "700", fontSize: "1.75rem" }}>
+                    {t("contact.get_in_touch")}
+                  </Title>
+                  <Paragraph style={{ fontSize: "15px", color: "#64748b", maxWidth: "480px", margin: "0 auto 24px", lineHeight: 1.6 }}>
+                    {t("contact.contact_description")}
+                  </Paragraph>
+                  <Space size="middle" wrap style={{ justifyContent: "center", gap: "12px" }}>
+                    <Button
+                      type="primary"
+                      icon={<WhatsAppOutlined />}
+                      href="https://wa.me/237681289411"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="contact-quick-btn contact-quick-whatsapp"
                     >
-                      <MailOutlined
-                        style={{ fontSize: "28px", color: "white" }}
-                      />
-                    </div>
-                    <Title
-                      level={2}
-                      style={{ marginBottom: "8px", color: "#1a1a1a" }}
+                      {t("contact.whatsapp_us")}
+                    </Button>
+                    <Button
+                      icon={<MailOutlined />}
+                      href="mailto:info@cumi.dev"
+                      className="contact-quick-btn"
                     >
-                      {t("contact.get_in_touch")}
-                    </Title>
-                    <Paragraph
-                      style={{
-                        fontSize: "16px",
-                        color: "#666",
-                        maxWidth: "500px",
-                        margin: "0 auto",
-                      }}
+                      {t("contact.email_us")}
+                    </Button>
+                    <Button
+                      icon={<CalendarOutlined />}
+                      href="https://calendly.com/ayeahchanser"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="contact-quick-btn"
                     >
-                      {t("contact.contact_description")}
-                    </Paragraph>
+                      {t("contact.book_consultation")}
+                    </Button>
                   </Space>
                 </div>
 
+                <div id="project-inquiry-form" className="contact-form-inner" style={{ padding: "32px 32px 40px" }}>
+                  <div style={{ marginBottom: "24px" }}>
+                    <Title level={5} style={{ color: "#1e293b", fontWeight: "600", marginBottom: "4px" }}>
+                      {t("contact.project_inquiry_heading")}
+                    </Title>
+                    <Paragraph style={{ fontSize: "14px", color: "#64748b", margin: 0 }}>
+                      {t("contact.project_inquiry_subtext")}
+                    </Paragraph>
+                  </div>
                 <Form
                   form={form}
                   layout="vertical"
                   onFinish={handleSubmit}
                   size="large"
+                  className="contact-form-fields"
+                  initialValues={{ countryCode: "CM" }}
                 >
-                  <Row gutter={16}>
+                  <Row gutter={[20, 20]}>
                     <Col xs={24} md={12}>
                       <Form.Item
                         name="name"
                         label={t("contact.full_name")}
                         rules={[
-                          {
-                            required: true,
-                            message: t("contact.name_required"),
-                          },
+                          { required: true, message: t("contact.name_required") },
                           { min: 2, message: t("contact.name_min_length") },
                         ]}
                       >
                         <Input
-                          prefix={<UserOutlined style={{ color: "#bfbfbf" }} />}
+                          prefix={<UserOutlined className="contact-input-icon" />}
                           placeholder={t("contact.name_placeholder")}
-                          style={{ borderRadius: "8px" }}
-                          size="large"
+                          className="contact-input"
                         />
                       </Form.Item>
                     </Col>
@@ -185,52 +219,45 @@ export default function ContactUsPageComponent() {
                         name="email"
                         label={t("contact.working_mail")}
                         rules={[
-                          {
-                            required: true,
-                            message: t("contact.email_required"),
-                          },
+                          { required: true, message: t("contact.email_required") },
                           { type: "email", message: t("contact.email_valid") },
                         ]}
                       >
                         <Input
-                          prefix={<MailOutlined style={{ color: "#bfbfbf" }} />}
+                          prefix={<MailOutlined className="contact-input-icon" />}
                           placeholder={t("contact.email_placeholder")}
-                          style={{ borderRadius: "8px" }}
-                          size="large"
+                          className="contact-input"
                         />
                       </Form.Item>
                     </Col>
                   </Row>
 
-                  {}
-                  {/* <Form.Item name="countryCode" initialValue="CM" hidden>
-                    <Input />
-                  </Form.Item> */}
-
-                  <Row gutter={16}>
+                  <Row gutter={[20, 20]}>
                     <Col xs={24} md={12}>
+                      <Form.Item name="countryCode" hidden>
+                        <Input type="hidden" />
+                      </Form.Item>
                       <Form.Item
                         name="phone"
                         label={t("contact.phone_number")}
                         rules={[
                           {
                             validator: (_, value) => {
-                              // Treat values with only country prefix and no local digits as empty (optional field)
-                              const raw = (value || "").toString();
+                              const raw = (value || "").toString().trim();
+                              if (!raw) return Promise.resolve();
                               const digitsWithoutPrefix = raw
                                 .replace(/^\+?\d{1,4}/, "")
-                                .replace(/[\s\-\(\)]/g, "");
-                              if (!raw || digitsWithoutPrefix.length === 0) {
-                                return Promise.resolve();
+                                .replace(/[\s\-\(\)\.]/g, "");
+                              if (digitsWithoutPrefix.length === 0) return Promise.resolve();
+                              let countryCode = form.getFieldValue("countryCode");
+                              if (!countryCode && raw.startsWith("+")) {
+                                const prefix = raw.match(/^\+\d{1,4}/)?.[0];
+                                const country = prefix ? getCountryByPhonePrefix(prefix) : null;
+                                countryCode = country?.code ?? "CM";
                               }
-                              const countryCode =
-                                form.getFieldValue("countryCode") || "CM";
-                              if (validatePhoneNumber(countryCode, raw)) {
-                                return Promise.resolve();
-                              }
-                              return Promise.reject(
-                                new Error(t("contact.phone_valid"))
-                              );
+                              countryCode = countryCode || "CM";
+                              if (validatePhoneNumber(countryCode, raw)) return Promise.resolve();
+                              return Promise.reject(new Error(t("contact.phone_valid")));
                             },
                           },
                         ]}
@@ -240,9 +267,7 @@ export default function ContactUsPageComponent() {
                           showMoneyServices={true}
                           countryCode="CM"
                           size="large"
-                          onCountryCodeChange={(code) => {
-                            form.setFieldValue("countryCode", code);
-                          }}
+                          onCountryCodeChange={(code) => form.setFieldValue("countryCode", code)}
                         />
                       </Form.Item>
                     </Col>
@@ -259,12 +284,9 @@ export default function ContactUsPageComponent() {
                         ]}
                       >
                         <Input
-                          prefix={
-                            <MessageOutlined style={{ color: "#bfbfbf" }} />
-                          }
+                          prefix={<MessageOutlined className="contact-input-icon" />}
                           placeholder={t("contact.subject_placeholder")}
-                          style={{ borderRadius: "8px" }}
-                          size="large"
+                          className="contact-input"
                         />
                       </Form.Item>
                     </Col>
@@ -284,39 +306,26 @@ export default function ContactUsPageComponent() {
                     <TextArea
                       placeholder={t("contact.message_placeholder")}
                       showCount
-                      maxLength={1000}
-                      rows={10}
-                      style={{ minHeight: "100px", borderRadius: "8px" }}
-                      size="large"
+                      maxLength={2000}
+                      rows={12}
+                      className="contact-textarea"
                     />
                   </Form.Item>
 
-                  <Form.Item
-                    className="text-center"
-                    style={{ marginBottom: 0 }}
-                  >
+                  <Form.Item style={{ marginBottom: 0, marginTop: "8px" }}>
                     <Button
                       type="primary"
                       htmlType="submit"
                       loading={loading}
                       size="large"
                       icon={<SendOutlined />}
-                      style={{
-                        background:
-                          "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                        borderColor: "transparent",
-                        borderRadius: "10px",
-                        padding: "0 48px",
-                        height: "52px",
-                        fontSize: "16px",
-                        fontWeight: "600",
-                        boxShadow: "0 4px 16px rgba(102, 126, 234, 0.3)",
-                      }}
+                      className="contact-submit-btn"
                     >
                       {t("contact.send_message")}
                     </Button>
                   </Form.Item>
                 </Form>
+                </div>
               </Card>
             </Col>
           </Row>

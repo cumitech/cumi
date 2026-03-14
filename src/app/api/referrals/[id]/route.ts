@@ -130,6 +130,7 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const { id } = params;
   try {
     const session = await getServerSession(authOptions);
 

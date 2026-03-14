@@ -47,7 +47,7 @@ return (
         pageTitle="Our Authors"
       />
 
-<div className="container mb-5">
+<div id="page-content" className="container mb-5">
         {error && <h1>Something wrong...</h1>}
 
 <Content>

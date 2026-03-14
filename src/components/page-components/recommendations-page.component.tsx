@@ -184,7 +184,7 @@ const RecommendationsPageComponent: React.FC = () => {
         breadcrumbs={[{ label: "Tools", uri: "recommendations" }]}
       />
 
-      <section style={{ padding: "60px 0", minHeight: "70vh" }}>
+      <section id="page-content" style={{ padding: "60px 0", minHeight: "70vh" }}>
         <div className="container">
           {/* Search and Filters */}
           <Card

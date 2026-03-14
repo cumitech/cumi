@@ -11,6 +11,7 @@ import {
   PhoneOutlined,
   MailOutlined,
   MenuOutlined,
+  DownOutlined,
 } from "@ant-design/icons";
 import Image from "next/image";
 import Link from "next/link";
@@ -33,6 +34,7 @@ export const AppNav: React.FC<Props> = ({ logoPath }) => {
   const [isNavigating, setIsNavigating] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [companyDropdownOpen, setCompanyDropdownOpen] = useState(false);
   const { t } = useTranslation();
   const { mode, setMode } = useContext(ColorModeContext);
   const toggleTheme = () => setMode(mode === "light" ? "dark" : "light");
@@ -63,7 +65,6 @@ export const AppNav: React.FC<Props> = ({ logoPath }) => {
     { path: "/our-services", label: t("nav.services") },
     { path: "/blog-posts", label: t("nav.blog-posts") },
     { path: "/projects", label: t("nav.our_work") },
-    { path: "/pricing", label: t("nav.pricing") },
     {
       type: "dropdown",
       label: t("nav.our_company"),
@@ -231,32 +232,43 @@ export const AppNav: React.FC<Props> = ({ logoPath }) => {
               "type" in item && item.type === "dropdown" ? (
                 <Dropdown
                   key={idx}
+                  open={companyDropdownOpen}
+                  onOpenChange={setCompanyDropdownOpen}
+                  trigger={["hover", "click"]}
+                  placement="bottom"
+                  overlayClassName="cumi-company-dropdown"
+                  arrow={{ pointAtCenter: true }}
                   menu={{
                     items: item.children.map(({ path, label }) => ({
                       key: path,
                       label: (
-                        <Link href={path} onClick={handleNavClick}>
+                        <Link
+                          href={path}
+                          onClick={() => {
+                            handleNavClick();
+                            setCompanyDropdownOpen(false);
+                          }}
+                          className="cumi-company-dropdown-link"
+                        >
                           {label}
                         </Link>
                       ),
                     })),
-                    style: {
-                      borderRadius: 8,
-                      boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
-                      minWidth: 160,
-                    },
                   }}
-                  placement="bottomLeft"
                 >
                   <span
-                    className={`cumi-nav-link ${
+                    role="button"
+                    tabIndex={0}
+                    aria-haspopup="menu"
+                    aria-expanded={companyDropdownOpen}
+                    className={`cumi-nav-link cumi-nav-link-dropdown-trigger ${
                       item.children.some((c) => pathname === c.path)
                         ? "cumi-nav-link-active"
                         : ""
-                    }`}
-                    style={{ cursor: "pointer" }}
+                    } ${companyDropdownOpen ? "cumi-nav-dropdown-open" : ""}`}
                   >
-                    {item.label}
+                    <span>{item.label}</span>
+                    <DownOutlined className="cumi-nav-dropdown-chevron" />
                   </span>
                 </Dropdown>
               ) : (

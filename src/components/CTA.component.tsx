@@ -207,7 +207,7 @@ export const AppCTA = () => {
 <Button
                     size="large"
                     icon={<MailOutlined />}
-                    href="mailto:info@cumi.dev"
+                    href="/contact-us"
                     style={{
                       background: "rgba(255, 255, 255, 0.15)",
                       color: "white",

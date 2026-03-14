@@ -1,3 +1,22 @@
+/* Banner breadcrumb: avoid duplicate Home, last item not a link */
+.custom__banner-breadcrumb.ant-breadcrumb {
+  .ant-breadcrumb-link a {
+    color: var(--cumi-text-secondary);
+    font-weight: 500;
+    transition: color 0.15s ease;
+  }
+  .ant-breadcrumb-link a:hover {
+    color: #22c55e;
+  }
+  .banner-breadcrumb-current {
+    color: var(--cumi-text-primary);
+    font-weight: 600;
+  }
+  .ant-breadcrumb-separator {
+    color: var(--cumi-text-tertiary, #94a3b8);
+  }
+}
+
 .custom__banner {
   margin-bottom: 2rem;
   // background-image:

@@ -36,9 +36,10 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const { id } = params;
   try {
     const body = await request.json();
-    
+
     const eventRegistration = await eventRegistrationUsecase.updateEventRegistration(id, body);
 
     if (!eventRegistration) {

@@ -3,8 +3,7 @@ import { Avatar, Breadcrumb, Button, Typography } from "antd";
 import Link from "next/link";
 import React from "react";
 import "./banner.scss";
-import { BASE_URL } from "@constants/api-url";
-import { MailOutlined, WhatsAppOutlined } from "@ant-design/icons";
+import { MailOutlined, ArrowDownOutlined } from "@ant-design/icons";
 import { motion } from "framer-motion";
 import { useTranslation } from "@contexts/translation.context";
 
@@ -20,7 +19,34 @@ type Props = {
 const BannerComponent: React.FC<Props> = ({ pageTitle, breadcrumbs }) => {
   const { t } = useTranslation();
 
-return (
+  // Avoid duplicate Home: filter out any breadcrumb that is already "Home"
+  const homeLabel = t("banner.home");
+  const filteredBreadcrumbs = breadcrumbs.filter(
+    (b) => b.uri !== "" && b.uri !== "/" && b.label !== homeLabel
+  );
+  const breadcrumbItems = [
+    { title: <Link href="/">{homeLabel}</Link> },
+    ...filteredBreadcrumbs.map((b, index) => {
+      const isLast = index === filteredBreadcrumbs.length - 1;
+      return {
+        title: isLast ? (
+          <span key={index} className="text-capitalize banner-breadcrumb-current">
+            {b.label}
+          </span>
+        ) : (
+          <Link
+            key={index}
+            href={`/${b.uri}`}
+            className="text-capitalize"
+          >
+            {b.label}
+          </Link>
+        ),
+      };
+    }),
+  ];
+
+  return (
     <>
       <div className="container-fluid mx-auto px-3 position-relative custom__banner">
         <div
@@ -36,52 +62,37 @@ return (
             animate={{ scale: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <Title level={2} style={{ fontSize: '2.2rem', fontWeight: '600' }}>{pageTitle}</Title>
+            <Title level={2} style={{ fontSize: "2.2rem", fontWeight: "600" }}>
+              {pageTitle}
+            </Title>
             <Paragraph className="text-black-50 fs-5 mb-4">
-              {t('banner.subtitle')}
+              {t("banner.subtitle")}
             </Paragraph>
           </motion.div>
 
-<Breadcrumb
+          <Breadcrumb
+            className="custom__banner-breadcrumb"
             style={{ display: "flex", justifyContent: "center" }}
-            items={[
-              {
-                title: <Link href="/">{t('banner.home')}</Link>,
-              },
-              ...breadcrumbs.map((b, index) => {
-                return {
-                  title: (
-                    <Link
-                      href={`/${b.uri}`}
-                      key={index}
-                      className="text-capitalize"
-                    >
-                      {b.label}
-                    </Link>
-                  ),
-                };
-              }),
-            ]}
+            items={breadcrumbItems}
           />
 
-<div className="d-flex justify-content-center gap-3 mt-5">
+          <div className="d-flex justify-content-center gap-3 mt-5">
             <Button
               type="primary"
               size="large"
               className="cumi-button-primary"
-              icon={<WhatsAppOutlined />}
-              href="https://wa.me/237681289411"
-              target="_blank"
+              icon={<ArrowDownOutlined />}
+              href="#page-content"
             >
-              {t('banner.get_started')}
+              {t("banner.get_started")}
             </Button>
             <Button
               size="large"
               className="cumi-gradient-border text-black"
               icon={<MailOutlined />}
-              href="mailto:info@cumi.dev"
+              href="/contact-us"
             >
-              {t('banner.contact-us')}
+              {t("banner.contact-us")}
             </Button>
           </div>
         </div>

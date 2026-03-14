@@ -48,10 +48,12 @@ return (
         pageTitle="Tags"
       />
 
-<TagContainer
-        posts={isLoading || isFetching ? [] : posts}
-        tags={isLoadingTag || isFetchTag ? [] : tags}
-      />
+<div id="page-content">
+        <TagContainer
+          posts={isLoading || isFetching ? [] : posts}
+          tags={isLoadingTag || isFetchTag ? [] : tags}
+        />
+      </div>
 
 <AppFooter logoPath="/" />
       <AppFootnote />

@@ -5,29 +5,14 @@ import { AppFootnote } from "@components/footnote/footnote";
 import { AppNav } from "@components/nav/nav.component";
 import ProjectCard from "@components/project/ProjectCard";
 import { projectAPI } from "@store/api/project_api";
-import {
-  Col,
-  Empty,
-  Layout,
-  Row,
-  Spin,
-  Typography,
-  Card,
-  Space,
-  Tag,
-  Statistic,
-} from "antd";
+import { Col, Empty, Layout, Row, Spin, Typography, Card, Space, Tag } from "antd";
 import { motion } from "framer-motion";
 import styles from "@app/projects/project-card.module.css";
-import {
-  RocketOutlined,
-  CodeOutlined,
-  GlobalOutlined,
-  TrophyOutlined,
-} from "@ant-design/icons";
+import { CodeOutlined } from "@ant-design/icons";
 import { useTranslation } from "@contexts/translation.context";
 import { AppCTA } from "@components/CTA.component";
 import { NonBlockingLoader } from "@components/shared";
+import StatsSection from "@components/stats/stats-section";
 
 const { Content } = Layout;
 const { Title, Paragraph, Text } = Typography;
@@ -42,25 +27,6 @@ export default function ProjectsPageComponent() {
   } = projectAPI.useFetchAllProjectsQuery(1);
 
   const loading = isLoadingEvent || isFetchEvent;
-
-  const stats = [
-    {
-      title: t("about.projects_completed"),
-      value: projects?.length || 0,
-      icon: <TrophyOutlined />,
-    },
-    {
-      title: t("projects.technologies_master"),
-      value: "15+",
-      icon: <CodeOutlined />,
-    },
-    { title: t("about.happy_clients"), value: "50+", icon: <RocketOutlined /> },
-    {
-      title: t("about.years_experience"),
-      value: "5+",
-      icon: <GlobalOutlined />,
-    },
-  ];
 
   const technologies = [
     "JavaScript",
@@ -90,43 +56,9 @@ export default function ProjectsPageComponent() {
             breadcrumbs={[{ label: t("nav.projects"), uri: "projects" }]}
             pageTitle={t("nav.projects")}
           />
-          {}
-          <section className="py-5 my-5">
-            <div className="container">
-              <Row gutter={[24, 24]} justify="center">
-                {stats.map((stat, index) => (
-                  <Col xs={12} sm={6} key={index}>
-                    <motion.div
-                      initial={{ opacity: 0, y: 30 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
-                    >
-                      <Card className="text-center border-0 shadow-sm h-100">
-                        <div
-                          className="text-primary mb-3"
-                          style={{ fontSize: "2rem" }}
-                        >
-                          {stat.icon}
-                        </div>
-                        <Statistic
-                          title={stat.title}
-                          value={stat.value}
-                          valueStyle={{
-                            color: "#1890ff",
-                            fontSize: "2rem",
-                            fontWeight: "bold",
-                          }}
-                        />
-                      </Card>
-                    </motion.div>
-                  </Col>
-                ))}
-              </Row>
-            </div>
-          </section>
+          <StatsSection />
 
-          {}
-          <section className="py-5 my-5">
+          <section id="page-content" className="py-5 my-5">
             <div className="container">
               <Row justify="center" className="mb-4">
                 <Col xs={24} lg={16} className="text-center">

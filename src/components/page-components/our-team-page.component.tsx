@@ -48,7 +48,7 @@ export default function OurTeamPageComponent() {
         ]}
       />
 
-      <section style={{ padding: "60px 0", minHeight: "60vh" }}>
+      <section id="page-content" style={{ padding: "60px 0", minHeight: "60vh" }}>
         <div className="container">
           {loading ? (
             <div style={{ display: "flex", justifyContent: "center", padding: "48px 0" }}>

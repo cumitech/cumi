@@ -13,6 +13,7 @@ import LeadMagnetSection from "@components/lead-magnet/lead-magnet-section";
 import TestimonialsSection from "@components/testimonials/testimonials-section";
 import StatsSection from "@components/stats/stats-section";
 import ProcessFlowSection from "@components/process-flow/process-flow-section";
+import WhoWeHelpSection from "@components/who-we-help/who-we-help-section";
 import Subscribe from "@components/subscribe/subscribe";
 
 export default function HomePageComponent() {
@@ -22,6 +23,9 @@ export default function HomePageComponent() {
         <AppNav logoPath="/" />
         <AppHero />
       </div>
+
+      {/* Who we help */}
+      <WhoWeHelpSection />
 
       {/* 1. COMPANY INTRODUCTION - Who we are */}
       <AboutNote />

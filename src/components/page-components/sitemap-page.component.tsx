@@ -240,13 +240,6 @@ const SitemapPageComponent: React.FC = () => {
           access: "public",
           type: "page",
         },
-        {
-          path: "/pricing",
-          title: "Pricing",
-          description: "Pricing and plans",
-          access: "public",
-          type: "page",
-        },
       ],
     },
   ];

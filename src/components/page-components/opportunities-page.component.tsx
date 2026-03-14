@@ -143,7 +143,7 @@ export default function OpportunitiesPageComponent() {
           ]}
         />
 
-        <div className="container py-5" style={{ backgroundColor: "white" }}>
+        <div id="page-content" className="container py-5" style={{ backgroundColor: "white" }}>
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}

@@ -24,13 +24,12 @@ import {
   StarOutlined,
   ThunderboltOutlined,
 } from "@ant-design/icons";
-import { 
-  PageLayout, 
-  LoadingSpinner, 
-  SearchAndFilterBar 
+import {
+  PageLayout,
+  LoadingSpinner,
+  SearchAndFilterBar,
 } from "@components/shared";
 import { useTranslation } from "@contexts/translation.context";
-import Breadcrumb from "@components/breadcrumb/breadcrumb.component";
 import Pagination from "@components/pagination/pagination.component";
 
 const { Content } = Layout;
@@ -85,17 +84,7 @@ return (
         bannerTitle={t("blog.title")}
         bannerBreadcrumbs={[{ label: t("blog.breadcrumb"), uri: "blog-posts" }]}
       >
-        {/* SEO Breadcrumb with Schema Markup */}
-        <div className="container py-3">
-          <Breadcrumb 
-            items={[
-              { label: 'Home', href: '/' },
-              { label: 'Blog Posts', href: '/blog-posts' }
-            ]}
-          />
-        </div>
-
-<div className="container py-5 mb-5">
+        <div className="container py-5 mb-5">
         {error && <h1>{t("blog.something_wrong")}</h1>}
 
 {loading ? (

@@ -66,8 +66,7 @@ return (
         pageTitle={t("nav.services")}
       />
 
-{}
-      <section className="py-5">
+      <section id="page-content" className="py-5">
         <div className="container">
           <Row justify="center" className="mb-5">
             <Col xs={24} lg={16} className="text-center">

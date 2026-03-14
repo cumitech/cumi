@@ -53,9 +53,9 @@ export const AppHero = () => {
             shape="round"
             href="/contact-us"
             size="large"
-            onClick={() => trackCtaClick("hero_get_started", "/contact-us")}
+            onClick={() => trackCtaClick("hero_start_project", "/contact-us")}
           >
-            {t("cta.get_started")}
+            {t("cta.start_project")}
           </Button>
           <Button
             size="large"

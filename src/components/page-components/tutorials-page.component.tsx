@@ -18,7 +18,6 @@ import {
   PageLayout, 
 } from "@components/shared";
 import { useTranslation } from "@contexts/translation.context";
-import Breadcrumb from "@components/breadcrumb/breadcrumb.component";
 import TutorialCategories from "@components/tutorials/tutorial-categories";
 import { useSearchParams } from "next/navigation";
 

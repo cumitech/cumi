@@ -47,10 +47,12 @@ return (
         pageTitle="Categories"
       />
 
-<CategoryContainer
-        posts={isLoading || isFetching ? [] : posts}
-        categories={isLoadingCategory || isFetchCategory ? [] : categories || []}
-      />
+<div id="page-content">
+        <CategoryContainer
+          posts={isLoading || isFetching ? [] : posts}
+          categories={isLoadingCategory || isFetchCategory ? [] : categories || []}
+        />
+      </div>
 
 <AppFooter logoPath="/" />
       <AppFootnote />

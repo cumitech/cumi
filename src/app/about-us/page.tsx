@@ -7,7 +7,7 @@ import SchemaRenderer from "@components/shared/schema-renderer.component";
 export async function generateMetadata(): Promise<Metadata> {
   return await generateDynamicPageMetadata("/about-us", {
   title: "About Us - CUMI Digital Agency",
-  description: "CUMI is a digital agency helping businesses scale. Learn about our story, mission, and how we build web apps, mobile apps, and custom software for small businesses and enterprises.",
+  description: "CUMI helps businesses and organizations use technology to grow, operate more efficiently, and serve their customers better. 5+ years experience, NGO work, CareerFoundry mentoring, systems for Cameroon Baptist Convention Health Services.",
   keywords: [
     "about CUMI",
     "software development company",
@@ -52,7 +52,7 @@ export async function generateMetadata(): Promise<Metadata> {
   openGraph: {
     type: "website",
     title: "About CUMI - Digital Agency for Business Growth",
-    description: "CUMI helps businesses scale through web apps, mobile apps, and custom software. Learn about our mission and team.",
+    description: "CUMI builds practical digital solutions that help businesses grow, operate efficiently, and connect with their customers online. Learn about our story and team.",
     images: [defaultImages[1], defaultImages[2]],
     siteName: "CUMI",
     locale: "en_US",
@@ -67,7 +67,7 @@ export async function generateMetadata(): Promise<Metadata> {
   },
   schema: generateStructuredData('organization', {
     name: "CUMI",
-    description: "Digital agency helping businesses scale through web applications, mobile apps, and custom software for small businesses and enterprises",
+    description: "CUMI builds practical digital solutions that help businesses grow, operate efficiently, and connect with their customers online.",
     url: SITE_URL,
     foundingDate: "2020",
     numberOfEmployees: "50+",
@@ -79,7 +79,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function AboutPage() {
   const aboutSchema = generateStructuredData('organization', {
     name: "CUMI",
-    description: "Digital agency helping businesses scale through web applications, mobile apps, and custom software for small businesses and enterprises",
+    description: "CUMI builds practical digital solutions that help businesses grow, operate efficiently, and connect with their customers online.",
     url: SITE_URL,
     foundingDate: "2020",
     numberOfEmployees: "50+",

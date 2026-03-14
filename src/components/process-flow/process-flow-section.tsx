@@ -8,11 +8,10 @@ import styles from "./process-flow-section.module.css";
 const { Title, Paragraph, Text } = Typography;
 
 const STEPS = [
-  { key: "discovery", num: "1", titleKey: "process.discovery", descKey: "process.discovery_desc" },
-  { key: "design", num: "2", titleKey: "process.design", descKey: "process.design_desc" },
-  { key: "development", num: "3", titleKey: "process.development", descKey: "process.development_desc" },
-  { key: "review", num: "4", titleKey: "process.review", descKey: "process.review_desc" },
-  { key: "launch", num: "5", titleKey: "process.launch", descKey: "process.launch_desc" },
+  { key: "step1", num: "1", titleKey: "process.step1", descKey: "process.step1_desc" },
+  { key: "step2", num: "2", titleKey: "process.step2", descKey: "process.step2_desc" },
+  { key: "step3", num: "3", titleKey: "process.step3", descKey: "process.step3_desc" },
+  { key: "step4", num: "4", titleKey: "process.step4", descKey: "process.step4_desc" },
 ];
 
 export default function ProcessFlowSection() {

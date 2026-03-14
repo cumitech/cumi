@@ -78,6 +78,25 @@
     color: var(--cumi-text-secondary) !important;
   }
 
+  /* Our Company dropdown in dark mode */
+  .cumi-company-dropdown.ant-dropdown .ant-dropdown-menu {
+    background: var(--cumi-bg-secondary) !important;
+    border-color: var(--cumi-border-light) !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  .cumi-company-dropdown.ant-dropdown .ant-dropdown-menu-item:hover {
+    background: rgba(34, 197, 94, 0.12) !important;
+  }
+
+  .cumi-company-dropdown-link {
+    color: var(--cumi-text-secondary) !important;
+  }
+
+  .cumi-company-dropdown-link:hover {
+    color: #22c55e !important;
+  }
+
   /* ---- Bootstrap navbar (global) ---- */
   .navbar {
     background-color: var(--cumi-bg-secondary) !important;
@@ -420,6 +439,10 @@
     color: var(--cumi-text-primary) !important;
   }
 
+  .custom__banner .banner-breadcrumb-current {
+    color: var(--cumi-text-primary) !important;
+  }
+
   .custom__banner .text-black-50,
   .custom__banner .ant-typography.ant-typography-secondary {
     color: var(--cumi-text-secondary) !important;
@@ -461,5 +484,42 @@
   .py-5 .ant-statistic-title,
   .py-5 .ant-statistic-content {
     color: var(--cumi-text-primary) !important;
+  }
+
+  /* Contact form card */
+  .contact-page-section {
+    background: linear-gradient(180deg, var(--cumi-bg-secondary) 0%, var(--cumi-bg-primary) 100%) !important;
+  }
+
+  .contact-form-card .ant-card-body {
+    background: var(--cumi-bg-secondary) !important;
+  }
+
+  .contact-form-card > div:first-of-type {
+    background: linear-gradient(180deg, rgba(34, 197, 94, 0.12) 0%, var(--cumi-bg-secondary) 100%) !important;
+    border-bottom-color: var(--cumi-border-light) !important;
+  }
+
+  .contact-form-inner .ant-form-item-label > label {
+    color: var(--cumi-text-primary) !important;
+  }
+
+  .contact-form-inner .ant-input,
+  .contact-form-inner .ant-input-affix-wrapper,
+  .contact-form-inner .ant-input-affix-wrapper input {
+    background: var(--cumi-bg-primary) !important;
+    border-color: var(--cumi-border-light) !important;
+    color: var(--cumi-text-primary) !important;
+  }
+
+  .contact-form-inner .ant-input::placeholder,
+  .contact-form-inner .ant-input-affix-wrapper input::placeholder {
+    color: var(--cumi-text-tertiary) !important;
+  }
+
+  .contact-form-inner .ant-input-affix-wrapper-focused,
+  .contact-form-inner .ant-input-affix-wrapper:focus-within {
+    border-color: #22c55e !important;
+    box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2) !important;
   }
 }

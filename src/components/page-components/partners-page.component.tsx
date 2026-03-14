@@ -39,7 +39,7 @@ return (
         ]}
       />
 
-<section style={{ padding: "60px 0", minHeight: "70vh" }}>
+<section id="page-content" style={{ padding: "60px 0", minHeight: "70vh" }}>
         <div className="container">
           {}
           <div style={{ maxWidth: "600px", margin: "0 auto 48px" }}>
